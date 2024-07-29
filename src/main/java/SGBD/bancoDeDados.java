@@ -1,4 +1,4 @@
-package DB;
+package SGBD;
 
 import java.io.FileInputStream;
 import java.io.IOException;

@@ -1,8 +1,8 @@
-package services.funcionarios;
+package Services.Funcionarios;
 
 import java.util.Date;
 
-public class Gerente extends Funcionarios{
+public class Gerente extends Funcionario {
 
     public void contrataGerente(String name, String email, String CPF, String turno, Date dataContratacao, Cargo cargo){
         this.setNome(name);
@@ -14,7 +14,7 @@ public class Gerente extends Funcionarios{
     }
 
     public void sobeCargo(Promocao promocao, Cargo novoCargo){
-        Funcionarios funcionarios = new Funcionarios();
+        Funcionario funcionarios = new Funcionario();
         promocao.validar(funcionarios);
         funcionarios.setCargo(novoCargo.ProximoCargo());
     }

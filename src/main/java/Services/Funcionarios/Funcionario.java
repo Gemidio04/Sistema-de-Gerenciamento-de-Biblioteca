@@ -1,8 +1,8 @@
-package services.funcionarios;
+package Services.Funcionarios;
 
 import java.util.Date;
 
-public class Funcionarios {
+public class Funcionario {
     private String nome;
     private String email;
     private String CPF;
@@ -10,10 +10,10 @@ public class Funcionarios {
     private Date dataContratacao;
     private Cargo cargo;
 
-    public Funcionarios(){
+    public Funcionario(){
     }
 
-    public Funcionarios(String nome, String email, String CPF, String turno, Date dataContratacao, Cargo cargo) {
+    public Funcionario(String nome, String email, String CPF, String turno, Date dataContratacao, Cargo cargo) {
         this.nome = nome;
         this.email = email;
         this.CPF = CPF;

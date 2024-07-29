@@ -1,6 +1,6 @@
-package application;
+package Application;
 
-import DB.bancoDeDados;
+import SGBD.bancoDeDados;
 
 import java.sql.Connection;
 
