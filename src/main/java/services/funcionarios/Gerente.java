@@ -13,10 +13,10 @@ public class Gerente extends Funcionarios{
         this.setCargo(cargo);
     }
 
-//    public void sobeCargo(Promocao promocao, Cargo novoCargo){
-//        Funcionarios funcionarios = new Funcionarios();
-//        promocao.validar(funcionarios);
-//        funcionarios.setCargo(novoCargo.ProximoCargo());
-//    }
+    public void sobeCargo(Promocao promocao, Cargo novoCargo){
+        Funcionarios funcionarios = new Funcionarios();
+        promocao.validar(funcionarios);
+        funcionarios.setCargo(novoCargo.ProximoCargo());
+    }
 
 }

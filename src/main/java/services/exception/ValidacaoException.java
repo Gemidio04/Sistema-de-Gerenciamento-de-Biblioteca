@@ -1,4 +1,4 @@
-package services.Exception;
+package services.exception;
 
 public class ValidacaoException extends RuntimeException {
 

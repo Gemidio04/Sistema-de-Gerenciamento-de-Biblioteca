@@ -69,4 +69,7 @@ public class Funcionarios {
     public void setCargo(Cargo cargo) {
         this.cargo = cargo;
     }
+    public void promover(Cargo novoCargo){
+        this.cargo = novoCargo;
+    }
 }

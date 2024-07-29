@@ -1,6 +1,6 @@
 package services.funcionarios;
 
-import services.Exception.ValidacaoException;
+import services.exception.ValidacaoException;
 
 public class Promocao {
 
