@@ -14,9 +14,9 @@ public class bancoDeDados {
     public static Connection getConnection(){
         if(connection == null){
             try{
-            Properties properties = loadProperties();
-            String url = properties.getProperty("dburl");
-            connection = DriverManager.getConnection(url, properties);
+                Properties properties = loadProperties();
+                String url = properties.getProperty("dburl");
+                connection = DriverManager.getConnection(url, properties);
             }catch (SQLException ex){
                 throw new RuntimeException(ex.getMessage());
             }
