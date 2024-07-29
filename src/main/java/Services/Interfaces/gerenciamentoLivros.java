@@ -1,6 +1,6 @@
 package Services.Interfaces;
 
-public interface Livros {
+public interface gerenciamentoLivros {
 
     void compraLivro();
     void vendeLivro();

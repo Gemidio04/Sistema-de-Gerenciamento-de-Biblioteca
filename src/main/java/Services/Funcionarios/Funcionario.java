@@ -1,5 +1,6 @@
 package Services.Funcionarios;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Funcionario {
@@ -7,13 +8,12 @@ public class Funcionario {
     private String email;
     private String CPF;
     private String turno;
-    private Date dataContratacao;
+    private LocalDate dataContratacao;
     private Cargo cargo;
 
     public Funcionario(){
     }
-
-    public Funcionario(String nome, String email, String CPF, String turno, Date dataContratacao, Cargo cargo) {
+    public Funcionario(String nome, String email, String CPF, String turno, LocalDate dataContratacao, Cargo cargo) {
         this.nome = nome;
         this.email = email;
         this.CPF = CPF;
@@ -38,7 +38,7 @@ public class Funcionario {
         return turno;
     }
 
-    public Date getDataContratacao() {
+    public LocalDate getDataContratacao() {
         return dataContratacao;
     }
 
@@ -62,7 +62,7 @@ public class Funcionario {
         this.turno = turno;
     }
 
-    public void setDataContratacao(Date dataContratacao) {
+    public void setDataContratacao(LocalDate dataContratacao) {
         this.dataContratacao = dataContratacao;
     }
 

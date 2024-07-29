@@ -1,10 +1,11 @@
 package Services.Funcionarios;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Gerente extends Funcionario {
 
-    public void contrataGerente(String name, String email, String CPF, String turno, Date dataContratacao, Cargo cargo){
+    public void contrataGerente(String name, String email, String CPF, String turno, LocalDate dataContratacao, Cargo cargo){
         this.setNome(name);
         this.setEmail(email);
         this.setCPF(CPF);
@@ -16,6 +17,7 @@ public class Gerente extends Funcionario {
     public void sobeCargo(Promocao promocao, Cargo novoCargo){
         Funcionario funcionarios = new Funcionario();
         promocao.validar(funcionarios);
+        promocao.meta();
         funcionarios.setCargo(novoCargo.ProximoCargo());
     }
 
