@@ -1,4 +1,4 @@
-package entities.funcionarios;
+package services.funcionarios;
 
 import java.util.Date;
 
@@ -44,5 +44,29 @@ public class Funcionarios {
 
     public Cargo getCargo() {
         return cargo;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setCPF(String CPF) {
+        this.CPF = CPF;
+    }
+
+    public void setTurno(String turno) {
+        this.turno = turno;
+    }
+
+    public void setDataContratacao(Date dataContratacao) {
+        this.dataContratacao = dataContratacao;
+    }
+
+    public void setCargo(Cargo cargo) {
+        this.cargo = cargo;
     }
 }
