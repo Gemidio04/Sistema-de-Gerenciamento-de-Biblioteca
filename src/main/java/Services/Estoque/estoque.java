@@ -8,11 +8,11 @@ import Services.Interfaces.gerenciamentoLivros;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Estoque implements gerenciamentoLivros, buscaLivros {
+public class estoque implements gerenciamentoLivros, buscaLivros {
     private int quantidade = 150;
     private Map<String, Livro> livros;
 
-    public Estoque(){
+    public estoque(){
         livros = new HashMap<>();
     }
 
@@ -52,8 +52,28 @@ public class Estoque implements gerenciamentoLivros, buscaLivros {
     }
 
     @Override
-    public Livro buscarLivro(String isbn) {
+    public Livro buscarLivroIsbn(String isbn) {
         Livro livro = livros.get(isbn);
+        if (livro != null) {
+            return livro;
+        } else {
+            throw new ValidacaoException("O livro não existe");
+        }
+    }
+
+    @Override
+    public Livro buscarLivroAutor(String autor) {
+        Livro livro = livros.get(autor);
+        if (livro != null) {
+            return livro;
+        } else {
+            throw new ValidacaoException("O livro não existe");
+        }
+    }
+
+    @Override
+    public Livro buscarLivroTitulo(String titulo) {
+        Livro livro = livros.get(titulo);
         if (livro != null) {
             return livro;
         } else {

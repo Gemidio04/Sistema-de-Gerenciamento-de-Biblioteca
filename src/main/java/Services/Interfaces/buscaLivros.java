@@ -3,5 +3,7 @@ package Services.Interfaces;
 import Livros.Livro;
 
 public interface buscaLivros {
-    Livro buscarLivro(String isbn);
+    Livro buscarLivroIsbn(String isbn);
+    Livro buscarLivroAutor(String autor);
+    Livro buscarLivroTitulo(String titulo);
 }

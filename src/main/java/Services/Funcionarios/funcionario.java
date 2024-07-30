@@ -8,16 +8,18 @@ public class funcionario {
     private String CPF;
     private String turno;
     private LocalDate dataContratacao;
+    private Double salario;
     private Cargo cargo;
 
     public funcionario(){
     }
-    public funcionario(String nome, String email, String CPF, String turno, LocalDate dataContratacao, Cargo cargo) {
+    public funcionario(String nome, String email, String CPF, String turno, LocalDate dataContratacao,Double salario, Cargo cargo) {
         this.nome = nome;
         this.email = email;
         this.CPF = CPF;
         this.turno = turno;
         this.dataContratacao = dataContratacao;
+        this.salario = salario;
         this.cargo = cargo;
     }
 
@@ -68,6 +70,15 @@ public class funcionario {
     public void setCargo(Cargo cargo) {
         this.cargo = cargo;
     }
+
+    public Double getSalario() {
+        return salario;
+    }
+
+    public void setSalario(Double salario) {
+        this.salario = salario;
+    }
+
     public void promover(Cargo novoCargo){
         this.cargo = novoCargo;
     }

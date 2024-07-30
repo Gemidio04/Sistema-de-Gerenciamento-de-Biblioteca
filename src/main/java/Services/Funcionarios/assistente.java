@@ -1,22 +1,27 @@
 package Services.Funcionarios;
 
 import Livros.Livro;
-import Services.Estoque.Estoque;
+import Services.Estoque.estoque;
 import Services.Exception.ValidacaoException;
 import Services.Interfaces.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class assistente extends funcionario implements gerenciamentoLivros, emprestimoVendaLivros, buscaLivros {
     private int quantidadeLivrosVendidos;
     private int quantidadeLivrosEmprestados;
 
-    private Estoque estoque;
+    private estoque estoque;
+    private Map<String, Livro> livros;
 
     public assistente(){
     }
-    public assistente(Estoque estoque) {
-        this.estoque = estoque;
+    public assistente(Services.Estoque.estoque estoque) {
         quantidadeLivrosVendidos = 0;
         quantidadeLivrosEmprestados = 0;
+        this.estoque = estoque;
+        this.livros = new HashMap<>();
     }
 
     public int getQuantidadeLivrosVendidos() {
@@ -76,12 +81,32 @@ public class assistente extends funcionario implements gerenciamentoLivros, empr
     }
 
     @Override
-    public Livro buscarLivro(String isbn) {
-        Livro livro = estoque.buscarLivro(isbn);
+    public Livro buscarLivroIsbn(String isbn) {
+        Livro livro = livros.get(isbn);
         if (livro != null) {
             return livro;
         } else {
-            throw new ValidacaoException("Livro com ISBN " + isbn + " não encontrado.");
+            throw new ValidacaoException("O livro não existe");
+        }
+    }
+
+    @Override
+    public Livro buscarLivroAutor(String autor) {
+        Livro livro = livros.get(autor);
+        if (livro != null) {
+            return livro;
+        } else {
+            throw new ValidacaoException("O livro não existe");
+        }
+    }
+
+    @Override
+    public Livro buscarLivroTitulo(String titulo) {
+        Livro livro = livros.get(titulo);
+        if (livro != null) {
+            return livro;
+        } else {
+            throw new ValidacaoException("O livro não existe");
         }
     }
 }

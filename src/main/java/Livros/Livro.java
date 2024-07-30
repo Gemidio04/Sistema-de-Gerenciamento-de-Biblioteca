@@ -9,10 +9,6 @@ public class Livro {
     private Integer AnoPublicacao;
     private boolean disponilidade;
 
-    public Livro(String isbn){
-        this.isbn = isbn;
-    }
-
     public Livro(String isbn, String titulo, String editora, String genero, String autor, Integer AnoPublicacao) {
         this.isbn = isbn;
         this.titulo = titulo;
