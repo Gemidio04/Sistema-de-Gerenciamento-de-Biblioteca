@@ -53,7 +53,16 @@ public class Estoque implements gerenciamentoLivros, buscaLivros {
 
     @Override
     public Livro buscarLivro(String isbn) {
-        return livros.get(isbn);
+        Livro livro = livros.get(isbn);
+        if (livro != null) {
+            return livro;
+        } else {
+            throw new ValidacaoException("O livro não existe");
+        }
     }
 
+    public boolean checarDisponibilidade(String isbn) {
+        Livro livro = livros.get(isbn);
+        return livro.getDisponilidade();
+    }
 }

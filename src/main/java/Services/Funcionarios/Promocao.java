@@ -30,6 +30,6 @@ public class Promocao {
         }
 
         Assistente assistente = new Assistente();
-        return assistente.getMeta() >= metaLivrosVendidos && assistente.getMeta() >= metaLivrosEmprestados && experienciaMinima;
+        return assistente.getQuantidadeLivrosVendidos() >= metaLivrosVendidos && assistente.getQuantidadeLivrosEmprestados() >= metaLivrosEmprestados && experienciaMinima;
     }
 }

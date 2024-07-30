@@ -1,7 +1,9 @@
 package Services.Interfaces;
 
+import Livros.Livro;
+
 public interface emprestimoVendaLivros {
-    void venderLivro();
-    void emprestarLivro();
-    void devolverLivro();
+    void venderLivro(String isbn);
+    void emprestarLivro(String isbn);
+    void devolverLivro(String isbn, Livro livro);
 }

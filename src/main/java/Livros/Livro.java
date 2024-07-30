@@ -70,6 +70,14 @@ public class Livro {
         AnoPublicacao = anoPublicacao;
     }
 
+    public boolean getDisponilidade() {
+        return disponilidade;
+    }
+
+    public void setDisponilidade(boolean disponilidade) {
+        this.disponilidade = disponilidade;
+    }
+
     public boolean disponibilidade(){
         if(disponilidade){
             System.out.println("Livro Disponível!");
