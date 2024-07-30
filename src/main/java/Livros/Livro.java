@@ -3,7 +3,7 @@ package Livros;
 public class Livro {
     private String isbn;
     private String titulo;
-    private String email;
+    private String editora;
     private String genero;
     private String autor;
     private Integer AnoPublicacao;
@@ -13,10 +13,10 @@ public class Livro {
         this.isbn = isbn;
     }
 
-    public Livro(String isbn, String titulo, String email, String genero, String autor, Integer AnoPublicacao) {
+    public Livro(String isbn, String titulo, String editora, String genero, String autor, Integer AnoPublicacao) {
         this.isbn = isbn;
         this.titulo = titulo;
-        this.email = email;
+        this.editora = editora;
         this.genero = genero;
         this.autor = autor;
         this.AnoPublicacao = AnoPublicacao;
@@ -38,12 +38,12 @@ public class Livro {
         this.titulo = titulo;
     }
 
-    public String getEmail() {
-        return email;
+    public String getEditora() {
+        return editora;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEditora(String editora) {
+        this.editora = editora;
     }
 
     public String getGenero() {
