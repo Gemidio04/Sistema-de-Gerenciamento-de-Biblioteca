@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Date;
 
 public class Gerente extends Funcionario {
+    Funcionario funcionario = new Funcionario();
 
     public void contrataGerente(String name, String email, String CPF, String turno, LocalDate dataContratacao, Cargo cargo){
         this.setNome(name);
@@ -15,10 +16,9 @@ public class Gerente extends Funcionario {
     }
 
     public void sobeCargo(Promocao promocao, Cargo novoCargo){
-        Funcionario funcionarios = new Funcionario();
-        promocao.validar(funcionarios);
         promocao.meta();
-        funcionarios.setCargo(novoCargo.ProximoCargo());
+        promocao.validar(funcionario);
+        funcionario.setCargo(novoCargo.ProximoCargo());
     }
 
 }

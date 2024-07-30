@@ -1,33 +1,33 @@
 package Livros;
 
 public class Livro {
-    private String id;
+    private String isbn;
     private String titulo;
     private String email;
     private String genero;
     private String autor;
-    private int anoPublicao;
+    private Integer AnoPublicacao;
     private boolean disponilidade;
 
-    public Livro(){
+    public Livro(String isbn){
+        this.isbn = isbn;
     }
 
-    public Livro(String id, String titulo, String email, String genero, String autor, int anoPublicao, boolean disponilidade) {
-        this.id = id;
+    public Livro(String isbn, String titulo, String email, String genero, String autor, Integer AnoPublicacao) {
+        this.isbn = isbn;
         this.titulo = titulo;
         this.email = email;
         this.genero = genero;
         this.autor = autor;
-        this.anoPublicao = anoPublicao;
-        this.disponilidade = disponilidade;
+        this.AnoPublicacao = AnoPublicacao;
     }
 
-    public String getId() {
-        return id;
+    public String getIsbn() {
+        return isbn;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
 
     public String getTitulo() {
@@ -62,20 +62,12 @@ public class Livro {
         this.autor = autor;
     }
 
-    public int getAnoPublicao() {
-        return anoPublicao;
+    public Integer getAnoPublicacao() {
+        return AnoPublicacao;
     }
 
-    public void setAnoPublicao(int anoPublicao) {
-        this.anoPublicao = anoPublicao;
-    }
-
-    public boolean getDisponilidade() {
-        return disponilidade;
-    }
-
-    public void setDisponilidade(boolean disponilidade) {
-        this.disponilidade = disponilidade;
+    public void setAnoPublicacao(Integer anoPublicacao) {
+        AnoPublicacao = anoPublicacao;
     }
 
     public boolean disponibilidade(){
