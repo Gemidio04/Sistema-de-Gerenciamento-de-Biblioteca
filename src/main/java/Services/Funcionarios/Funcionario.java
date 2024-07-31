@@ -2,7 +2,7 @@ package Services.Funcionarios;
 
 import java.time.LocalDate;
 
-public class funcionario {
+public class Funcionario {
     private String nome;
     private String email;
     private String CPF;
@@ -11,9 +11,9 @@ public class funcionario {
     private Double salario;
     private Cargo cargo;
 
-    public funcionario(){
+    public Funcionario(){
     }
-    public funcionario(String nome, String email, String CPF, String turno, LocalDate dataContratacao,Double salario, Cargo cargo) {
+    public Funcionario(String nome, String email, String CPF, String turno, LocalDate dataContratacao, Double salario, Cargo cargo) {
         this.nome = nome;
         this.email = email;
         this.CPF = CPF;

@@ -1,26 +1,30 @@
 package Services.Funcionarios;
 
 import Livros.Livro;
-import Services.Estoque.estoque;
+import Services.Estoque.EstoqueImplements;
 import Services.Exception.ValidacaoException;
 import Services.Interfaces.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class assistente extends funcionario implements gerenciamentoLivros, emprestimoVendaLivros, buscaLivros {
+public class Bibliotecaria extends Funcionario implements gerenciamentoLivros, emprestimoVendaLivros, buscaLivros, gerenciamentoAdvertencias, estoque {
     private int quantidadeLivrosVendidos;
     private int quantidadeLivrosEmprestados;
+    private boolean advertencia;
+    private int quantidadeAdvertencias;
 
-    private estoque estoque;
+    private EstoqueImplements estoqueImplements;
     private Map<String, Livro> livros;
 
-    public assistente(){
+    public Bibliotecaria(){
     }
-    public assistente(Services.Estoque.estoque estoque) {
+    public Bibliotecaria(EstoqueImplements estoqueImplements) {
         quantidadeLivrosVendidos = 0;
         quantidadeLivrosEmprestados = 0;
-        this.estoque = estoque;
+        advertencia = false;
+        quantidadeAdvertencias = 0;
+        this.estoqueImplements = estoqueImplements;
         this.livros = new HashMap<>();
     }
 
@@ -42,23 +46,23 @@ public class assistente extends funcionario implements gerenciamentoLivros, empr
 
     @Override
     public void adicionarLivro(String isbn, Livro livro) {
-        estoque.adicionarLivro(isbn, livro);
+        estoqueImplements.adicionarLivro(isbn, livro);
     }
 
     @Override
     public void removerLivro(String isbn) {
-        estoque.removerLivro(isbn);
+        estoqueImplements.removerLivro(isbn);
     }
 
     @Override
     public void atualizarInformacoes(String isbn, String novoTitulo, String novoAutor, int novoAnoPublicacao) {
-        estoque.atualizarInformacoes(isbn, novoTitulo, novoAutor, novoAnoPublicacao);
+        estoqueImplements.atualizarInformacoes(isbn, novoTitulo, novoAutor, novoAnoPublicacao);
     }
 
     @Override
     public void venderLivro(String isbn) {
-        if (estoque.checarDisponibilidade(isbn)) {
-            estoque.removerLivro(isbn);
+        if (checarDisponibilidade(isbn)) {
+            estoqueImplements.removerLivro(isbn);
             quantidadeLivrosVendidos++;
         } else {
             throw new ValidacaoException("Livro com ISBN " + isbn + " não está disponível para venda!");
@@ -67,8 +71,8 @@ public class assistente extends funcionario implements gerenciamentoLivros, empr
 
     @Override
     public void emprestarLivro(String isbn) {
-        if (estoque.checarDisponibilidade(isbn)) {
-            estoque.removerLivro(isbn);
+        if (checarDisponibilidade(isbn)) {
+            estoqueImplements.removerLivro(isbn);
             quantidadeLivrosEmprestados++;
         } else {
             throw new ValidacaoException("Livro com ISBN " + isbn + " não está disponível para empréstimo!");
@@ -77,7 +81,7 @@ public class assistente extends funcionario implements gerenciamentoLivros, empr
 
     @Override
     public void devolverLivro(String isbn, Livro livro) {
-        estoque.adicionarLivro(isbn, livro);
+        estoqueImplements.adicionarLivro(isbn, livro);
     }
 
     @Override
@@ -109,4 +113,22 @@ public class assistente extends funcionario implements gerenciamentoLivros, empr
             throw new ValidacaoException("O livro não existe");
         }
     }
+
+    @Override
+    public void adicionarAdvertencia() {
+        quantidadeAdvertencias++;
+    }
+
+    @Override
+    public boolean verificarAdvertencias() {
+        return quantidadeAdvertencias > 3;
+    }
+
+    public void demitirAssistente(Funcionario funcionario) {
+        if (verificarAdvertencias()) {
+            System.out.println("Funcionário " + funcionario.getNome() + " demitido!");
+        }
+    }
+
+
 }

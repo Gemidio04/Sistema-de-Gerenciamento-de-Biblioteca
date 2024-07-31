@@ -3,16 +3,17 @@ package Services.Estoque;
 import Livros.Livro;
 import Services.Exception.ValidacaoException;
 import Services.Interfaces.buscaLivros;
+import Services.Interfaces.estoque;
 import Services.Interfaces.gerenciamentoLivros;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class estoque implements gerenciamentoLivros, buscaLivros {
+public class EstoqueImplements implements gerenciamentoLivros, buscaLivros, estoque {
     private int quantidade = 150;
     private Map<String, Livro> livros;
 
-    public estoque(){
+    public EstoqueImplements(){
         livros = new HashMap<>();
     }
 
@@ -81,8 +82,4 @@ public class estoque implements gerenciamentoLivros, buscaLivros {
         }
     }
 
-    public boolean checarDisponibilidade(String isbn) {
-        Livro livro = livros.get(isbn);
-        return livro.getDisponilidade();
-    }
 }

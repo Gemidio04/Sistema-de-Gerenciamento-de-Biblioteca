@@ -1,20 +1,20 @@
 package Services.Meta;
 
-import Services.Funcionarios.assistente;
+import Services.Funcionarios.Assistentes.assistenteEmprestimoVendaLivros;
 import Services.Funcionarios.Cargo;
-import Services.Funcionarios.funcionario;
+import Services.Funcionarios.Funcionario;
 
 import java.time.LocalDate;
 import java.time.Period;
 
-public class meta {
+public class Meta {
 
     public boolean meta() {
         int metaLivrosVendidos = 0;
         int metaLivrosEmprestados = 0;
         boolean experienciaMinima = true;
 
-        funcionario funcionario = new funcionario();
+        Funcionario funcionario = new Funcionario();
         if (funcionario.getCargo() == Cargo.ASSISTENTE) {
             metaLivrosVendidos = 100;
             metaLivrosEmprestados = 200;
@@ -24,7 +24,7 @@ public class meta {
             experienciaMinima = Period.between(funcionario.getDataContratacao(), LocalDate.now()).getYears() >= 5;
         }
 
-        assistente assistente = new assistente();
-        return assistente.getQuantidadeLivrosVendidos() >= metaLivrosVendidos && assistente.getQuantidadeLivrosEmprestados() >= metaLivrosEmprestados && experienciaMinima;
+        assistenteEmprestimoVendaLivros assistenteEmprestimoVendaLivros = new assistenteEmprestimoVendaLivros();
+        return assistenteEmprestimoVendaLivros.getQuantidadeLivrosVendidos() >= metaLivrosVendidos && assistenteEmprestimoVendaLivros.getQuantidadeLivrosEmprestados() >= metaLivrosEmprestados && experienciaMinima;
     }
 }

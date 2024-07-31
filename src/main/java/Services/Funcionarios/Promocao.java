@@ -1,19 +1,19 @@
 package Services.Funcionarios;
 
 
-import Services.Meta.meta;
-import Services.Validacao.validacao;
+import Services.Meta.Meta;
+import Services.Validacao.Validacao;
 
-public class promocao {
-    private validacao validador;
-    private meta verificadorMeta;
+public class Promocao {
+    private Validacao validador;
+    private Meta verificadorMeta;
 
-    public promocao(validacao validador, meta verificadorMeta) {
+    public Promocao(Validacao validador, Meta verificadorMeta) {
         this.validador = validador;
         this.verificadorMeta = verificadorMeta;
     }
 
-    public void promover(funcionario funcionario) {
+    public void promover(Funcionario funcionario) {
         validador.validar(funcionario);
         if (verificadorMeta.meta()) {
             System.out.println("Funcionário elegível para promoção!");

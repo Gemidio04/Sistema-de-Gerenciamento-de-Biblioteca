@@ -2,11 +2,11 @@ package Services.Validacao;
 
 import Services.Exception.ValidacaoException;
 import Services.Funcionarios.Cargo;
-import Services.Funcionarios.funcionario;
+import Services.Funcionarios.Funcionario;
 
-public class validacao {
+public class Validacao {
 
-    public void validar(funcionario funcionarios){
+    public void validar(Funcionario funcionarios){
         Cargo cargoAtual = funcionarios.getCargo();
         if(Cargo.GERENTE==cargoAtual){
             throw new ValidacaoException("Gerentes não podem ser promovidos!");

@@ -2,10 +2,10 @@ package Services.Funcionarios;
 
 import java.time.LocalDate;
 
-public class gerente extends funcionario {
-    funcionario funcionario;
+public class Gerente extends Funcionario {
+    Funcionario funcionario;
 
-    public gerente(Services.Funcionarios.funcionario funcionario){
+    public Gerente(Funcionario funcionario){
         this.funcionario = funcionario;
     }
     public void contrataGerente(String name, String email, String CPF, String turno, LocalDate dataContratacao, Cargo cargo){
@@ -17,7 +17,7 @@ public class gerente extends funcionario {
         this.setCargo(cargo);
     }
 
-    public void sobeCargo(promocao promocao, Cargo novoCargo){
+    public void sobeCargo(Promocao promocao, Cargo novoCargo){
         promocao.promover(funcionario);
         funcionario.setCargo(novoCargo.ProximoCargo());
     }
