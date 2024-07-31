@@ -1,5 +1,10 @@
 package Services.Funcionarios;
 
+import Services.Funcionarios.OperacoesBiblioteca.Gerente;
+import Services.Funcionarios.OperacoesBiblioteca.OperacoesBiblioteca;
+
+import java.util.Scanner;
+
 public enum Cargo {
 
     PRESERVADOR {
@@ -53,4 +58,19 @@ public enum Cargo {
     };
 
     public abstract Cargo ProximoCargo();
+
+    public static void converteCargoEnum(OperacoesBiblioteca novoFuncionario){
+        Scanner sc = new Scanner(System.in);
+        Gerente gerente = new Gerente();
+
+        try (sc) {
+            System.out.print("Cargo: (ASSISTENTE, BIBLIOTECARIO, GERENTE): ");
+            String cargoInput = sc.nextLine().toUpperCase();
+            Cargo cargo = Cargo.valueOf(cargoInput);
+            novoFuncionario.setCargo(cargo);
+            gerente.getListaDeFuncionarios().add(novoFuncionario);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Cargo inválido. Por favor, insira um cargo válido.");
+        }
+    }
 }

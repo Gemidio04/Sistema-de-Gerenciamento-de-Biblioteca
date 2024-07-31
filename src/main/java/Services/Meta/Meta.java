@@ -1,8 +1,8 @@
 package Services.Meta;
 
-import Services.Funcionarios.Assistentes.assistenteEmprestimoVendaLivros;
 import Services.Funcionarios.Cargo;
 import Services.Funcionarios.Funcionario;
+import Services.Funcionarios.OperacoesBiblioteca.OperacoesBiblioteca;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -24,7 +24,7 @@ public class Meta {
             experienciaMinima = Period.between(funcionario.getDataContratacao(), LocalDate.now()).getYears() >= 5;
         }
 
-        assistenteEmprestimoVendaLivros assistenteEmprestimoVendaLivros = new assistenteEmprestimoVendaLivros();
-        return assistenteEmprestimoVendaLivros.getQuantidadeLivrosVendidos() >= metaLivrosVendidos && assistenteEmprestimoVendaLivros.getQuantidadeLivrosEmprestados() >= metaLivrosEmprestados && experienciaMinima;
+        OperacoesBiblioteca operacoesBiblioteca = new OperacoesBiblioteca();
+        return operacoesBiblioteca.getQuantidadeLivrosVendidos() >= metaLivrosVendidos && operacoesBiblioteca.getQuantidadeLivrosEmprestados() >= metaLivrosEmprestados && experienciaMinima;
     }
 }
