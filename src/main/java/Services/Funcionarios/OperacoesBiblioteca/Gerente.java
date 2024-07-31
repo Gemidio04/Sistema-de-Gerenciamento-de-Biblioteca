@@ -16,11 +16,13 @@ public class Gerente extends OperacoesBiblioteca {
     private boolean advertencia;
     private int quantidadeAdvertencias;
     private List<Funcionario> listaDeFuncionarios;
+    private Assistente assistente;
 
     public Gerente(){
-        this.advertencia = false;
+        advertencia = false;
         quantidadeAdvertencias = 0;
         listaDeFuncionarios = new LinkedList<>();
+        assistente = new Assistente();
     }
 
     public List<Funcionario> getListaDeFuncionarios() {
@@ -30,15 +32,6 @@ public class Gerente extends OperacoesBiblioteca {
     public void setListaDeFuncionarios(List<Funcionario> listaDeFuncionarios) {
         this.listaDeFuncionarios = listaDeFuncionarios;
     }
-
-//    public void contrataGerente(String name, String email, String CPF, String turno, LocalDate dataContratacao, Cargo cargo){
-//        this.setNome(name);
-//        this.setEmail(email);
-//        this.setCPF(CPF);
-//        this.setTurno(turno);
-//        this.setDataContratacao(dataContratacao);
-//        this.setCargo(cargo);
-//    }
 
     public void promover(Promocao promocao, Cargo novoCargo){
         Funcionario funcionario = new Funcionario();
@@ -95,17 +88,23 @@ public class Gerente extends OperacoesBiblioteca {
                 sc.nextLine(); // Consome a nova linha restante
                 return salario;
             } else {
-                System.out.println("Salário inválido. Por favor, insira um número.");
+                System.out.println("Salário inválido. Digite novamente: ");
                 sc.next(); // Consome a entrada inválida
             }
         }
     }
+
     public void adicionarAdvertencia() {
-        quantidadeAdvertencias++;
+        if(advertencia)
+            quantidadeAdvertencias++;
     }
 
     public boolean verificarAdvertencias() {
-        return quantidadeAdvertencias > 3;
+        if(quantidadeAdvertencias == 3) {
+            System.out.println("Número de advertências: " + quantidadeAdvertencias);
+            return advertencia = true;
+        }
+        return false;
     }
 
     public void demitirFuncionario(Funcionario funcionario) {

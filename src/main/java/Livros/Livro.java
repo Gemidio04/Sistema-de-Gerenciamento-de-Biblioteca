@@ -7,7 +7,6 @@ public class Livro {
     private String genero;
     private String autor;
     private Integer AnoPublicacao;
-    private boolean disponilidade;
 
     public Livro(String isbn, String titulo, String editora, String genero, String autor, Integer AnoPublicacao) {
         this.isbn = isbn;
@@ -66,21 +65,5 @@ public class Livro {
         AnoPublicacao = anoPublicacao;
     }
 
-    public boolean getDisponilidade() {
-        return disponilidade;
-    }
 
-    public void setDisponilidade(boolean disponilidade) {
-        this.disponilidade = disponilidade;
-    }
-
-    public boolean disponibilidade(){
-        if(disponilidade){
-            System.out.println("Livro Disponível!");
-            return true;
-        }else{
-            System.out.println("Livro Indisponível!");
-            return false;
-        }
-    }
 }

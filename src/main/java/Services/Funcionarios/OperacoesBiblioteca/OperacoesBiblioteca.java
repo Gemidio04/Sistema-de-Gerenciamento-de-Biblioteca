@@ -77,7 +77,7 @@ public class OperacoesBiblioteca extends Funcionario {
         adicionarLivro(isbn, livro);
     }
 
-    private boolean checarDisponibilidade() {
+    boolean checarDisponibilidade() {
         return getEstoque().getQuantidade() > 0;
     }
 
@@ -106,17 +106,5 @@ public class OperacoesBiblioteca extends Funcionario {
         } else {
             throw new ValidacaoException("O livro não existe");
         }
-    }
-    @Override
-    public String toString() {
-        return "Funcionario{" +
-                "nome ='" + getNome() + '\'' +
-                ", email ='" + getEmail() + '\'' +
-                ", CPF ='" + getCPF() + '\'' +
-                ", turno ='" + getTurno() + '\'' +
-                ", dataContratacao =" + getDataContratacao() +
-                ", salario =" + getSalario() +
-                ", cargo =" + getCargo() +
-                '}';
     }
 }

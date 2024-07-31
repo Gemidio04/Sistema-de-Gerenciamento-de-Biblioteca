@@ -1,9 +1,13 @@
 package Clientes;
+
+import java.time.LocalDate;
+
 public class Cliente {
     private String name;
     private String email;
     private String CEP;
     private String endereco;
+    private LocalDate dataCadastro;
 
     public Cliente(String name, String email, String CEP, String endereco) {
         this.name = name;
@@ -42,5 +46,13 @@ public class Cliente {
 
     public void setEndereco(String endereco) {
         this.endereco = endereco;
+    }
+
+    public LocalDate getDataCadastro() {
+        return dataCadastro;
+    }
+
+    public void setDataCadastro(LocalDate dataCadastro) {
+        this.dataCadastro = dataCadastro;
     }
 }
