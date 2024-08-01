@@ -1,11 +1,7 @@
 package Services.Funcionarios;
 
-import Livros.Livro;
 import Services.Estoque.Estoque;
-
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.*;
 
 public class Funcionario {
     private String nome;
@@ -15,8 +11,6 @@ public class Funcionario {
     private LocalDate dataContratacao;
     private Double salario;
     private Cargo cargo;
-    private Estoque estoque;
-    private Map<String, Livro> livros;
 
     public Funcionario(){
     }
@@ -28,8 +22,6 @@ public class Funcionario {
         this.dataContratacao = dataContratacao;
         this.salario = salario;
         this.cargo = cargo;
-        this.estoque = estoque;
-        this.livros = new HashMap<>();
     }
 
     public String getNome() {
@@ -86,22 +78,6 @@ public class Funcionario {
 
     public void setCargo(Cargo cargo) {
         this.cargo = cargo;
-    }
-
-    public Estoque getEstoque() {
-        return estoque;
-    }
-
-    public void setEstoque(Estoque estoque) {
-        this.estoque = estoque;
-    }
-
-    public Map<String, Livro> getLivros() {
-        return livros;
-    }
-
-    public void setLivros(Map<String, Livro> livros) {
-        this.livros = livros;
     }
 
 }

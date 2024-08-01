@@ -1,11 +1,6 @@
 package Application;
 
-import SGBD.BancoDeDados;
-import Services.Funcionarios.Funcionario;
-import Services.Funcionarios.OperacoesBiblioteca.Gerente;
-import Services.Funcionarios.OperacoesBiblioteca.OperacoesBiblioteca;
-
-import java.sql.Connection;
+import Services.Funcionarios.AnalistaDeSistemas;
 
 public class Principal {
 
@@ -14,8 +9,7 @@ public class Principal {
 //        Connection connection = BancoDeDados.getConnection();
 //        BancoDeDados.closeConnection();
 
-        OperacoesBiblioteca operacoesBiblioteca = new OperacoesBiblioteca();
-        Gerente gerente = new Gerente();
-        gerente.contratarFuncionario(operacoesBiblioteca);
+        AnalistaDeSistemas analista = new AnalistaDeSistemas();
+        analista.suporteTecnico(true);
     }
 }

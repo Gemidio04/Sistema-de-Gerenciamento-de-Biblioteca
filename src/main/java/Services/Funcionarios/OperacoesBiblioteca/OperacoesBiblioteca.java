@@ -1,20 +1,41 @@
 package Services.Funcionarios.OperacoesBiblioteca;
 
 import Livros.Livro;
+import Services.Estoque.Estoque;
 import Services.Exception.ValidacaoException;
 import Services.Funcionarios.Funcionario;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.util.HashMap;
+import java.util.Map;
 
 public class OperacoesBiblioteca extends Funcionario {
+
+    private Estoque estoque;
+    private Map<String, Livro> livros;
     private int quantidadeLivrosVendidos;
     private int quantidadeLivrosEmprestados;
 
     public OperacoesBiblioteca(){
         super();
+        livros = new HashMap<>();
         quantidadeLivrosVendidos = 0;
         quantidadeLivrosEmprestados = 0;
+    }
+
+    public Estoque getEstoque() {
+        return estoque;
+    }
+
+    public void setEstoque(Estoque estoque) {
+        this.estoque = estoque;
+    }
+
+    public Map<String, Livro> getLivros() {
+        return livros;
+    }
+
+    public void setLivros(Map<String, Livro> livros) {
+        this.livros = livros;
     }
 
     public int getQuantidadeLivrosVendidos() {
@@ -34,20 +55,21 @@ public class OperacoesBiblioteca extends Funcionario {
     }
 
     public void adicionarLivro(String isbn, Livro livro) {
-        getLivros().put(isbn, livro);
-        getEstoque().setQuantidade(getEstoque().getQuantidade() + 1);
+        livros.put(isbn, livro);
+        estoque.setQuantidade(estoque.getQuantidade() + 1);
     }
 
     public void removerLivro(String isbn) {
-        getLivros().remove(isbn);
-        if(getEstoque().getQuantidade() > 0)
-            getEstoque().setQuantidade(getEstoque().getQuantidade() - 1);
+        livros.remove(isbn);
+        if(estoque.getQuantidade() > 0)
+            estoque.setQuantidade(estoque.getQuantidade() - 1);
         else
             throw new ValidacaoException("Não há mais unidades deste livro!");
     }
 
-    public void atualizarInformacoes(String isbn, String novoTitulo, String novoAutor, int novoAnoPublicacao) {
-        Livro livro = getLivros().get(isbn);
+    public void atualizarInformacoes
+            (String isbn, String novoTitulo, String novoAutor, int novoAnoPublicacao) {
+        Livro livro = livros.get(isbn);
         if (livro != null) {
             livro.setTitulo(novoTitulo);
             livro.setAutor(novoAutor);
@@ -81,11 +103,11 @@ public class OperacoesBiblioteca extends Funcionario {
     }
 
     boolean checarDisponibilidade() {
-        return getEstoque().getQuantidade() > 0;
+        return estoque.getQuantidade() > 0;
     }
 
     public Livro buscarLivroIsbn(String isbn) {
-        Livro livro = getLivros().get(isbn);
+        Livro livro = livros.get(isbn);
         if (livro != null) {
             return livro;
         } else {
@@ -94,7 +116,7 @@ public class OperacoesBiblioteca extends Funcionario {
     }
 
     public Livro buscarLivroAutor(String autor) {
-        Livro livro = getLivros().get(autor);
+        Livro livro = livros.get(autor);
         if (livro != null) {
             return livro;
         } else {
@@ -103,7 +125,7 @@ public class OperacoesBiblioteca extends Funcionario {
     }
 
     public Livro buscarLivroTitulo(String titulo) {
-        Livro livro = getLivros().get(titulo);
+        Livro livro = livros.get(titulo);
         if (livro != null) {
             return livro;
         } else {

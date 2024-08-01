@@ -1,33 +1,99 @@
 package Services.Regras;
 
-import Livros.Livro;
-
-import java.time.LocalDate;
+import Services.Funcionarios.Funcionario;
 import java.time.LocalTime;
-import java.util.Map;
 
 public class Regra {
+    private boolean advertencia;
+    private int quantidadeAdvertencias;
 
-    public static boolean verificarAtraso(LocalTime horaChegada, LocalTime horaAtual) {
+    public Regra(){
+        advertencia = false;
+        quantidadeAdvertencias = 0;
+    }
+
+    public boolean getAdvertencia() {
+        return advertencia;
+    }
+
+    public void setAdvertencia(boolean advertencia) {
+        this.advertencia = advertencia;
+    }
+
+    public int getQuantidadeAdvertencias() {
+        return quantidadeAdvertencias;
+    }
+
+    public void setQuantidadeAdvertencias(int quantidadeAdvertencias) {
+        this.quantidadeAdvertencias = quantidadeAdvertencias;
+    }
+
+    private static boolean verificarAtraso(LocalTime horaChegada, LocalTime horaAtual) {
         return horaAtual.isAfter(horaChegada);
     }
-    public static boolean verificarMalAtendimento(int numeroReclamacoes) {
+    private static boolean verificarMalAtendimento(int numeroReclamacoes) {
         return numeroReclamacoes > 0;
     }
 
-    public static boolean verificarDesorganizacao(boolean desorganizado) {
+    private static boolean verificarDesorganizacao(boolean desorganizado) {
         return desorganizado;
     }
 
-    public static boolean verificarUsoIndevido(boolean usoIndevido) {
+    private static boolean verificarUsoIndevido(boolean usoIndevido) {
         return usoIndevido;
     }
 
-    public static boolean verificarFaltaDeRegistro(boolean registroInadequado) {
+    private static boolean verificarFaltaDeRegistro(boolean registroInadequado) {
         return registroInadequado;
     }
 
-    public static boolean verificarQuebraProtocoloSeguranca(boolean quebraProtocolo) {
+    private static boolean verificarQuebraProtocoloSeguranca(boolean quebraProtocolo) {
         return quebraProtocolo;
+    }
+
+    public void verificarRegras(Funcionario funcionario) {
+        LocalTime horaChegada = LocalTime.of(8, 0);  // Hora padrão de chegada
+        LocalTime horaAtual = LocalTime.now();
+
+        if (Regra.verificarAtraso(horaChegada, horaAtual)) {
+            advertencia = true;
+            quantidadeAdvertencias++;
+            System.out.println("Funcionário " + funcionario.getNome() + " chegou atrasado. Advertência emitida.");
+        }
+
+        int numeroReclamacoes = 3;  // Dados de exemplo
+        if (Regra.verificarMalAtendimento(numeroReclamacoes)) {
+            advertencia = true;
+            quantidadeAdvertencias++;
+            System.out.println("Funcionário " + funcionario.getNome() + " recebeu reclamações de clientes. Advertência emitida.");
+        }
+
+        boolean desorganizado = true;  // Dados de exemplo
+        if (Regra.verificarDesorganizacao(desorganizado)) {
+            advertencia = true;
+            quantidadeAdvertencias++;
+            System.out.println("Funcionário " + funcionario.getNome() + " deixou a biblioteca desorganizada. Advertência emitida.");
+        }
+
+        boolean usoIndevido = true;  // Dados de exemplo
+        if (Regra.verificarUsoIndevido(usoIndevido)) {
+            advertencia = true;
+            quantidadeAdvertencias++;
+            System.out.println("Funcionário " + funcionario.getNome() + " usou indevidamente os recursos da biblioteca. Advertência emitida.");
+        }
+
+        boolean registroInadequado = true;  // Dados de exemplo
+        if (Regra.verificarFaltaDeRegistro(registroInadequado)) {
+            advertencia = true;
+            quantidadeAdvertencias++;
+            System.out.println("Funcionário " + funcionario.getNome() + " não registrou adequadamente a entrada e saída de materiais. Advertência emitida.");
+        }
+
+        boolean quebraProtocolo = true;  // Dados de exemplo
+        if (Regra.verificarQuebraProtocoloSeguranca(quebraProtocolo)) {
+            advertencia = true;
+            quantidadeAdvertencias++;
+            System.out.println("Funcionário " + funcionario.getNome() + " não seguiu os protocolos de segurança. Advertência emitida.");
+        }
     }
 }
