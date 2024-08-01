@@ -2,9 +2,11 @@ package Services.Funcionarios.OperacoesBiblioteca;
 
 import Services.Funcionarios.Cargo;
 import Services.Funcionarios.Funcionario;
-import Services.Funcionarios.Promocao;
+import Services.Promocao.Promocao;
+import Services.Regras.Regra;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.LinkedList;
@@ -16,13 +18,11 @@ public class Gerente extends OperacoesBiblioteca {
     private boolean advertencia;
     private int quantidadeAdvertencias;
     private List<Funcionario> listaDeFuncionarios;
-    private Assistente assistente;
 
     public Gerente(){
         advertencia = false;
         quantidadeAdvertencias = 0;
         listaDeFuncionarios = new LinkedList<>();
-        assistente = new Assistente();
     }
 
     public List<Funcionario> getListaDeFuncionarios() {
@@ -94,23 +94,57 @@ public class Gerente extends OperacoesBiblioteca {
         }
     }
 
-    public void adicionarAdvertencia() {
-        if(advertencia)
-            quantidadeAdvertencias++;
-    }
+    public void verificarRegras(Funcionario funcionario) {
+        LocalTime horaChegada = LocalTime.of(8, 0);  // Hora padrão de chegada
+        LocalTime horaAtual = LocalTime.now();
 
-    public boolean verificarAdvertencias() {
-        if(quantidadeAdvertencias == 3) {
-            System.out.println("Número de advertências: " + quantidadeAdvertencias);
-            return advertencia = true;
+        if (Regra.verificarAtraso(horaChegada, horaAtual)) {
+            advertencia = true;
+            quantidadeAdvertencias++;
+            System.out.println("Funcionário " + funcionario.getNome() + " chegou atrasado. Advertência emitida.");
         }
-        return false;
+
+        int numeroReclamacoes = 3;  // Dados de exemplo
+        if (Regra.verificarMalAtendimento(numeroReclamacoes)) {
+            advertencia = true;
+            quantidadeAdvertencias++;
+            System.out.println("Funcionário " + funcionario.getNome() + " recebeu reclamações de clientes. Advertência emitida.");
+        }
+
+        boolean desorganizado = true;  // Dados de exemplo
+        if (Regra.verificarDesorganizacao(desorganizado)) {
+            advertencia = true;
+            quantidadeAdvertencias++;
+            System.out.println("Funcionário " + funcionario.getNome() + " deixou a biblioteca desorganizada. Advertência emitida.");
+        }
+
+        boolean usoIndevido = true;  // Dados de exemplo
+        if (Regra.verificarUsoIndevido(usoIndevido)) {
+            advertencia = true;
+            quantidadeAdvertencias++;
+            System.out.println("Funcionário " + funcionario.getNome() + " usou indevidamente os recursos da biblioteca. Advertência emitida.");
+        }
+
+        boolean registroInadequado = true;  // Dados de exemplo
+        if (Regra.verificarFaltaDeRegistro(registroInadequado)) {
+            advertencia = true;
+            quantidadeAdvertencias++;
+            System.out.println("Funcionário " + funcionario.getNome() + " não registrou adequadamente a entrada e saída de materiais. Advertência emitida.");
+        }
+
+        boolean quebraProtocolo = true;  // Dados de exemplo
+        if (Regra.verificarQuebraProtocoloSeguranca(quebraProtocolo)) {
+            advertencia = true;
+            quantidadeAdvertencias++;
+            System.out.println("Funcionário " + funcionario.getNome() + " não seguiu os protocolos de segurança. Advertência emitida.");
+        }
     }
 
     public void demitirFuncionario(Funcionario funcionario) {
-        if (verificarAdvertencias()) {
-            System.out.println("Funcionário " + funcionario.getNome() + " demitido!");
+        if (quantidadeAdvertencias == 3 || advertencia) {
+            System.out.println("Funcionário: " + funcionario.getNome() + " demitido!");
         }
     }
+
 
 }

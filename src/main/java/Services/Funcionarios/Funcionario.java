@@ -4,10 +4,8 @@ import Livros.Livro;
 import Services.Estoque.Estoque;
 
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
+import java.time.LocalTime;
+import java.util.*;
 
 public class Funcionario {
     private String nome;
@@ -18,12 +16,11 @@ public class Funcionario {
     private Double salario;
     private Cargo cargo;
     private Estoque estoque;
-
     private Map<String, Livro> livros;
 
     public Funcionario(){
     }
-    public Funcionario(String nome, String email, String CPF, String turno, LocalDate dataContratacao, Double salario, Cargo cargo, Estoque estoque, Map<String, Livro> livros) {
+    public Funcionario(String nome, String email, String CPF, String turno, LocalDate dataContratacao, Double salario, Cargo cargo, Estoque estoque) {
         this.nome = nome;
         this.email = email;
         this.CPF = CPF;
@@ -32,7 +29,7 @@ public class Funcionario {
         this.salario = salario;
         this.cargo = cargo;
         this.estoque = estoque;
-        this.livros = livros;
+        this.livros = new HashMap<>();
     }
 
     public String getNome() {

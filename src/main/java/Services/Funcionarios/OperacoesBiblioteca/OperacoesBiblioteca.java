@@ -4,6 +4,9 @@ import Livros.Livro;
 import Services.Exception.ValidacaoException;
 import Services.Funcionarios.Funcionario;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 public class OperacoesBiblioteca extends Funcionario {
     private int quantidadeLivrosVendidos;
     private int quantidadeLivrosEmprestados;

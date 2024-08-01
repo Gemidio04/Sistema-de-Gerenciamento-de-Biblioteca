@@ -1,6 +1,7 @@
-package Services.Funcionarios;
+package Services.Promocao;
 
 
+import Services.Funcionarios.Funcionario;
 import Services.Meta.Meta;
 import Services.Validacao.Validacao;
 
