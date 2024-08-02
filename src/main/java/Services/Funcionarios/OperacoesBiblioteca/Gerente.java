@@ -1,34 +1,16 @@
 package Services.Funcionarios.OperacoesBiblioteca;
 
-import Services.Funcionarios.Cargo;
+import Services.ENUM.Cargo;
 import Services.Funcionarios.Funcionario;
 import Services.Promocao.Promocao;
 import Services.Regras.Regra;
 import Services.Solicitacoes.Solicitacoes;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
 public class Gerente extends OperacoesBiblioteca {
-    private List<Funcionario> listaDeFuncionarios;
-    private Regra regra;
-
-    public Gerente(){
-        listaDeFuncionarios = new LinkedList<>();
-    }
-
-    public List<Funcionario> getListaDeFuncionarios() {
-        return listaDeFuncionarios;
-    }
-
-    public void setListaDeFuncionarios(List<Funcionario> listaDeFuncionarios) {
-        this.listaDeFuncionarios = listaDeFuncionarios;
-    }
 
     public void promover(Promocao promocao, Cargo novoCargo){
         Funcionario funcionario = new Funcionario();
@@ -36,7 +18,7 @@ public class Gerente extends OperacoesBiblioteca {
         funcionario.setCargo(novoCargo.ProximoCargo());
     }
 
-    public void contratarFuncionario(OperacoesBiblioteca novoFuncionario) {
+    public void contratarFuncionario(Funcionario novoFuncionario) {
         Locale.setDefault(Locale.US);
         Solicitacoes solicitacoes = new Solicitacoes();
 
@@ -48,7 +30,7 @@ public class Gerente extends OperacoesBiblioteca {
             LocalDate dataContratacao = solicitacoes.solicitarDataContratacao("Data da Contratação: ", sc);
             Double salario = solicitacoes.solicitarSalario("Salário: ", sc);
 
-            Cargo.converteCargoEnum(novoFuncionario);
+            Cargo.converteCargoEnum((OperacoesBiblioteca) novoFuncionario);
 
             novoFuncionario.setNome(nome);
             novoFuncionario.setEmail(email);
@@ -57,12 +39,13 @@ public class Gerente extends OperacoesBiblioteca {
             novoFuncionario.setDataContratacao(dataContratacao);
             novoFuncionario.setSalario(salario);
 
-            listaDeFuncionarios.add(novoFuncionario);
+            novoFuncionario.getListaDeFuncionarios().add(novoFuncionario);
             System.out.println("\nFuncionário contratado: " + novoFuncionario.getNome() + ", Cargo: " + novoFuncionario.getCargo());
         }
     }
 
     public void demitirFuncionario(Funcionario funcionario) {
+        Regra regra = new Regra();
         if (regra.getQuantidadeAdvertencias() == 3 || regra.getAdvertencia()) {
             System.out.println("Assistente: " + funcionario.getNome() + " demitido!");
         }

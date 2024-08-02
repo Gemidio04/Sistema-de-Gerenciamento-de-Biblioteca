@@ -17,3 +17,16 @@ public class Principal {
         gestor.exibirEventos();
     }
 }
+
+import java.time.LocalDate;
+import java.time.Month;
+
+public class Principal {
+    public static void main(String[] args) {
+        LocalDate hoje = LocalDate.now();
+        Month mesAtual = hoje.getMonth();
+        int mesAtualInt = mesAtual.getValue(); // Se você precisar do valor numérico do mês
+        System.out.println("Mês atual: " + mesAtual);
+        System.out.println("Mês atual (número): " + mesAtualInt);
+    }
+}

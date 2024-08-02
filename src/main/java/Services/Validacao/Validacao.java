@@ -1,7 +1,7 @@
 package Services.Validacao;
 
 import Services.Exception.ValidacaoException;
-import Services.Funcionarios.Cargo;
+import Services.ENUM.Cargo;
 import Services.Funcionarios.Funcionario;
 
 public class Validacao {

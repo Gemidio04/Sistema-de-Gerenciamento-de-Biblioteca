@@ -1,4 +1,4 @@
-package Services.Funcionarios;
+package Services.ENUM;
 
 import Services.Funcionarios.OperacoesBiblioteca.Gerente;
 import Services.Funcionarios.OperacoesBiblioteca.OperacoesBiblioteca;
@@ -7,28 +7,22 @@ import java.util.Scanner;
 
 public enum Cargo {
 
-    PRESERVADOR {
+    GESTOR_PROGRAMAS_EVENTOS {
         @Override
         public Cargo ProximoCargo() {
-            return PRESERVADOR;
+            return GESTOR_PROGRAMAS_EVENTOS;
         }
     },
-    DESENVOLVERDOR_COMUNITARIO {
+    SEGURANCA_PROFISSIONAL {
         @Override
         public Cargo ProximoCargo() {
-            return DESENVOLVERDOR_COMUNITARIO;
+            return SEGURANCA_PROFISSIONAL;
         }
     },
-    SEGURANCA {
+    ANALISTA_DE_SISTEMAS {
         @Override
         public Cargo ProximoCargo() {
-            return SEGURANCA;
-        }
-    },
-    ANALISTA_DO_SISTEMA {
-        @Override
-        public Cargo ProximoCargo() {
-            return ANALISTA_DO_SISTEMA;
+            return ANALISTA_DE_SISTEMAS;
         }
     },
     RH {
@@ -70,7 +64,7 @@ public enum Cargo {
             novoFuncionario.setCargo(cargo);
             gerente.getListaDeFuncionarios().add(novoFuncionario);
         } catch (IllegalArgumentException e) {
-            System.out.println("Cargo inválido. Por favor, insira um cargo válido.");
+            System.out.println("Cargo inválido. Por favor, insira um cargo válido: ");
         }
     }
 }

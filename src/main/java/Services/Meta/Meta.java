@@ -1,6 +1,6 @@
 package Services.Meta;
 
-import Services.Funcionarios.Cargo;
+import Services.ENUM.Cargo;
 import Services.Funcionarios.Funcionario;
 import Services.Funcionarios.OperacoesBiblioteca.OperacoesBiblioteca;
 

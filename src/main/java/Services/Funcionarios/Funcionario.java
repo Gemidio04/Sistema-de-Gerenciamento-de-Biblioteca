@@ -1,7 +1,9 @@
 package Services.Funcionarios;
 
+import Services.ENUM.Cargo;
 import Services.Estoque.Estoque;
 import java.time.LocalDate;
+import java.util.List;
 
 public class Funcionario {
     private String nome;
@@ -11,6 +13,7 @@ public class Funcionario {
     private LocalDate dataContratacao;
     private Double salario;
     private Cargo cargo;
+    private List<Funcionario> listaDeFuncionarios;
 
     public Funcionario(){
     }
@@ -78,6 +81,14 @@ public class Funcionario {
 
     public void setCargo(Cargo cargo) {
         this.cargo = cargo;
+    }
+
+    public List<Funcionario> getListaDeFuncionarios() {
+        return listaDeFuncionarios;
+    }
+
+    public void setListaDeFuncionarios(List<Funcionario> listaDeFuncionarios) {
+        this.listaDeFuncionarios = listaDeFuncionarios;
     }
 
 }
