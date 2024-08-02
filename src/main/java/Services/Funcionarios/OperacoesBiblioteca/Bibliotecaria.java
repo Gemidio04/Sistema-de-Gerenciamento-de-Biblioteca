@@ -64,4 +64,8 @@ public class Bibliotecaria extends OperacoesBiblioteca {
             System.out.println("Assistente: " + funcionario.getNome() + " demitido!");
         }
     }
+
+    public void verificandoBiblioteca(){
+        super.verificandoBiblioteca();
+    }
 }

@@ -1,15 +1,19 @@
 package Application;
 
-import Services.Funcionarios.AnalistaDeSistemas;
+import Services.Funcionarios.GestorProgramasEventos;
 
 public class Principal {
 
     public static void main(String[] args) {
 
-//        Connection connection = BancoDeDados.getConnection();
-//        BancoDeDados.closeConnection();
+        GestorProgramasEventos gestor = new GestorProgramasEventos();
 
-        AnalistaDeSistemas analista = new AnalistaDeSistemas();
-        analista.suporteTecnico(true);
+        int contador = 0;
+        while (contador < 3){
+            gestor.realizaEvento();
+            contador++;
+        }
+
+        gestor.exibirEventos();
     }
 }

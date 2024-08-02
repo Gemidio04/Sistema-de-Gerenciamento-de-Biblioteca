@@ -50,4 +50,8 @@ public class Assistente extends OperacoesBiblioteca{
     public Livro buscarLivroTitulo(String titulo) {
         return super.buscarLivroTitulo(titulo);
     }
+
+    public void verificandoBiblioteca(){
+        super.verificandoBiblioteca();
+    }
 }

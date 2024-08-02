@@ -3,6 +3,7 @@ package Services.Funcionarios.OperacoesBiblioteca;
 import Livros.Livro;
 import Services.Estoque.Estoque;
 import Services.Exception.ValidacaoException;
+import Services.Funcionarios.AnalistaDeSistemas;
 import Services.Funcionarios.Funcionario;
 
 import java.util.HashMap;
@@ -14,6 +15,7 @@ public class OperacoesBiblioteca extends Funcionario {
     private Map<String, Livro> livros;
     private int quantidadeLivrosVendidos;
     private int quantidadeLivrosEmprestados;
+    private AnalistaDeSistemas analistaDeSistemas;
 
     public OperacoesBiblioteca(){
         super();
@@ -131,5 +133,9 @@ public class OperacoesBiblioteca extends Funcionario {
         } else {
             throw new ValidacaoException("O livro não existe");
         }
+    }
+
+    public void verificandoBiblioteca(){
+        analistaDeSistemas.suporteTecnico(true);
     }
 }
