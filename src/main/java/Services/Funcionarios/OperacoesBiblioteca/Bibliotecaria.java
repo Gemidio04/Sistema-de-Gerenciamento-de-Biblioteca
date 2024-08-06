@@ -1,5 +1,6 @@
 package Services.Funcionarios.OperacoesBiblioteca;
 
+import Clientes.Cliente;
 import Livros.Livro;
 import Services.Exception.ValidacaoException;
 import Services.Funcionarios.Funcionario;
@@ -13,27 +14,23 @@ public class Bibliotecaria extends OperacoesBiblioteca {
         super.adicionarLivro(isbn, livro);
     }
 
-    public void removerLivro(String isbn) {
-        super.removerLivro(isbn);
+    public void removerLivro(Livro livro) {
+        super.removerLivro(livro);
     }
 
-    public void atualizarInformacoes(String isbn, String novoTitulo, String novoAutor, int novoAnoPublicacao) {
-        super.atualizarInformacoes(isbn, novoTitulo, novoAutor, novoAnoPublicacao);
+    public void atualizarInformacoesLivro(String isbn, String novoTitulo, String novoAutor, int novoAnoPublicacao) {
+        super.atualizarInformacoesLivro(isbn, novoTitulo, novoAutor, novoAnoPublicacao);
     }
-    public void venderLivro(String isbn) {
-        super.venderLivro(isbn);
+    public void venderLivro(Livro livro) {
+        super.venderLivro(livro);
     }
 
-    public void emprestarLivro(String isbn) {
-        super.emprestarLivro(isbn);
+    public void emprestarLivro(Livro livro, Cliente cliente) {
+        super.emprestarLivro(livro, cliente);
     }
 
     public void devolverLivro(String isbn, Livro livro) {
         super.devolverLivro(isbn, livro);
-    }
-
-    public boolean checarDisponibilidade() {
-        return super.checarDisponibilidade();
     }
 
     public Livro buscarLivroIsbn(String isbn) {
@@ -46,6 +43,14 @@ public class Bibliotecaria extends OperacoesBiblioteca {
 
     public Livro buscarLivroTitulo(String titulo) {
         return super.buscarLivroTitulo(titulo);
+    }
+
+    public boolean checarDisponibilidadeEstoque() {
+        return getEstoque().getQuantidade() > 0;
+    }
+
+    public boolean checarDisponibilidadeparaEmprestimo() {
+        return getLivroEmprestado();
     }
 
     public void demitirAssistente(Funcionario funcionario) {

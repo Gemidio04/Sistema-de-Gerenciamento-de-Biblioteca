@@ -7,16 +7,19 @@ public class Livro {
     private String genero;
     private String autor;
     private Integer AnoPublicacao;
+    private String sinopse;
 
     public Livro(){
     }
-    public Livro(String isbn, String titulo, String editora, String genero, String autor, Integer AnoPublicacao) {
+
+    public Livro(String isbn, String titulo, String editora, String genero, String autor, Integer AnoPublicacao, String sinopse) {
         this.isbn = isbn;
         this.titulo = titulo;
         this.editora = editora;
         this.genero = genero;
         this.autor = autor;
         this.AnoPublicacao = AnoPublicacao;
+        this.sinopse = sinopse;
     }
 
     public String getIsbn() {
@@ -67,5 +70,11 @@ public class Livro {
         AnoPublicacao = anoPublicacao;
     }
 
+    public String getSinopse() {
+        return sinopse;
+    }
 
+    public void setSinopse(String sinopse) {
+        this.sinopse = sinopse;
+    }
 }

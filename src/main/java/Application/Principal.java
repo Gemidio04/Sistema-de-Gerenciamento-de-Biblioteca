@@ -1,13 +1,22 @@
 package Application;
 
-import Services.Funcionarios.AnalistaDeSistemas;
+import Services.Funcionarios.OperacoesBiblioteca.OperacoesBiblioteca;
 
 public class Principal {
 
     public static void main(String[] args) {
 
-        AnalistaDeSistemas analistaTI = new AnalistaDeSistemas();
-        analistaTI.suporteTecnico(true);
+        OperacoesBiblioteca op = new OperacoesBiblioteca();
+
+        int contador = 0;
+        while (contador < 2){
+            op.registrarNovoCliente();
+            System.out.println();
+            contador++;
+        }
+
+        op.listaTodosClientes();
+        op.listaClienteDadoUmNome("Gustavo");
     }
 }
 

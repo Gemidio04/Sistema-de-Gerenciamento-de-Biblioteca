@@ -3,25 +3,29 @@ package Clientes;
 import java.time.LocalDate;
 
 public class Cliente {
-    private String name;
+    private String nome;
     private String email;
     private String CEP;
     private String endereco;
     private LocalDate dataCadastro;
 
-    public Cliente(String name, String email, String CEP, String endereco) {
-        this.name = name;
+    public Cliente(){
+    }
+
+    public Cliente(String nome, String email, String CEP, String endereco, LocalDate dataCadastro) {
+        this.nome = nome;
         this.email = email;
         this.CEP = CEP;
         this.endereco = endereco;
+        this.dataCadastro = dataCadastro;
     }
 
-    public String getName() {
-        return name;
+    public String getNome() {
+        return nome;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getEmail() {
@@ -55,4 +59,14 @@ public class Cliente {
     public void setDataCadastro(LocalDate dataCadastro) {
         this.dataCadastro = dataCadastro;
     }
+
+    @Override
+    public String toString() {
+        return "Nome: " + nome + ",\n" +
+                "Email: " + email + ",\n" +
+                "CEP: " + CEP + ",\n" +
+                "Endereco: " + endereco + ",\n" +
+                "DataCadastro: " + dataCadastro + "\n";
+    }
+
 }

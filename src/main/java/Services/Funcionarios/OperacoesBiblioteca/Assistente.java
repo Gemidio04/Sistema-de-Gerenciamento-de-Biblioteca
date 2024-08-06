@@ -1,5 +1,6 @@
 package Services.Funcionarios.OperacoesBiblioteca;
 
+import Clientes.Cliente;
 import Livros.Livro;
 import Services.Exception.ValidacaoException;
 import Services.Funcionarios.SegurancaProfissional;
@@ -9,35 +10,23 @@ public class Assistente extends OperacoesBiblioteca{
         super.adicionarLivro(isbn, livro);
     }
 
-    public void removerLivro(String isbn) {
-        super.removerLivro(isbn);
+    public void removerLivro(Livro livro) {
+        super.removerLivro(livro);
     }
 
-    public void atualizarInformacoes(String isbn, String novoTitulo, String novoAutor, int novoAnoPublicacao) {
-        super.atualizarInformacoes(isbn, novoTitulo, novoAutor, novoAnoPublicacao);
+    public void atualizarInformacoesLivro(String isbn, String novoTitulo, String novoAutor, int novoAnoPublicacao) {
+        super.atualizarInformacoesLivro(isbn, novoTitulo, novoAutor, novoAnoPublicacao);
     }
-    public void venderLivro(String isbn) {
-        if (checarDisponibilidade()) {
-            removerLivro(isbn);
-            setQuantidadeLivrosVendidos(getQuantidadeLivrosVendidos() + 1);
-        } else {
-            throw new ValidacaoException
-                    ("Livro com ISBN " + isbn + " não está disponível para venda!");
-        }
+    public void venderLivro(Livro livro) {
+        super.venderLivro(livro);
     }
 
-    public void emprestarLivro(String isbn) {
-        if (checarDisponibilidade()) {
-            removerLivro(isbn);
-            setQuantidadeLivrosEmprestados(getQuantidadeLivrosVendidos() + 1);
-        } else {
-            throw new ValidacaoException
-                    ("Livro com ISBN " + isbn + " não está disponível para empréstimo!");
-        }
+    public void emprestarLivro(Livro livro, Cliente cliente) {
+        super.emprestarLivro(livro, cliente);
     }
 
     public void devolverLivro(String isbn, Livro livro) {
-        adicionarLivro(isbn, livro);
+        super.devolverLivro(isbn, livro);
     }
 
     public Livro buscarLivroIsbn(String isbn) {
@@ -50,6 +39,14 @@ public class Assistente extends OperacoesBiblioteca{
 
     public Livro buscarLivroTitulo(String titulo) {
         return super.buscarLivroTitulo(titulo);
+    }
+
+    public boolean checarDisponibilidadeEstoque() {
+        return getEstoque().getQuantidade() > 0;
+    }
+
+    public boolean checarDisponibilidadeparaEmprestimo() {
+        return getLivroEmprestado();
     }
 
     @Override
