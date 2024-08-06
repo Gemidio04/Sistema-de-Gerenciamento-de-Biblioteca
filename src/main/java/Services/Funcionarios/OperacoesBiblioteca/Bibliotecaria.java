@@ -3,6 +3,7 @@ package Services.Funcionarios.OperacoesBiblioteca;
 import Livros.Livro;
 import Services.Exception.ValidacaoException;
 import Services.Funcionarios.Funcionario;
+import Services.Funcionarios.SegurancaProfissional;
 import Services.Regras.Regra;
 
 public class Bibliotecaria extends OperacoesBiblioteca {
@@ -20,31 +21,19 @@ public class Bibliotecaria extends OperacoesBiblioteca {
         super.atualizarInformacoes(isbn, novoTitulo, novoAutor, novoAnoPublicacao);
     }
     public void venderLivro(String isbn) {
-        if (checarDisponibilidade()) {
-            removerLivro(isbn);
-            setQuantidadeLivrosVendidos(getQuantidadeLivrosVendidos() + 1);
-        } else {
-            throw new ValidacaoException
-                    ("Livro com ISBN " + isbn + " não está disponível para venda!");
-        }
+        super.venderLivro(isbn);
     }
 
     public void emprestarLivro(String isbn) {
-        if (checarDisponibilidade()) {
-            removerLivro(isbn);
-            setQuantidadeLivrosEmprestados(getQuantidadeLivrosEmprestados() + 1);
-        } else {
-            throw new ValidacaoException
-                    ("Livro com ISBN " + isbn + " não está disponível para empréstimo!");
-        }
+        super.emprestarLivro(isbn);
     }
 
     public void devolverLivro(String isbn, Livro livro) {
-        adicionarLivro(isbn, livro);
+        super.devolverLivro(isbn, livro);
     }
 
     public boolean checarDisponibilidade() {
-        return getEstoque().getQuantidade() > 0;
+        return super.checarDisponibilidade();
     }
 
     public Livro buscarLivroIsbn(String isbn) {
@@ -65,7 +54,13 @@ public class Bibliotecaria extends OperacoesBiblioteca {
         }
     }
 
-    public void verificandoBiblioteca(){
-        super.verificandoBiblioteca();
+    @Override
+    public void verificandoTodoSistemaBiblioteca(){
+        super.verificandoTodoSistemaBiblioteca();
+    }
+
+    @Override
+    public void receberNotificacao(SegurancaProfissional incidente) {
+        super.receberNotificacao(incidente);
     }
 }

@@ -6,8 +6,8 @@ import Services.Funcionarios.Funcionario;
 
 public class Validacao {
 
-    public void validar(Funcionario funcionarios){
-        Cargo cargoAtual = funcionarios.getCargo();
+    public void validar(Funcionario funcionario){
+        Cargo cargoAtual = funcionario.getCargo();
         if(Cargo.GERENTE==cargoAtual){
             throw new ValidacaoException("Gerentes não podem ser promovidos!");
         }

@@ -2,6 +2,7 @@ package Services.Funcionarios.OperacoesBiblioteca;
 
 import Livros.Livro;
 import Services.Exception.ValidacaoException;
+import Services.Funcionarios.SegurancaProfissional;
 
 public class Assistente extends OperacoesBiblioteca{
     public void adicionarLivro(String isbn, Livro livro) {
@@ -51,7 +52,13 @@ public class Assistente extends OperacoesBiblioteca{
         return super.buscarLivroTitulo(titulo);
     }
 
-    public void verificandoBiblioteca(){
-        super.verificandoBiblioteca();
+    @Override
+    public void verificandoTodoSistemaBiblioteca(){
+        super.verificandoTodoSistemaBiblioteca();
+    }
+
+    @Override
+    public void receberNotificacao(SegurancaProfissional incidente) {
+        super.receberNotificacao(incidente);
     }
 }

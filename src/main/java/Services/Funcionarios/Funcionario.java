@@ -3,6 +3,7 @@ package Services.Funcionarios;
 import Services.ENUM.Cargo;
 import Services.Estoque.Estoque;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Funcionario {
@@ -89,6 +90,18 @@ public class Funcionario {
 
     public void setListaDeFuncionarios(List<Funcionario> listaDeFuncionarios) {
         this.listaDeFuncionarios = listaDeFuncionarios;
+    }
+
+    public void receberNotificacao(SegurancaProfissional incidente) {
+        incidente.enviarNotificacao(incidente);
+    }
+
+    public static void tabelaDeCargos(){
+        Cargo.tabelaDeCargos();
+    }
+
+    public void fornecerInformacao(){
+        // SERÁ CRIADO FUTURAMENTE!
     }
 
 }

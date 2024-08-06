@@ -3,6 +3,8 @@ package Services.ENUM;
 import Services.Funcionarios.OperacoesBiblioteca.Gerente;
 import Services.Funcionarios.OperacoesBiblioteca.OperacoesBiblioteca;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public enum Cargo {
@@ -65,6 +67,13 @@ public enum Cargo {
             gerente.getListaDeFuncionarios().add(novoFuncionario);
         } catch (IllegalArgumentException e) {
             System.out.println("Cargo inválido. Por favor, insira um cargo válido: ");
+        }
+    }
+
+    public static void tabelaDeCargos() {
+        System.out.println("\nLISTA DE CARGOS DA BIBLIOTECA:\n");
+        for (Cargo cargo : Cargo.values()) {
+            System.out.println(cargo+".");
         }
     }
 }

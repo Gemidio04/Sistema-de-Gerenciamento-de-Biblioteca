@@ -1,4 +1,4 @@
-package Services.FuncionarioIndisponivel;
+package Services.Ausencia;
 
 import Services.Funcionarios.Funcionario;
 

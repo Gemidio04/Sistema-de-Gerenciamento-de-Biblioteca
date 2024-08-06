@@ -1,5 +1,8 @@
 package Services.Funcionarios;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.InputStreamReader;
 import java.nio.file.*;
 import java.io.IOException;
 
@@ -7,7 +10,7 @@ public class AnalistaDeSistemas extends Funcionario {
 
     private boolean precisaDeSuporte;
 
-    public AnalistaDeSistemas(){
+    public AnalistaDeSistemas() {
         precisaDeSuporte = false;
     }
 
@@ -24,7 +27,7 @@ public class AnalistaDeSistemas extends Funcionario {
         verificarIntegridadeDoSistema();
         reiniciarServicosEssenciais();
         realizarBackup();
-//        atualizarSoftware();
+        atualizarSoftware();
 
         System.out.println("Manutenção concluída com sucesso!");
     }
@@ -44,7 +47,7 @@ public class AnalistaDeSistemas extends Funcionario {
         }
 
         if (sistemaIntegro) {
-            System.out.println("Integridade do sistema verificada.");
+            System.out.println("Integridade do sistema verificada!");
         } else {
             System.out.println("Problemas encontrados na integridade do sistema.");
             verificarIntegridadeDoSistema();
@@ -57,7 +60,7 @@ public class AnalistaDeSistemas extends Funcionario {
             Process process = Runtime.getRuntime().exec("wuauclt.exe /detectnow");
             process.waitFor();
             if (process.exitValue() == 0) {
-                System.out.println("Serviços essenciais reiniciados.");
+                System.out.println("Serviços essenciais reiniciados!");
             } else {
                 System.out.println("Falha ao reiniciar serviços essenciais.");
             }
@@ -72,64 +75,42 @@ public class AnalistaDeSistemas extends Funcionario {
             Path source = Paths.get("D:\\JAVA\\PROJETOS GITHUB");
             Path backup = Paths.get("D:\\JAVA\\PROJETOS PESSOAIS\\2º PROJETO\\Sistema-De-Gerenciamento-De-Biblioteca\\Backup");
             Files.copy(source, backup, StandardCopyOption.REPLACE_EXISTING);
-            System.out.println("Backup dos dados realizado.");
+            System.out.println("Backup dos dados realizado!");
         } catch (IOException e) {
             System.out.println("Erro ao realizar backup dos dados: " + e.getMessage());
         }
     }
 
-//    private void atualizarSoftware() {
-//        System.out.println("Atualizando software...");
-//        try {
-//            String projectPath = "D:\\JAVA\\PROJETOS PESSOAIS\\2º PROJETO\\Sistema-De-Gerenciamento-De-Biblioteca"; // Caminho do seu projeto
-//            String mavenPath = "mvn"; // Assume que o Maven está no PATH
-//
-//            // Monta o comando para mudar para o diretório do projeto e executar o Maven
-//            String[] command = {"cmd.exe", "/c", "cd " + projectPath + " && " + mavenPath + " clean install"};
-//
-//            Process process = Runtime.getRuntime().exec(command);
-//
-//            // Captura a saída padrão do processo
-//            BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
-//            // Captura a saída de erro do processo
-//            BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-//
-//            String s;
-//            System.out.println("Saída do processo:\n");
-//            while ((s = stdInput.readLine()) != null) {
-//                System.out.println(s);
-//            }
-//
-//            System.out.println("Erros do processo (se houver):\n");
-//            while ((s = stdError.readLine()) != null) {
-//                System.out.println(s);
-//            }
-//
-//            int exitCode = process.waitFor();
-//            if (exitCode == 0) {
-//                System.out.println("Software atualizado com sucesso.");
-//            } else {
-//                System.out.println("Falha ao atualizar software. Código de saída: " + exitCode);
-//            }
-//        } catch (IOException | InterruptedException e) {
-//            System.out.println("Erro ao atualizar software: " + e.getMessage());
-//        }
-//    }
+    public void atualizarSoftware() {
+        System.out.println("Realizando a Atualização do Software...");
+        try {
+            File pastaProjeto = new File("D:\\JAVA\\PROJETOS PESSOAIS\\2º PROJETO\\Sistema-De-Gerenciamento-De-Biblioteca");
+            File pastaAtualizacao = new File("D:\\JAVA\\PROJETOS PESSOAIS\\2º PROJETO\\Projeto Atualizado");
 
-//        private void atualizarSoftware() {
-//            System.out.println("Atualizando software...");
-//            try {
-//                String mavenPath = "D:\\JAVA\\Maven\\apache-maven-4.0.0-beta-3\\bin\\mvn.cmd"; // Caminho completo para o executável do Maven
-//                Process process = Runtime.getRuntime().exec("cmd /c " + mavenPath + " clean install");
-//                process.waitFor();
-//                if (process.exitValue() == 0) {
-//                    System.out.println("Software atualizado.");
-//              } else {
-//                System.out.println("Falha ao atualizar software.");
-//              }
-//            } catch (IOException | InterruptedException e) {
-//                System.out.println("Erro ao atualizar software: " + e.getMessage());
-//            }
-//        }
+            if (pastaProjeto.exists() && pastaAtualizacao.exists()) {
+                Files.walk(pastaAtualizacao.toPath())
+                        .forEach(source -> {
+                            try {
+                                File destination = new File(pastaProjeto.toPath().resolve(pastaAtualizacao.toPath().relativize(source)).toString());
+                                if (source.toFile().isDirectory()) {
+                                    destination.mkdirs();
+                                } else {
+                                    Files.copy(source, destination.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        });
+
+                System.out.println("Software atualizado com sucesso!");
+            } else {
+                System.out.println("Pasta do projeto ou pasta de atualização não encontrada.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }
+

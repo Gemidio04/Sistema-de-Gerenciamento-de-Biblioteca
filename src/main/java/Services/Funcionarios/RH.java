@@ -1,10 +1,8 @@
 package Services.Funcionarios;
 
 import Services.ENUM.Cargo;
-import Services.ENUM.MesesAno;
-import Services.FuncionarioIndisponivel.Ausencia;
-import Services.FuncionarioIndisponivel.Ferias;
-import Services.FuncionarioIndisponivel.Folga;
+import Services.Ausencia.Ferias;
+import Services.Ausencia.Folga;
 import Services.Funcionarios.OperacoesBiblioteca.OperacoesBiblioteca;
 import Services.Promocao.Promocao;
 import Services.Regras.Regra;
@@ -43,10 +41,8 @@ public class RH extends OperacoesBiblioteca {
         }
     }
 
-    public void promover(Promocao promocao, Cargo novoCargo) {
-        Funcionario funcionario = new Funcionario();
-        promocao.promover(funcionario);
-        funcionario.setCargo(novoCargo.ProximoCargo());
+    public void promover(Promocao promocao, Funcionario funcionario, Cargo novoCargo) {
+        promocao.promover(funcionario, novoCargo);
     }
 
     public void demitirFuncionario(Funcionario funcionario) {
@@ -77,5 +73,10 @@ public class RH extends OperacoesBiblioteca {
     public void verificaTirarFerias(Funcionario funcionario){
         Ferias ferias = new Ferias();
         ferias.tirarFerias(funcionario);
+    }
+
+    @Override
+    public void receberNotificacao(SegurancaProfissional incidente) {
+        super.receberNotificacao(incidente);
     }
 }

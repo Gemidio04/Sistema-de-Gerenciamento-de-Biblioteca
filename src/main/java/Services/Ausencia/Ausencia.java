@@ -1,4 +1,4 @@
-package Services.FuncionarioIndisponivel;
+package Services.Ausencia;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

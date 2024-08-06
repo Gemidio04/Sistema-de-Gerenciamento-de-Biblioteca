@@ -93,7 +93,6 @@ public class OperacoesBiblioteca extends Funcionario {
     public void emprestarLivro(String isbn) {
         if (checarDisponibilidade()) {
             removerLivro(isbn);
-            quantidadeLivrosEmprestados++;
         } else {
             throw new ValidacaoException
                     ("Livro com ISBN " + isbn + " não está disponível para empréstimo!");
@@ -102,6 +101,7 @@ public class OperacoesBiblioteca extends Funcionario {
 
     public void devolverLivro(String isbn, Livro livro) {
         adicionarLivro(isbn, livro);
+        quantidadeLivrosEmprestados++;
     }
 
     boolean checarDisponibilidade() {
@@ -135,7 +135,7 @@ public class OperacoesBiblioteca extends Funcionario {
         }
     }
 
-    public void verificandoBiblioteca(){
+    public void verificandoTodoSistemaBiblioteca(){
         analistaDeSistemas.suporteTecnico(true);
     }
 }

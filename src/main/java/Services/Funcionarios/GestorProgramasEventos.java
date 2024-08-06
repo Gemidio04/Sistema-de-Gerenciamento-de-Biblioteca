@@ -1,6 +1,7 @@
 package Services.Funcionarios;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
@@ -9,12 +10,13 @@ import java.util.Scanner;
 public class GestorProgramasEventos extends Funcionario {
 
     private String nomeEvento;
-    private LocalDate dataEvento;
+    private LocalDateTime dataEvento;
     private String temaEvento;
 
-    List<GestorProgramasEventos> listaEventos = new LinkedList<>();
+    List<GestorProgramasEventos> listaEventos;
 
     public GestorProgramasEventos(){
+        listaEventos = new LinkedList<>();
         nomeEvento = null;
         dataEvento = null;
         temaEvento = null;
@@ -28,11 +30,11 @@ public class GestorProgramasEventos extends Funcionario {
         this.nomeEvento = nomeEvento;
     }
 
-    public LocalDate getDataEvento() {
+    public LocalDateTime getDataEvento() {
         return dataEvento;
     }
 
-    public void setDataEvento(LocalDate dataEvento) {
+    public void setDataEvento(LocalDateTime dataEvento) {
         this.dataEvento = dataEvento;
     }
 
@@ -54,13 +56,13 @@ public class GestorProgramasEventos extends Funcionario {
 
     public void realizaEvento() {
         Scanner sc = new Scanner(System.in);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         System.out.print("Nome do Evento: ");
         nomeEvento = sc.nextLine();
 
-        System.out.print("Data do Evento: ");
-        dataEvento = LocalDate.parse(sc.nextLine(), formatter);
+        System.out.print("Data e Hora do Evento: ");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        dataEvento = LocalDateTime.parse(sc.nextLine(), formatter);
 
         System.out.print("Tema do Evento: ");
         temaEvento = sc.nextLine();
@@ -76,11 +78,22 @@ public class GestorProgramasEventos extends Funcionario {
     public void exibirEventos(){
         int i = 1;
         for(GestorProgramasEventos evento: listaEventos){
-            System.out.println(i+"º EVENTO! ");
+            System.out.println("\n"+i+"º EVENTO! ");
             System.out.println("Evento: " + evento.getNomeEvento());
             System.out.println("Data: " + evento.getDataEvento());
             System.out.println("Tema: " + evento.getTemaEvento()+"\n");
             i++;
         }
+    }
+
+    public void enviarNotificacao(SegurancaProfissional incidente) {
+        System.out.println("OCORREU UM INCIDENTE:");
+        System.out.println("DETALHES:");
+        System.out.println(incidente);
+    }
+
+    @Override
+    public void receberNotificacao(SegurancaProfissional incidente) {
+        super.receberNotificacao(incidente);
     }
 }
