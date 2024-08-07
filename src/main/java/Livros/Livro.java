@@ -26,55 +26,20 @@ public class Livro {
         return isbn;
     }
 
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
     public void setTitulo(String titulo) {
         this.titulo = titulo;
-    }
-
-    public String getEditora() {
-        return editora;
-    }
-
-    public void setEditora(String editora) {
-        this.editora = editora;
-    }
-
-    public String getGenero() {
-        return genero;
-    }
-
-    public void setGenero(String genero) {
-        this.genero = genero;
-    }
-
-    public String getAutor() {
-        return autor;
     }
 
     public void setAutor(String autor) {
         this.autor = autor;
     }
 
-    public Integer getAnoPublicacao() {
-        return AnoPublicacao;
-    }
-
-    public void setAnoPublicacao(Integer anoPublicacao) {
-        AnoPublicacao = anoPublicacao;
-    }
+      public void setAnoPublicacao(Integer anoPublicacao) {
+          AnoPublicacao = anoPublicacao;
+      }
 
     public String getSinopse() {
         return sinopse;
     }
 
-    public void setSinopse(String sinopse) {
-        this.sinopse = sinopse;
-    }
 }

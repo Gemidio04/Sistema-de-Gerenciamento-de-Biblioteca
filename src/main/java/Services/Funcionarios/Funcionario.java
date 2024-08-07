@@ -18,7 +18,8 @@ public class Funcionario {
 
     public Funcionario(){
     }
-    public Funcionario(String nome, String email, String CPF, String turno, LocalDate dataContratacao, Double salario, Cargo cargo, Estoque estoque) {
+
+    public Funcionario(String nome, String email, String CPF, String turno, LocalDate dataContratacao, Double salario, Cargo cargo) {
         this.nome = nome;
         this.email = email;
         this.CPF = CPF;
@@ -36,24 +37,12 @@ public class Funcionario {
         this.nome = nome;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
     public void setEmail(String email) {
         this.email = email;
     }
 
-    public String getCPF() {
-        return CPF;
-    }
-
     public void setCPF(String CPF) {
         this.CPF = CPF;
-    }
-
-    public String getTurno() {
-        return turno;
     }
 
     public void setTurno(String turno) {
@@ -66,10 +55,6 @@ public class Funcionario {
 
     public void setDataContratacao(LocalDate dataContratacao) {
         this.dataContratacao = dataContratacao;
-    }
-
-    public Double getSalario() {
-        return salario;
     }
 
     public void setSalario(Double salario) {
@@ -88,9 +73,6 @@ public class Funcionario {
         return listaDeFuncionarios;
     }
 
-    public void setListaDeFuncionarios(List<Funcionario> listaDeFuncionarios) {
-        this.listaDeFuncionarios = listaDeFuncionarios;
-    }
 
     public void receberNotificacao(SegurancaProfissional incidente) {
         incidente.enviarNotificacao(incidente);

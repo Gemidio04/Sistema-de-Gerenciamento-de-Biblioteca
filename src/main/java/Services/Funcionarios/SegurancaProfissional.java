@@ -31,22 +31,6 @@ public class SegurancaProfissional extends Funcionario {
         logIncidentes = new ArrayList<>();
     }
 
-    public int getTipo() {
-        return tipo;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public LocalDateTime getDataHora() {
-        return dataHora;
-    }
-
-    public String getResponsavel() {
-        return responsavel;
-    }
-
     protected void registrarIncidente() {
         Scanner sc = new Scanner(System.in);
 

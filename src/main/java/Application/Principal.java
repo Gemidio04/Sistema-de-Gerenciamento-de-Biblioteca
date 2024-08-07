@@ -8,12 +8,8 @@ public class Principal {
 
         OperacoesBiblioteca op = new OperacoesBiblioteca();
 
-        int contador = 0;
-        while (contador < 2){
-            op.registrarNovoCliente();
-            System.out.println();
-            contador++;
-        }
+        op.registrarNovoCliente();
+        System.out.println();
 
         op.listaTodosClientes();
         op.listaClienteDadoUmNome("Gustavo");

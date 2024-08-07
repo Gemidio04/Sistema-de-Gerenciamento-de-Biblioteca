@@ -1,6 +1,5 @@
 package Services.Funcionarios;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
@@ -44,14 +43,6 @@ public class GestorProgramasEventos extends Funcionario {
 
     public void setTemaEvento(String temaEvento) {
         this.temaEvento = temaEvento;
-    }
-
-    public List<GestorProgramasEventos> getListaEventos() {
-        return listaEventos;
-    }
-
-    public void setListaEventos(List<GestorProgramasEventos> listaEventos) {
-        this.listaEventos = listaEventos;
     }
 
     public void realizaEvento() {

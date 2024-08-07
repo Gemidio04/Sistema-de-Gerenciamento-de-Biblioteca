@@ -13,7 +13,7 @@ public class Ausencia {
         this.diasTrabalhadosConsecutivos = 0;
     }
 
-    public java.util.List<LocalDate> getHistoricoFerias() {
+    public List<LocalDate> getHistoricoFerias() {
         return historicoFerias;
     }
 

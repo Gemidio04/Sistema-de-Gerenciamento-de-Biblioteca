@@ -24,8 +24,8 @@ public class OperacoesBiblioteca extends Funcionario {
     private Estoque estoque;
 
     private Map<String, Livro> livros;
-    private List<Cliente> listaClientes;
-    private List<EmprestimoLivro> historicoEmprestimos;
+    private final List<Cliente> listaClientes;
+    private final List<EmprestimoLivro> historicoEmprestimos;
 
     public OperacoesBiblioteca() {
         super();
@@ -41,40 +41,16 @@ public class OperacoesBiblioteca extends Funcionario {
         return estoque;
     }
 
-    public void setEstoque(Estoque estoque) {
-        this.estoque = estoque;
-    }
-
-    public Map<String, Livro> getLivros() {
-        return livros;
-    }
-
-    public void setLivros(Map<String, Livro> livros) {
-        this.livros = livros;
+    public boolean getLivroEmprestado() {
+        return livroEmprestado;
     }
 
     public int getQuantidadeLivrosVendidos() {
         return quantidadeLivrosVendidos;
     }
 
-    public void setQuantidadeLivrosVendidos(int quantidadeLivrosVendidos) {
-        this.quantidadeLivrosVendidos = quantidadeLivrosVendidos;
-    }
-
     public int getQuantidadeLivrosEmprestados() {
         return quantidadeLivrosEmprestados;
-    }
-
-    public void setQuantidadeLivrosEmprestados(int quantidadeLivrosEmprestados) {
-        this.quantidadeLivrosEmprestados = quantidadeLivrosEmprestados;
-    }
-
-    public boolean getLivroEmprestado() {
-        return livroEmprestado;
-    }
-
-    public void setLivroEmprestado(boolean livroEmprestado) {
-        this.livroEmprestado = livroEmprestado;
     }
 
     public void adicionarLivro(String isbn, Livro livro) {
@@ -265,5 +241,4 @@ public class OperacoesBiblioteca extends Funcionario {
     public void verificandoTodoSistemaBiblioteca() {
         analistaDeSistemas.suporteTecnico(true);
     }
-
 }

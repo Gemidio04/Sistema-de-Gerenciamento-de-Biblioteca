@@ -40,25 +40,14 @@ public class Cliente {
         return CEP;
     }
 
-    public void setCEP(String CEP) {
-        this.CEP = CEP;
-    }
-
     public String getEndereco() {
         return endereco;
-    }
-
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
     }
 
     public LocalDate getDataCadastro() {
         return dataCadastro;
     }
 
-    public void setDataCadastro(LocalDate dataCadastro) {
-        this.dataCadastro = dataCadastro;
-    }
 
     @Override
     public String toString() {

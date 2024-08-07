@@ -1,5 +1,7 @@
 package Services.Funcionarios;
 
+import Services.Exception.ValidacaoException;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
@@ -98,7 +100,7 @@ public class AnalistaDeSistemas extends Funcionario {
                                     Files.copy(source, destination.toPath(), StandardCopyOption.REPLACE_EXISTING);
                                 }
                             } catch (Exception e) {
-                                e.printStackTrace();
+                                System.out.println(e.getMessage());
                             }
                         });
 
@@ -107,10 +109,8 @@ public class AnalistaDeSistemas extends Funcionario {
                 System.out.println("Pasta do projeto ou pasta de atualização não encontrada.");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
-
-
 }
 

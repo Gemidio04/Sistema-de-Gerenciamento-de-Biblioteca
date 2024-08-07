@@ -15,22 +15,14 @@ public class Regra {
     public boolean getAdvertencia() {
         return advertencia;
     }
-
-    public void setAdvertencia(boolean advertencia) {
-        this.advertencia = advertencia;
-    }
-
     public int getQuantidadeAdvertencias() {
         return quantidadeAdvertencias;
-    }
-
-    public void setQuantidadeAdvertencias(int quantidadeAdvertencias) {
-        this.quantidadeAdvertencias = quantidadeAdvertencias;
     }
 
     private static boolean verificarAtraso(LocalTime horaChegada, LocalTime horaAtual) {
         return horaAtual.isAfter(horaChegada);
     }
+
     private static boolean verificarMalAtendimento(int numeroReclamacoes) {
         return numeroReclamacoes > 0;
     }
