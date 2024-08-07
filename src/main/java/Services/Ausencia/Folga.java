@@ -13,7 +13,7 @@ public class Folga extends Ausencia {
     }
 
     public boolean podeTirarFolga() {
-        return diasTrabalhadosConsecutivos >= 4;
+        return getDiasTrabalhadosConsecutivos() >= 4;
     }
 
     public void tirarFolga(Funcionario funcionario) {

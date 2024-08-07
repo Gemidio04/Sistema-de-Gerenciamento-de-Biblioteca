@@ -1,4 +1,6 @@
-package SGBD;
+package SGBD.Connection;
+
+import Services.Exception.DBException;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -7,7 +9,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class BancoDeDados {
+public class ConexaoBancoDeDados {
 
     private static Connection connection = null;
 
@@ -18,7 +20,7 @@ public class BancoDeDados {
                 String url = properties.getProperty("dburl");
                 connection = DriverManager.getConnection(url, properties);
             }catch (SQLException ex){
-                throw new RuntimeException(ex.getMessage());
+                throw new DBException(ex.getMessage());
             }
         }
         return connection;
@@ -31,17 +33,17 @@ public class BancoDeDados {
             }catch (SQLException ex){
                 throw new RuntimeException(ex.getMessage());
             }
-
         }
     }
+
     private static Properties loadProperties() {
         try(FileInputStream fs = new FileInputStream("db.properties")){
             Properties props = new Properties();
             props.load(fs);
             return props;
-
         }catch (IOException e){
             throw new RuntimeException("Erro nas propriedades de conexão com o Banco de Dados");
         }
     }
+
 }

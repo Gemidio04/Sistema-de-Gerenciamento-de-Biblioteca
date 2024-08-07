@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Ausencia {
-    protected int diasTrabalhadosConsecutivos;
+    private int diasTrabalhadosConsecutivos;
     private List<LocalDate> historicoFerias;
 
     public Ausencia() {

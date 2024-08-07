@@ -16,9 +16,6 @@ public class GestorProgramasEventos extends Funcionario {
 
     public GestorProgramasEventos(){
         listaEventos = new LinkedList<>();
-        nomeEvento = null;
-        dataEvento = null;
-        temaEvento = null;
     }
 
     public String getNomeEvento() {

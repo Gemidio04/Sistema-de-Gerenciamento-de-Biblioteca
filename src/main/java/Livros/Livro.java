@@ -6,19 +6,19 @@ public class Livro {
     private String editora;
     private String genero;
     private String autor;
-    private Integer AnoPublicacao;
+    private Integer anoPublicacao;
     private String sinopse;
 
     public Livro(){
     }
 
-    public Livro(String isbn, String titulo, String editora, String genero, String autor, Integer AnoPublicacao, String sinopse) {
+    public Livro(String isbn, String titulo, String editora, String genero, String autor, Integer anoPublicacao, String sinopse) {
         this.isbn = isbn;
         this.titulo = titulo;
         this.editora = editora;
         this.genero = genero;
         this.autor = autor;
-        this.AnoPublicacao = AnoPublicacao;
+        this.anoPublicacao = anoPublicacao;
         this.sinopse = sinopse;
     }
 
@@ -35,7 +35,7 @@ public class Livro {
     }
 
       public void setAnoPublicacao(Integer anoPublicacao) {
-          AnoPublicacao = anoPublicacao;
+          anoPublicacao = anoPublicacao;
       }
 
     public String getSinopse() {
