@@ -77,14 +77,7 @@ public class GestorProgramasEventos extends Funcionario {
         }
     }
 
-    public void enviarNotificacao(SegurancaProfissional incidente) {
-        System.out.println("OCORREU UM INCIDENTE:");
-        System.out.println("DETALHES:");
-        System.out.println(incidente);
-    }
-
-    @Override
     public void receberNotificacao(SegurancaProfissional incidente) {
-        super.receberNotificacao(incidente);
+        super.enviarNotificacaoIncidente(incidente);
     }
 }

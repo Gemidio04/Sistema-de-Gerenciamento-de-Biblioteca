@@ -112,5 +112,9 @@ public class AnalistaDeSistemas extends Funcionario {
             System.out.println(e.getMessage());
         }
     }
+
+    public void receberNotificacao(SegurancaProfissional incidente) {
+        super.enviarNotificacaoIncidente(incidente);
+    }
 }
 

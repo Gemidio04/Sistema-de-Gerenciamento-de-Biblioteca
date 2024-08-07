@@ -48,7 +48,6 @@ public class Cliente {
         return dataCadastro;
     }
 
-
     @Override
     public String toString() {
         return "Nome: " + nome + ",\n" +

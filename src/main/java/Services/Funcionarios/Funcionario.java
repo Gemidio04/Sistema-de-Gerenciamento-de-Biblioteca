@@ -74,16 +74,11 @@ public class Funcionario {
     }
 
 
-    public void receberNotificacao(SegurancaProfissional incidente) {
+    public void enviarNotificacaoIncidente(SegurancaProfissional incidente) {
         incidente.enviarNotificacao(incidente);
     }
 
     public static void tabelaDeCargos(){
         Cargo.tabelaDeCargos();
     }
-
-    public void fornecerInformacao(){
-        // SERÁ CRIADO FUTURAMENTE!
-    }
-
 }

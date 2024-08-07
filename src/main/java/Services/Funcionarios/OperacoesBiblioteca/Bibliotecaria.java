@@ -1,11 +1,14 @@
 package Services.Funcionarios.OperacoesBiblioteca;
 
 import Clientes.Cliente;
+import Livros.EmprestimoLivro;
 import Livros.Livro;
 import Services.Exception.ValidacaoException;
 import Services.Funcionarios.Funcionario;
 import Services.Funcionarios.SegurancaProfissional;
 import Services.Regras.Regra;
+
+import java.util.List;
 
 public class Bibliotecaria extends OperacoesBiblioteca {
     private Regra regra;
@@ -53,6 +56,44 @@ public class Bibliotecaria extends OperacoesBiblioteca {
         return getLivroEmprestado();
     }
 
+    public void exibirSinopseLivro(Livro livro){
+        super.exibirSinopseLivro(livro);
+    }
+
+    public void registrarNovoCliente() {
+        super.registrarNovoCliente();
+    }
+
+    public void listaTodosClientes() {
+        super.listaTodosClientes();
+    }
+
+    public void listaClienteDadoUmNome(String nomeBusca) {
+        super.listaClienteDadoUmNome(nomeBusca);
+    }
+
+
+    public void removerCliente(Cliente cliente){
+        super.removerCliente(cliente);
+    }
+
+    public void atualizarTodasInformacoesCliente
+            (Cliente cliente, String novoNome, String novoEmail, String novoCEP, String novoEndereco) {
+        super.atualizarTodasInformacoesCliente(cliente, novoNome, novoEmail, novoCEP, novoEndereco);
+    }
+
+    public List<EmprestimoLivro> historicoDeLivro(Livro livro) {
+        return super.historicoDeLivro(livro);
+    }
+
+    public List<EmprestimoLivro> historicoDeUsuario(Cliente cliente) {
+        return super.historicoDeUsuario(cliente);
+    }
+
+    public List<EmprestimoLivro> historicoCompletoLivrosEmprestados() {
+        return super.historicoCompletoLivrosEmprestados();
+    }
+
     public void demitirAssistente(Funcionario funcionario) {
         if (regra.getQuantidadeAdvertencias() == 3 || regra.getAdvertencia()) {
             System.out.println("Assistente: " + funcionario.getNome() + " demitido!");
@@ -64,8 +105,7 @@ public class Bibliotecaria extends OperacoesBiblioteca {
         super.verificandoTodoSistemaBiblioteca();
     }
 
-    @Override
     public void receberNotificacao(SegurancaProfissional incidente) {
-        super.receberNotificacao(incidente);
+        super.enviarNotificacaoIncidente(incidente);
     }
 }

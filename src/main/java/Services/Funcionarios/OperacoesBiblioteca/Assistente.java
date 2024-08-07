@@ -1,9 +1,18 @@
 package Services.Funcionarios.OperacoesBiblioteca;
 
 import Clientes.Cliente;
+import Livros.EmprestimoLivro;
 import Livros.Livro;
 import Services.Exception.ValidacaoException;
 import Services.Funcionarios.SegurancaProfissional;
+import Services.Solicitacoes.Solicitacoes;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Assistente extends OperacoesBiblioteca{
     public void adicionarLivro(String isbn, Livro livro) {
@@ -49,13 +58,51 @@ public class Assistente extends OperacoesBiblioteca{
         return getLivroEmprestado();
     }
 
+    public void exibirSinopseLivro(Livro livro){
+        super.exibirSinopseLivro(livro);
+    }
+
+    public void registrarNovoCliente() {
+        super.registrarNovoCliente();
+    }
+
+    public void listaTodosClientes() {
+        super.listaTodosClientes();
+    }
+
+    public void listaClienteDadoUmNome(String nomeBusca) {
+        super.listaClienteDadoUmNome(nomeBusca);
+        }
+
+
+    public void removerCliente(Cliente cliente){
+        super.removerCliente(cliente);
+    }
+
+    public void atualizarTodasInformacoesCliente
+            (Cliente cliente, String novoNome, String novoEmail, String novoCEP, String novoEndereco) {
+        super.atualizarTodasInformacoesCliente(cliente, novoNome, novoEmail, novoCEP, novoEndereco);
+    }
+
+    public List<EmprestimoLivro> historicoDeLivro(Livro livro) {
+        return super.historicoDeLivro(livro);
+    }
+
+    public List<EmprestimoLivro> historicoDeUsuario(Cliente cliente) {
+        return super.historicoDeUsuario(cliente);
+    }
+
+    public List<EmprestimoLivro> historicoCompletoLivrosEmprestados() {
+        return super.historicoCompletoLivrosEmprestados();
+    }
+
     @Override
     public void verificandoTodoSistemaBiblioteca(){
         super.verificandoTodoSistemaBiblioteca();
     }
 
-    @Override
     public void receberNotificacao(SegurancaProfissional incidente) {
-        super.receberNotificacao(incidente);
+        super.enviarNotificacaoIncidente(incidente);
     }
+
 }

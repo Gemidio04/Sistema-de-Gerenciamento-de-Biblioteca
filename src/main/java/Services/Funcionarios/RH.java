@@ -75,8 +75,7 @@ public class RH extends OperacoesBiblioteca {
         ferias.tirarFerias(funcionario);
     }
 
-    @Override
     public void receberNotificacao(SegurancaProfissional incidente) {
-        super.receberNotificacao(incidente);
+        super.enviarNotificacaoIncidente(incidente);
     }
 }

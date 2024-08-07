@@ -4,15 +4,13 @@ import Services.Funcionarios.Funcionario;
 
 public class Folga extends Ausencia {
 
-    public void trabalharDia() {
-       setDiasTrabalhadosConsecutivos(getDiasTrabalhadosConsecutivos() + 1);
-    }
-
-
     public void resetarDiasTrabalhados() {
         super.resetarDiasTrabalhados();
     }
 
+    public void trabalharDia() {
+        setDiasTrabalhadosConsecutivos(getDiasTrabalhadosConsecutivos() + 1);
+    }
 
     public boolean podeTirarFolga() {
         return diasTrabalhadosConsecutivos >= 4;
