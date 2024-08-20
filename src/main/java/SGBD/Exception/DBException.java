@@ -1,4 +1,4 @@
-package Services.Exception;
+package SGBD.Exception;
 
 public class DBException extends RuntimeException  {
 

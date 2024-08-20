@@ -64,8 +64,8 @@ public class Gerente extends OperacoesBiblioteca {
         super.removerLivro(livro);
     }
 
-    public void atualizarInformacoesLivro(String isbn, String novoTitulo, String novoAutor, int novoAnoPublicacao) {
-        super.atualizarInformacoesLivro(isbn, novoTitulo, novoAutor, novoAnoPublicacao);
+    public void atualizarInformacoesLivro(String isbn, String novoTitulo, String novoAutor, String novaDataPublicacao) {
+        super.atualizarInformacoesLivro(isbn, novoTitulo, novoAutor, novaDataPublicacao);
     }
     public void venderLivro(Livro livro) {
         super.venderLivro(livro);

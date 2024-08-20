@@ -8,8 +8,12 @@ import Services.Estoque.Estoque;
 import Services.Exception.ValidacaoException;
 import Services.Funcionarios.AnalistaDeSistemas;
 import Services.Funcionarios.Funcionario;
+import Services.Funcionarios.Tipos.FuncionarioAdministrativo;
+import Services.Funcionarios.Tipos.FuncionarioGeral;
 import Services.Solicitacoes.Solicitacoes;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -17,24 +21,37 @@ import java.util.stream.Collectors;
 
 public class OperacoesBiblioteca extends Funcionario {
 
+    private int idOperacoesBiblioteca;
+    private int idFuncionarioAdministrativo;
     private int quantidadeLivrosVendidos;
     private int quantidadeLivrosEmprestados;
     private boolean livroEmprestado;
     private AnalistaDeSistemas analistaDeSistemas;
     private Estoque estoque;
+    private int idEstoque;
+    private FuncionarioAdministrativo funcionarioAdministrativo;
 
-    private Map<String, Livro> livros;
+    private final Map<String, Livro> livros;
     private final List<Cliente> listaClientes;
     private final List<EmprestimoLivro> historicoEmprestimos;
 
     public OperacoesBiblioteca() {
-        super();
-        quantidadeLivrosVendidos = 0;
-        quantidadeLivrosEmprestados = 0;
-        livroEmprestado = true;
-        livros = new HashMap<>();
-        listaClientes = new ArrayList<>();
-        historicoEmprestimos = new ArrayList<>();
+        this.idOperacoesBiblioteca = 1;
+        this.idFuncionarioAdministrativo = 1;
+        this.quantidadeLivrosVendidos = 0;
+        this.quantidadeLivrosEmprestados = 0;
+        this.livroEmprestado = true;
+        this.livros = new HashMap<>();
+        this.listaClientes = new ArrayList<>();
+        this.historicoEmprestimos = new ArrayList<>();
+    }
+
+    public void setIdOperacoesBiblioteca(int idOperacoesBiblioteca) {
+        this.idOperacoesBiblioteca = idOperacoesBiblioteca;
+    }
+
+    public void setIdFuncionarioAdministrativo(int idFuncionarioAdministrativo) {
+        this.idFuncionarioAdministrativo = idFuncionarioAdministrativo;
     }
 
     public Estoque getEstoque() {
@@ -49,8 +66,24 @@ public class OperacoesBiblioteca extends Funcionario {
         return quantidadeLivrosVendidos;
     }
 
+    public void setQuantidadeLivrosVendidos(int quantidadeLivrosVendidos) {
+        this.quantidadeLivrosVendidos = quantidadeLivrosVendidos;
+    }
+
     public int getQuantidadeLivrosEmprestados() {
         return quantidadeLivrosEmprestados;
+    }
+
+    public void setQuantidadeLivrosEmprestados(int quantidadeLivrosEmprestados) {
+        this.quantidadeLivrosEmprestados = quantidadeLivrosEmprestados;
+    }
+
+    public void setIdEstoque(int idEstoque) {
+        this.idEstoque = idEstoque;
+    }
+
+    public void setLivroEmprestado(boolean livroEmprestado) {
+        this.livroEmprestado = livroEmprestado;
     }
 
     public void adicionarLivro(String isbn, Livro livro) {
@@ -67,12 +100,12 @@ public class OperacoesBiblioteca extends Funcionario {
     }
 
     public void atualizarInformacoesLivro
-            (String isbn, String novoTitulo, String novoAutor, int novoAnoPublicacao) {
+            (String isbn, String novoTitulo, String novoAutor, String novaDataPublicacao) {
         Livro livro = livros.get(isbn);
         if (livro != null) {
             livro.setTitulo(novoTitulo);
             livro.setAutor(novoAutor);
-            livro.setAnoPublicacao(novoAnoPublicacao);
+            livro.setDataPublicacao(novaDataPublicacao);
         } else {
             System.out.println("Livro com ISBN " + isbn + " não encontrado.");
         }
@@ -157,7 +190,7 @@ public class OperacoesBiblioteca extends Funcionario {
         System.out.print("Data de Cadastro (dd/MM/yyyy): ");
         String dateCadastro = sc.nextLine();
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy"); // Use the correct pattern
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate data = LocalDate.parse(dateCadastro, formatter);
 
         Cliente cliente = new Cliente(nome, email, CEP, endereco, data);
@@ -186,7 +219,7 @@ public class OperacoesBiblioteca extends Funcionario {
                     System.out.println("Email: " + cliente.getEmail() + ",");
                     System.out.println("CEP: " + cliente.getCEP() + ",");
                     System.out.println("Endereco: " + cliente.getEndereco() + ",");
-                    System.out.println("DataCadastro: " + cliente.getDataCadastro().format(formatter) + "\n");
+                    System.out.println("DataCadastro: " + cliente.getDataCadastro().toString() + "\n");
                     encontrado = true;
                     break;
                 }
@@ -240,5 +273,31 @@ public class OperacoesBiblioteca extends Funcionario {
 
     public void verificandoTodoSistemaBiblioteca() {
         analistaDeSistemas.suporteTecnico(true);
+    }
+
+    public static OperacoesBiblioteca instanciaOperacoesBiblioteca(ResultSet resultSet) throws SQLException {
+        OperacoesBiblioteca operacoesBiblioteca = new OperacoesBiblioteca();
+        FuncionarioAdministrativo funcionarioAdministrativo = new FuncionarioAdministrativo();
+        operacoesBiblioteca.setIdOperacoesBiblioteca(resultSet.getInt("idOperacoesBiblioteca"));
+        operacoesBiblioteca.setIdFuncionarioAdministrativo(resultSet.getInt("idFuncionarioAdministrativo"));
+//      String cargoString = resultSet.getString("cargo");
+//      Cargo cargo = Cargo.valueOf(cargoString.toUpperCase());
+//      operacoesBiblioteca.setCargo(cargo);
+        operacoesBiblioteca.setQuantidadeLivrosVendidos(resultSet.getInt("quantidadeLivrosVendidos"));
+        operacoesBiblioteca.setQuantidadeLivrosEmprestados(resultSet.getInt("quantidadeLivrosEmprestados"));
+        operacoesBiblioteca.setIdEstoque(resultSet.getInt("idEstoque"));
+        return operacoesBiblioteca;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("OperacoesBiblioteca{").append("\n");
+        sb.append("idOperacoesBiblioteca: ").append(idOperacoesBiblioteca).append("\n");
+        sb.append("idFuncionarioAdministrativo: ").append(idFuncionarioAdministrativo).append("\n");
+        sb.append("quantidadeLivrosVendidos: ").append(quantidadeLivrosVendidos).append("\n");
+        sb.append("quantidadeLivrosEmprestados: ").append(quantidadeLivrosEmprestados).append("\n");
+        sb.append("id do Estoque: ").append(idEstoque).append("\n");
+        sb.append('}');
+        return sb.toString();
     }
 }

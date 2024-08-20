@@ -1,9 +1,7 @@
 package Services.Funcionarios;
 
 import Services.ENUM.Cargo;
-import Services.Estoque.Estoque;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Funcionario {
@@ -37,12 +35,24 @@ public class Funcionario {
         this.nome = nome;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }
 
+    public String getCPF() {
+        return CPF;
+    }
+
     public void setCPF(String CPF) {
         this.CPF = CPF;
+    }
+
+    public String getTurno() {
+        return turno;
     }
 
     public void setTurno(String turno) {
@@ -55,6 +65,10 @@ public class Funcionario {
 
     public void setDataContratacao(LocalDate dataContratacao) {
         this.dataContratacao = dataContratacao;
+    }
+
+    public Double getSalario() {
+        return salario;
     }
 
     public void setSalario(Double salario) {
@@ -81,4 +95,5 @@ public class Funcionario {
     public static void tabelaDeCargos(){
         Cargo.tabelaDeCargos();
     }
+
 }
