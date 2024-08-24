@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Livro {
+    private int i = 1;
     private String isbn;
     private String titulo;
     private String editora;
@@ -25,6 +26,7 @@ public class Livro {
         this.sinopse = sinopse;
     }
 
+
     public String getIsbn() {
         return isbn;
     }
@@ -33,8 +35,16 @@ public class Livro {
         this.isbn = isbn;
     }
 
+    public String getTitulo() {
+        return titulo;
+    }
+
     public void setTitulo(String titulo) {
         this.titulo = titulo;
+    }
+
+    public String getAutor() {
+        return autor;
     }
 
     public void setAutor(String autor) {
@@ -49,12 +59,24 @@ public class Livro {
         this.sinopse = sinopse;
     }
 
+    public String getEditora() {
+        return editora;
+    }
+
     public void setEditora(String editora) {
         this.editora = editora;
     }
 
+    public String getGenero() {
+        return genero;
+    }
+
     public void setGenero(String genero) {
         this.genero = genero;
+    }
+
+    public String getDataPublicacao() {
+        return dataPublicacao;
     }
 
     public void setDataPublicacao(String dataPublicacao) {
@@ -75,15 +97,14 @@ public class Livro {
 
     @Override
     public String toString() {
-        return "Livro {" + "\n" +
-                "ISBN: " + isbn + ".\n" +
-                "Titulo: " + titulo + ".\n" +
-                "Editora: " + editora + ".\n" +
-                "Genero: " + genero + ".\n" +
-                "Autor: " + autor + ".\n" +
-                "Data de Publicação: " + dataPublicacao + ".\n" +
-                "Sinopse: " + sinopse + "\n" +
-                '}';
+        final StringBuffer sb = new StringBuffer("\n");
+        sb.append("ISBN: ").append(isbn).append(",\n");
+        sb.append("Titulo: ").append(titulo).append(",\n");
+        sb.append("Editora: ").append(editora).append(",\n");
+        sb.append("Genero: ").append(genero).append(",\n");
+        sb.append("Autor: ").append(autor).append(",\n");
+        sb.append("Data de Publicação: ").append(dataPublicacao).append(",\n");
+        sb.append("Sinopse: ").append(sinopse).append(".\n");
+        return sb.toString();
     }
-
 }

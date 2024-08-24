@@ -1,14 +1,14 @@
-package SGBD.DAO;
+package SGBD.InterfacesDAO;
 
-import Livros.EmprestimoLivro;
 import Services.Ausencia.Ausencia;
+import Services.Ausencia.AusensiaFuncionarioGeral;
 
 import java.util.List;
+import java.util.Set;
 
 public interface AusenciaDAO {
 
-    void insert(Ausencia ausencia);
     void update(Ausencia ausencia);
     void delete(Integer id);
-    List<Ausencia> selectAll();
+    List<String> selectAll();
 }

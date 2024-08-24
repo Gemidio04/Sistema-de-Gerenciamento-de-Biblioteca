@@ -1,9 +1,9 @@
 package SGBD.JDBC;
 
 import SGBD.Connection.ConexaoBancoDeDados;
-import SGBD.DAO.ConexaoDAO;
-import SGBD.DAO.FuncionarioAdministrativoDAO;
-import SGBD.DAO.FuncionarioDAO;
+import SGBD.Connection.ConexaoDAO;
+import SGBD.InterfacesDAO.FuncionarioAdministrativoDAO;
+import SGBD.InterfacesDAO.FuncionarioDAO;
 import SGBD.Exception.DBException;
 import Services.Funcionarios.Funcionario;
 import Services.Funcionarios.Tipos.FuncionarioAdministrativo;
@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FuncionarioAdministrativoDaoJDBC extends ConexaoDAO implements FuncionarioDAO, FuncionarioAdministrativoDAO {
@@ -21,8 +22,28 @@ public class FuncionarioAdministrativoDaoJDBC extends ConexaoDAO implements Func
     }
 
     @Override
-    public void insert(Funcionario funcionario) {
+    public void insert(FuncionarioAdministrativo funcionarioAdministrativo) {
+       PreparedStatement preparedStatement = null;
 
+       try {
+           preparedStatement = connection.prepareStatement
+                   ("INSERT INTO Funcionario_administrativo VALUES (?,?,?,?,?,?,?,?)");
+
+           preparedStatement.setInt(1, funcionarioAdministrativo.getIdFuncionarioAdministrativo());
+           preparedStatement.setString(2, funcionarioAdministrativo.getNome());
+           preparedStatement.setString(3, funcionarioAdministrativo.getEmail());
+           preparedStatement.setString(4, funcionarioAdministrativo.getCPF());
+           preparedStatement.setString(5, funcionarioAdministrativo.getTurno());
+           preparedStatement.setString(6, funcionarioAdministrativo.getDataContratacao());
+           preparedStatement.setDouble(7, funcionarioAdministrativo.getSalario());
+           preparedStatement.setString(8, String.valueOf(funcionarioAdministrativo.getCargo()));
+           preparedStatement.executeUpdate();
+           System.out.println("INSERT REALIZADO!");
+       }catch (SQLException ex){
+           throw new DBException(ex.getMessage());
+       }finally {
+           ConexaoBancoDeDados.closeStatement(preparedStatement);
+       }
     }
 
     @Override
@@ -59,9 +80,33 @@ public class FuncionarioAdministrativoDaoJDBC extends ConexaoDAO implements Func
         }
     }
 
-
     @Override
     public List<Funcionario> selectAll() {
-        return List.of();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            preparedStatement = connection.prepareStatement
+                    ("SELECT FA.idFuncionarioAdministrativo, FA.nome, FA.email, FA.CPF, FA.turno, " +
+                    "DATE_FORMAT(FA.dataContratacao, '%d/%m/%Y') AS dataContratacao, " +
+                    "FA.salario, FA.cargo FROM FUNCIONARIO_ADMINISTRATIVO FA; ");
+            resultSet = preparedStatement.executeQuery();
+
+            List<Funcionario> listaFuncionarioAdministrativo = new ArrayList<>();
+
+            while (resultSet.next()){
+                FuncionarioAdministrativo funcionarioAdministrativo =
+                FuncionarioAdministrativo.instanciaFuncionarioAdministrativo(resultSet);
+                Funcionario funcionario = Funcionario.instanciaFuncionario(resultSet);
+
+                listaFuncionarioAdministrativo.add(funcionarioAdministrativo);
+                listaFuncionarioAdministrativo.add(funcionario);
+            }
+            System.out.print("Funcionários Administrativos: ");
+            return listaFuncionarioAdministrativo;
+        }catch (SQLException ex){
+            throw new DBException(ex.getMessage());
+        }
     }
+
 }

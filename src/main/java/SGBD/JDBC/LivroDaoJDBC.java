@@ -2,14 +2,15 @@ package SGBD.JDBC;
 
 import Livros.Livro;
 import SGBD.Connection.ConexaoBancoDeDados;
-import SGBD.DAO.LivroDAO;
+import SGBD.InterfacesDAO.LivroDAO;
 
-import SGBD.DAO.ConexaoDAO;
+import SGBD.Connection.ConexaoDAO;
 import SGBD.Exception.DBException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LivroDaoJDBC extends ConexaoDAO implements LivroDAO {
@@ -18,10 +19,28 @@ public class LivroDaoJDBC extends ConexaoDAO implements LivroDAO {
         super(connection);
     }
 
-
     @Override
     public void insert(Livro livro) {
+        PreparedStatement preparedStatement = null;
 
+        try {
+            preparedStatement = connection.prepareStatement
+                    ("INSERT INTO Livro VALUES (?, ?, ?, ?, ?, ?, ?)");
+
+            preparedStatement.setString(1, livro.getIsbn());
+            preparedStatement.setString(2, livro.getTitulo());
+            preparedStatement.setString(3, livro.getEditora());
+            preparedStatement.setString(4, livro.getGenero());
+            preparedStatement.setString(5, livro.getAutor());
+            preparedStatement.setString(6, livro.getDataPublicacao());
+            preparedStatement.setString(7, livro.getSinopse());
+            preparedStatement.executeUpdate();
+            System.out.println("INSERT REALIZADO!");
+        }catch (SQLException ex) {
+            throw new DBException(ex.getMessage());
+        }finally {
+            ConexaoBancoDeDados.closeStatement(preparedStatement);
+        }
     }
 
     @Override
@@ -60,6 +79,26 @@ public class LivroDaoJDBC extends ConexaoDAO implements LivroDAO {
 
     @Override
     public List<Livro> selectAll() {
-        return List.of();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try{
+            preparedStatement = connection.prepareStatement("SELECT * FROM Livro");
+            resultSet = preparedStatement.executeQuery();
+
+            List<Livro> livros = new ArrayList<>();
+
+            while(resultSet.next()){
+                Livro livro = Livro.instanciaLivro(resultSet);
+                livros.add(livro);
+            }
+            System.out.print("Livros ");
+            return livros;
+        }catch (SQLException ex) {
+            throw new DBException(ex.getMessage());
+        }finally {
+            ConexaoBancoDeDados.closeStatement(preparedStatement);
+            ConexaoBancoDeDados.closeResultSet(resultSet);
+        }
     }
 }

@@ -3,13 +3,13 @@ package Services.Ausencia;
 import Services.Funcionarios.Funcionario;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Ferias extends Ausencia {
 
     private LocalDate agora;
 
     public Ferias(){
-        super("FERIAS");
         agora = LocalDate.now();
     }
 
@@ -25,10 +25,13 @@ public class Ferias extends Ausencia {
     }
 
     public void tirarFerias(Funcionario funcionario) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate agora = LocalDate.parse(funcionario.getDataContratacao(), formatter);
+
         if (podeTirarFerias()) {
             getHistoricoFerias().add(agora); // Adiciona a data atual ao histórico de férias
-            setDataInicio(agora); // Define a data inicial das férias
-            setDataFinal(agora.plusDays(30)); // Define a data final das férias (por exemplo, 30 dias de férias)
+            setDataInicio(String.valueOf(agora)); // Define a data inicial das férias
+            setDataFinal(String.valueOf(agora.plusDays(30))); // Define a data final das férias (por exemplo, 30 dias de férias)
             resetarDiasTrabalhados();
             System.out.println(funcionario.getNome() + " está de férias de " + getDataInicio() + " até " + getDataFinal());
         } else {
@@ -36,11 +39,11 @@ public class Ferias extends Ausencia {
         }
     }
 
-    public LocalDate getDataInicioFerias() {
+    public String getDataInicioFerias() {
         return getDataInicio();
     }
 
-    public LocalDate getDataFinalFerias() {
+    public String getDataFinalFerias() {
         return getDataFinal();
     }
 }

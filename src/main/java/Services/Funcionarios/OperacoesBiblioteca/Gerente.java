@@ -32,7 +32,7 @@ public class Gerente extends OperacoesBiblioteca {
             String email = solicitacoes.solicitarEntrada("Email: ", sc);
             String CPF = solicitacoes.solicitarEntrada("CPF: ", sc);
             String turno = solicitacoes.solicitarEntrada("Turno: ", sc);
-            LocalDate dataContratacao = solicitacoes.solicitarDataContratacao("Data da Contratação: ", sc);
+            String dataContratacao = solicitacoes.solicitarEntrada("Data da Contratação: ", sc);
             Double salario = solicitacoes.solicitarSalario("Salário: ", sc);
 
             Cargo.converteCargoEnum((OperacoesBiblioteca) novoFuncionario);
@@ -71,8 +71,8 @@ public class Gerente extends OperacoesBiblioteca {
         super.venderLivro(livro);
     }
 
-    public void emprestarLivro(Livro livro, Cliente cliente) {
-        super.emprestarLivro(livro, cliente);
+    public void emprestarLivro(EmprestimoLivro emprestimoLivro, Livro livro) {
+        super.emprestarLivro(emprestimoLivro, livro);
     }
 
     public void devolverLivro(String isbn, Livro livro) {

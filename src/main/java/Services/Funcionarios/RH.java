@@ -24,7 +24,7 @@ public class RH extends OperacoesBiblioteca {
             String email = solicitacoes.solicitarEntrada("Email: ", sc);
             String CPF = solicitacoes.solicitarEntrada("CPF: ", sc);
             String turno = solicitacoes.solicitarEntrada("Turno: ", sc);
-            LocalDate dataContratacao = solicitacoes.solicitarDataContratacao("Data da Contratação: ", sc);
+            String dataContratacao = solicitacoes.solicitarEntrada("Data da Contratação: ", sc);
             Double salario = solicitacoes.solicitarSalario("Salário: ", sc);
 
             Cargo.converteCargoEnum((OperacoesBiblioteca) novoFuncionario);

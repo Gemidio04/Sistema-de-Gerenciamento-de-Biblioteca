@@ -1,4 +1,4 @@
-package SGBD.DAO;
+package SGBD.InterfacesDAO;
 
 import SGBD.Connection.ConexaoBancoDeDados;
 import SGBD.JDBC.*;
@@ -10,35 +10,35 @@ public class DaoFactory {
         return new LivroDaoJDBC(ConexaoBancoDeDados.getConnection());
     }
 
-    public static EmprestimoLivroDAO createEmprestimoLivroDao(){
+    public static EmprestimoLivroDAO createEmprestimoLivroDAO(){
         return new EmprestimoLivroDaoJDBC(ConexaoBancoDeDados.getConnection());
     }
 
-    public static ClienteDaoJDBC createClienteDao(){
+    public static ClienteDAO createClienteDAO(){
         return new ClienteDaoJDBC(ConexaoBancoDeDados.getConnection());
     }
 
-    public static FuncionarioGeralDAO createFuncionarioGeralDao() {
+    public static FuncionarioGeralDAO createFuncionarioGeralDAO() {
         return new FuncionarioGeralDaoJDBC(ConexaoBancoDeDados.getConnection());
     }
 
-    public static FuncionarioAdministrativoDAO createFuncionarioAdminstrativoDao() {
+    public static FuncionarioAdministrativoDAO createFuncionarioAdminstrativoDAO() {
         return new FuncionarioAdministrativoDaoJDBC(ConexaoBancoDeDados.getConnection());
     }
 
-    public static OperacoesBibliotecaDAO createOperacoesBibliotecaDao(){
+    public static OperacoesBibliotecaDAO createOperacoesBibliotecaDAO(){
         return new OperacoesBibliotecaDaoJDBC(ConexaoBancoDeDados.getConnection());
     }
 
-    public static EstoqueDAO createEstoqueDao(){
+    public static EstoqueDAO createEstoqueDAO(){
         return new EstoqueDaoJDBC(ConexaoBancoDeDados.getConnection());
     }
 
-    public static AusensiaFuncionarioGeralDAO createAusensiaFuncionarioGeralDao(){
+    public static AusensiaFuncionarioGeralDAO createAusensiaFuncionarioGeralDAO(){
         return new AusensiaFuncionarioGeralDaoJDBC(ConexaoBancoDeDados.getConnection());
     }
 
-    public static AusenciaFuncionarioAdministrativoDAO createAusensiaFuncionarioAdministrativoDao(){
+    public static AusenciaFuncionarioAdministrativoDAO createAusensiaFuncionarioAdministrativoDAO(){
         return new AusensiaFuncionarioAdministrativoDaoJDBC(ConexaoBancoDeDados.getConnection());
     }
 }

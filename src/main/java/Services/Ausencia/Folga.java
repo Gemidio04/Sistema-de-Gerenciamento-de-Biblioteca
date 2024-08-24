@@ -3,11 +3,11 @@ package Services.Ausencia;
 import Services.Funcionarios.Funcionario;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Folga extends Ausencia {
 
     public Folga() {
-        super("FOLGA");
     }
 
     public void resetarDiasTrabalhados() {
@@ -23,10 +23,13 @@ public class Folga extends Ausencia {
     }
 
     public void tirarFolga(Funcionario funcionario) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate dataInicioFolga = LocalDate.parse(funcionario.getDataContratacao(), formatter);
+
         if (podeTirarFolga()) {
-            LocalDate dataInicioFolga = LocalDate.now();
-            setDataInicio(dataInicioFolga); // Define a data inicial da folga
-            setDataFinal(dataInicioFolga.plusDays(1)); // Define a data final da folga (por exemplo, 1 dia de folga)
+            dataInicioFolga = LocalDate.now();
+            setDataInicio(String.valueOf(dataInicioFolga)); // Define a data inicial da folga
+            setDataFinal(String.valueOf(dataInicioFolga.plusDays(1))); // Define a data final da folga (por exemplo, 1 dia de folga)
             resetarDiasTrabalhados();
             System.out.println(funcionario.getNome() + " recebeu uma folga de " + getDataInicio() + " até " + getDataFinal());
         } else {
@@ -34,11 +37,11 @@ public class Folga extends Ausencia {
         }
     }
 
-    public LocalDate getDataInicioFolga() {
+    public String getDataInicioFolga() {
         return getDataInicio();
     }
 
-    public LocalDate getDataFinalFolga() {
+    public String getDataFinalFolga() {
         return getDataFinal();
     }
 }

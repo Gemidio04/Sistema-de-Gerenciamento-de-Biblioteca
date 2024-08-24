@@ -1,4 +1,4 @@
-package SGBD.DAO;
+package SGBD.Connection;
 
 import java.sql.Connection;
 

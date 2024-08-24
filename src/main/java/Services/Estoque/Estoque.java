@@ -9,13 +9,24 @@ public class Estoque {
     private int quantidade;
 
     public Estoque(){
-        this.idEstoque = 1;
-        this.quantidade = 150;
     }
 
+    public Estoque(int idEstoque, String isbn, int quantidade) {
+        this.idEstoque = idEstoque;
+        this.isbn = isbn;
+        this.quantidade = quantidade;
+    }
+
+    public int getIdEstoque() {
+        return idEstoque;
+    }
 
     public void setIdEstoque(int idEstoque) {
         this.idEstoque = idEstoque;
+    }
+
+    public String getIsbn() {
+        return isbn;
     }
 
     public void setIsbn(String isbn) {
@@ -40,10 +51,10 @@ public class Estoque {
 
     @Override
     public String toString() {
-        return "Estoque{" + "\n" +
-                "id do Estoque: " + idEstoque + ".\n" +
-                "isbn: " + isbn + ".\n" +
-                "quantidade: " + quantidade + ".\n" +
-                '}';
+        final StringBuffer sb = new StringBuffer("\n");
+        sb.append("Id do Estoque: ").append(idEstoque).append("\n");
+        sb.append("ISBN: ").append(isbn).append("\n");
+        sb.append("Quantidade: ").append(quantidade).append("\n");
+        return sb.toString();
     }
 }

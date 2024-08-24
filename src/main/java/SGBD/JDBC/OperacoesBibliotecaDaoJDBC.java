@@ -1,18 +1,16 @@
 package SGBD.JDBC;
 
 import SGBD.Connection.ConexaoBancoDeDados;
-import SGBD.DAO.OperacoesBibliotecaDAO;
-import SGBD.DAO.ConexaoDAO;
+import SGBD.InterfacesDAO.OperacoesBibliotecaDAO;
+import SGBD.Connection.ConexaoDAO;
 import SGBD.Exception.DBException;
-import Services.Estoque.Estoque;
-import Services.Funcionarios.Funcionario;
 import Services.Funcionarios.OperacoesBiblioteca.OperacoesBiblioteca;
-import Services.Funcionarios.Tipos.FuncionarioAdministrativo;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class OperacoesBibliotecaDaoJDBC extends ConexaoDAO implements OperacoesBibliotecaDAO {
@@ -23,7 +21,24 @@ public class OperacoesBibliotecaDaoJDBC extends ConexaoDAO implements OperacoesB
 
     @Override
     public void insert(OperacoesBiblioteca operacoesBiblioteca) {
+        PreparedStatement preparedStatement = null;
 
+        try {
+            preparedStatement = connection.prepareStatement
+                    ("INSERT INTO Operacoes_Biblioteca VALUES (?,?,?,?,?)");
+
+            preparedStatement.setInt(1, operacoesBiblioteca.getIdOperacoesBiblioteca());
+            preparedStatement.setInt(2, operacoesBiblioteca.getIdFuncionarioAdministrativo());
+            preparedStatement.setInt(3, operacoesBiblioteca.getQuantidadeLivrosVendidos());
+            preparedStatement.setInt(4, operacoesBiblioteca.getQuantidadeLivrosEmprestados());
+            preparedStatement.setInt(5, operacoesBiblioteca.getIdEstoque());
+            preparedStatement.executeUpdate();
+            System.out.println("INSERT REALIZADO!");
+        }catch (SQLException ex){
+            throw new DBException(ex.getMessage());
+        }finally {
+            ConexaoBancoDeDados.closeStatement(preparedStatement);
+        }
     }
 
     @Override
@@ -72,7 +87,27 @@ public class OperacoesBibliotecaDaoJDBC extends ConexaoDAO implements OperacoesB
 
     @Override
     public List<OperacoesBiblioteca> selectAll() {
-        return List.of();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            preparedStatement = connection.prepareStatement("SELECT * FROM OPERACOES_BIBLIOTECA");
+            resultSet = preparedStatement.executeQuery();
+
+            List<OperacoesBiblioteca> listaOperacoesBiblioteca = new ArrayList<>();
+
+            while(resultSet.next()){
+                OperacoesBiblioteca operacoesBiblioteca = OperacoesBiblioteca.instanciaOperacoesBiblioteca(resultSet);
+                listaOperacoesBiblioteca.add(operacoesBiblioteca);
+            }
+            System.out.print("Operações Biblioteca ");
+            return listaOperacoesBiblioteca;
+        }catch (SQLException ex){
+            throw new DBException(ex.getMessage());
+        }finally {
+            ConexaoBancoDeDados.closeStatement(preparedStatement);
+            ConexaoBancoDeDados.closeResultSet(resultSet);
+        }
     }
 
 }

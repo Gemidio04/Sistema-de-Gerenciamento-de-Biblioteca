@@ -4,38 +4,39 @@ import Clientes.Cliente;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
 
 public class EmprestimoLivro {
     private int idEmprestimoLivro;
-    private Livro livro;
+//    private Livro livro;
     private Cliente cliente;
     private String isbn;
     private int idCliente;
-    private Date dataEmprestimo;
-    private Date dataDevolucaoEmprestimo;
+    private String dataEmprestimo;
+    private String dataDevolucaoEmprestimo;
 
     public EmprestimoLivro() {
     }
 
-    public EmprestimoLivro(Livro livro, Cliente cliente, Date date) {
-    }
-
-    public EmprestimoLivro(String isbn, int idCliente, Date dataEmprestimo) {
-        this.idEmprestimoLivro = 1;
+    public EmprestimoLivro(int idEmprestimoLivro, String isbn, int idCliente, String dataEmprestimo, String dataDevolucaoEmprestimo) {
+        this.idEmprestimoLivro = idEmprestimoLivro;
         this.isbn = isbn;
         this.idCliente = idCliente;
         this.dataEmprestimo = dataEmprestimo;
+        this.dataDevolucaoEmprestimo = dataDevolucaoEmprestimo;
+    }
+
+    public int getIdEmprestimoLivro() {
+        return idEmprestimoLivro;
     }
 
     public void setIdEmprestimoLivro(int idEmprestimoLivro) {
         this.idEmprestimoLivro = idEmprestimoLivro;
     }
 
-    public Livro getLivro() {
-        return livro;
-    }
-
+//    public Livro getLivro() {
+//        return livro;
+//    }
+//
     public Cliente getCliente() {
         return cliente;
     }
@@ -56,11 +57,19 @@ public class EmprestimoLivro {
         this.idCliente = idCliente;
     }
 
-    public void setDataEmprestimo(Date dataEmprestimo) {
+    public String getDataEmprestimo() {
+        return dataEmprestimo;
+    }
+
+    public void setDataEmprestimo(String dataEmprestimo) {
         this.dataEmprestimo = dataEmprestimo;
     }
 
-    public void setDataDevolucaoEmprestimo(Date dataDevolucaoEmprestimo) {
+    public String getDataDevolucaoEmprestimo() {
+        return dataDevolucaoEmprestimo;
+    }
+
+    public void setDataDevolucaoEmprestimo(String dataDevolucaoEmprestimo) {
         this.dataDevolucaoEmprestimo = dataDevolucaoEmprestimo;
     }
 
@@ -69,23 +78,21 @@ public class EmprestimoLivro {
         emprestimoLivro.setIdEmprestimoLivro(rs.getInt("idEmprestimoLivro"));
         emprestimoLivro.setIsbn(rs.getString("isbn"));
         emprestimoLivro.setIdCliente(rs.getInt("idCliente"));
-        emprestimoLivro.setDataEmprestimo(rs.getDate("dataEmprestimo"));
-        emprestimoLivro.setDataDevolucaoEmprestimo(rs.getDate("dataDevolucaoEmprestimo"));
+        emprestimoLivro.setDataEmprestimo(rs.getString("dataEmprestimo"));
+        emprestimoLivro.setDataDevolucaoEmprestimo(rs.getString("dataDevolucaoEmprestimo"));
         return emprestimoLivro;
     }
 
     @Override
     public String toString() {
-        return "EmprestimoLivro{ " + "\n" +
-                "id do EmprestimoLivro: " + idEmprestimoLivro + ".\n" +
-                "ISBN: " + isbn + ".\n" +
-                "id do Cliente: " + idCliente + ".\n" +
-                "Data do Empréstimo: " + dataEmprestimo + ".\n" +
-                "Data de devolução do Empréstimo: " + dataDevolucaoEmprestimo + ".\n" +
-                '}';
+        final StringBuffer sb = new StringBuffer("\n");
+        sb.append("id do Empréstimo do Livro: ").append(idEmprestimoLivro).append(",\n");
+        sb.append("ISBN: ").append(isbn).append(",\n");
+        sb.append("id do Cliente: ").append(idCliente).append(",\n");
+        sb.append("Data do Empréstimo: ").append(dataEmprestimo).append(",\n");
+        sb.append("Data da devolucao do Empréstimo: ").append(dataDevolucaoEmprestimo).append(".\n");
+        return sb.toString();
     }
-
-
 }
 
 

@@ -1,6 +1,6 @@
 package Services.ENUM;
 
-public enum AUSENCIA {
+public enum AusenciaENUM {
     FOLGA,
     FERIAS;
 }

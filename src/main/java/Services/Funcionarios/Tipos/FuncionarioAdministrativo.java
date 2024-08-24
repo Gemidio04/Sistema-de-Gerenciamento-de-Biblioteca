@@ -9,33 +9,32 @@ import java.sql.SQLException;
 public class FuncionarioAdministrativo extends Funcionario {
     private int idFuncionarioAdministrativo;
 
+    public FuncionarioAdministrativo(){
+    }
+
+    public FuncionarioAdministrativo(int idFuncionarioAdministrativo, String nome, String email, String CPF, String turno, String dataContratacao, Double salario, Cargo cargo) {
+        super(nome, email, CPF, turno, dataContratacao, salario, cargo);
+        this.idFuncionarioAdministrativo = idFuncionarioAdministrativo;
+    }
+
     public void setIdFuncionarioAdministrativo(int idFuncionarioAdministrativo) {
         this.idFuncionarioAdministrativo = idFuncionarioAdministrativo;
+    }
+
+    public int getIdFuncionarioAdministrativo() {
+        return idFuncionarioAdministrativo;
     }
 
     public static FuncionarioAdministrativo instanciaFuncionarioAdministrativo(ResultSet rs) throws SQLException {
         FuncionarioAdministrativo funcionarioAdministrativo = new FuncionarioAdministrativo();
         funcionarioAdministrativo.setIdFuncionarioAdministrativo(rs.getInt("idFuncionarioAdministrativo"));
-        funcionarioAdministrativo.setNome(rs.getString("nome"));
-        funcionarioAdministrativo.setEmail(rs.getString("email"));
-        funcionarioAdministrativo.setCPF(rs.getString("CPF"));
-        funcionarioAdministrativo.setTurno(rs.getString("turno"));
-        funcionarioAdministrativo.setDataContratacao(rs.getDate("dataContratacao").toLocalDate());
-        funcionarioAdministrativo.setSalario(rs.getDouble("salario"));
-        funcionarioAdministrativo.setCargo(Cargo.valueOf(rs.getString("cargo")));
         return funcionarioAdministrativo;
     }
 
+    @Override
     public String toString() {
-        return "Funcionário Administrativo {" + "\n" +
-                "id Funcionario Administrativo: " + idFuncionarioAdministrativo + ".\n" +
-                "Nome: " + getNome() + ".\n" +
-                "Email: " + getEmail() + ".\n" +
-                "CPF: " + getCPF() + ".\n" +
-                "Turno: " + getTurno() + ".\n" +
-                "Data da Contratação: " + getDataContratacao() + ".\n" +
-                "Salário: " + getSalario() + ".\n" +
-                "Cargo: " + getCargo() + ".\n" +
-                '}';
+        final StringBuffer sb = new StringBuffer("\n");
+        sb.append("id Funcionario Administrativo: ").append(idFuncionarioAdministrativo);
+        return sb.toString();
     }
 }

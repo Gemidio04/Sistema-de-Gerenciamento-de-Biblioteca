@@ -29,8 +29,8 @@ public class Bibliotecaria extends OperacoesBiblioteca {
         super.venderLivro(livro);
     }
 
-    public void emprestarLivro(Livro livro, Cliente cliente) {
-        super.emprestarLivro(livro, cliente);
+    public void emprestarLivro(EmprestimoLivro emprestimoLivro, Livro livro) {
+        super.emprestarLivro(emprestimoLivro, livro);
     }
 
     public void devolverLivro(String isbn, Livro livro) {

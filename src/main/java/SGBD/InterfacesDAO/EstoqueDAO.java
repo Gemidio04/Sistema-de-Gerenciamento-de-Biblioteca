@@ -1,4 +1,4 @@
-package SGBD.DAO;
+package SGBD.InterfacesDAO;
 
 import Services.Estoque.Estoque;
 

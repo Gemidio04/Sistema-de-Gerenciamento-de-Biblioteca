@@ -46,6 +46,30 @@ public class OperacoesBiblioteca extends Funcionario {
         this.historicoEmprestimos = new ArrayList<>();
     }
 
+    public OperacoesBiblioteca(int idOperacoesBiblioteca, int idFuncionarioAdministrativo,
+    int quantidadeLivrosVendidos, int quantidadeLivrosEmprestados, int idEstoque) {
+        this.idOperacoesBiblioteca = idOperacoesBiblioteca;
+        this.idFuncionarioAdministrativo = idFuncionarioAdministrativo;
+        this.quantidadeLivrosVendidos = quantidadeLivrosVendidos;
+        this.quantidadeLivrosEmprestados = quantidadeLivrosEmprestados;
+        this.idEstoque = idEstoque;
+        this.livros = new HashMap<>();
+        this.listaClientes = new ArrayList<>();
+        this.historicoEmprestimos = new ArrayList<>();
+    }
+
+    public int getIdOperacoesBiblioteca() {
+        return idOperacoesBiblioteca;
+    }
+
+    public int getIdFuncionarioAdministrativo() {
+        return idFuncionarioAdministrativo;
+    }
+
+    public int getIdEstoque() {
+        return idEstoque;
+    }
+
     public void setIdOperacoesBiblioteca(int idOperacoesBiblioteca) {
         this.idOperacoesBiblioteca = idOperacoesBiblioteca;
     }
@@ -93,7 +117,7 @@ public class OperacoesBiblioteca extends Funcionario {
 
     public void removerLivro(Livro livro) {
         if (estoque.getQuantidade() > 0) {
-            livros.remove(livro.getIsbn(), livro);
+            livros.remove(livro);
             estoque.setQuantidade(estoque.getQuantidade() - 1);
         }else
             throw new ValidacaoException("Não há mais unidades deste livro!");
@@ -121,15 +145,16 @@ public class OperacoesBiblioteca extends Funcionario {
         }
     }
 
-    public void emprestarLivro(Livro livro, Cliente cliente) {
-        EmprestimoLivro emprestimoLivro = new EmprestimoLivro(livro, cliente, new Date());
+    public void emprestarLivro(EmprestimoLivro emprestimoLivro, Livro livro) {
+        EmprestimoLivro emprestimo = new EmprestimoLivro(emprestimoLivro.getIdEmprestimoLivro(), emprestimoLivro.getIsbn(),
+        emprestimoLivro.getIdCliente(), emprestimoLivro.getDataEmprestimo(), emprestimoLivro.getDataDevolucaoEmprestimo());
         if (checarDisponibilidadeEstoque() && checarDisponibilidadeparaEmprestimo()) {
             removerLivro(livro);
             historicoEmprestimos.add(emprestimoLivro);
             livroEmprestado = false;
         } else {
             throw new ValidacaoException
-                    ("Livro " + livro + " não está disponível para empréstimo!");
+                    ("Livro:  " + livro + " não está disponível para empréstimo!");
         }
     }
 
@@ -182,6 +207,7 @@ public class OperacoesBiblioteca extends Funcionario {
         Scanner sc = new Scanner(System.in);
         Solicitacoes solicitacoes = new Solicitacoes();
 
+        int id = Integer.parseInt(solicitacoes.solicitarEntrada("Id do Cliente: ", sc));
         String nome = solicitacoes.solicitarEntrada("Nome: ", sc);
         String email = solicitacoes.solicitarEntrada("Email: ", sc);
         String CEP = solicitacoes.solicitarEntrada("CEP: ", sc);
@@ -191,9 +217,9 @@ public class OperacoesBiblioteca extends Funcionario {
         String dateCadastro = sc.nextLine();
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate data = LocalDate.parse(dateCadastro, formatter);
+        String data = String.valueOf(LocalDate.parse(dateCadastro, formatter));
 
-        Cliente cliente = new Cliente(nome, email, CEP, endereco, data);
+        Cliente cliente = new Cliente(id, nome, email, CEP, endereco, data);
         listaClientes.add(cliente);
     }
 
@@ -219,7 +245,7 @@ public class OperacoesBiblioteca extends Funcionario {
                     System.out.println("Email: " + cliente.getEmail() + ",");
                     System.out.println("CEP: " + cliente.getCEP() + ",");
                     System.out.println("Endereco: " + cliente.getEndereco() + ",");
-                    System.out.println("DataCadastro: " + cliente.getDataCadastro().toString() + "\n");
+                    System.out.println("DataCadastro: " + cliente.getDataCadastro() + "\n");
                     encontrado = true;
                     break;
                 }
@@ -259,7 +285,7 @@ public class OperacoesBiblioteca extends Funcionario {
 
     public List<EmprestimoLivro> historicoDeLivro(Livro livro) {
         return historicoEmprestimos.stream().filter(emprestimoLivro ->
-        emprestimoLivro.getLivro().equals(livro)).collect(Collectors.toList());
+        emprestimoLivro.getIsbn().equals(livro.getIsbn())).collect(Collectors.toList());
     }
 
     public List<EmprestimoLivro> historicoDeUsuario(Cliente cliente) {
@@ -280,9 +306,6 @@ public class OperacoesBiblioteca extends Funcionario {
         FuncionarioAdministrativo funcionarioAdministrativo = new FuncionarioAdministrativo();
         operacoesBiblioteca.setIdOperacoesBiblioteca(resultSet.getInt("idOperacoesBiblioteca"));
         operacoesBiblioteca.setIdFuncionarioAdministrativo(resultSet.getInt("idFuncionarioAdministrativo"));
-//      String cargoString = resultSet.getString("cargo");
-//      Cargo cargo = Cargo.valueOf(cargoString.toUpperCase());
-//      operacoesBiblioteca.setCargo(cargo);
         operacoesBiblioteca.setQuantidadeLivrosVendidos(resultSet.getInt("quantidadeLivrosVendidos"));
         operacoesBiblioteca.setQuantidadeLivrosEmprestados(resultSet.getInt("quantidadeLivrosEmprestados"));
         operacoesBiblioteca.setIdEstoque(resultSet.getInt("idEstoque"));
@@ -291,13 +314,12 @@ public class OperacoesBiblioteca extends Funcionario {
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("OperacoesBiblioteca{").append("\n");
+        final StringBuffer sb = new StringBuffer().append("\n");
         sb.append("idOperacoesBiblioteca: ").append(idOperacoesBiblioteca).append("\n");
         sb.append("idFuncionarioAdministrativo: ").append(idFuncionarioAdministrativo).append("\n");
         sb.append("quantidadeLivrosVendidos: ").append(quantidadeLivrosVendidos).append("\n");
         sb.append("quantidadeLivrosEmprestados: ").append(quantidadeLivrosEmprestados).append("\n");
         sb.append("id do Estoque: ").append(idEstoque).append("\n");
-        sb.append('}');
         return sb.toString();
     }
 }
