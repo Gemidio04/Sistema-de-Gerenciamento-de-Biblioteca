@@ -43,7 +43,28 @@ public class OperacoesBibliotecaDaoJDBC extends ConexaoDAO implements OperacoesB
 
     @Override
     public void update(OperacoesBiblioteca operacoesBiblioteca) {
+        PreparedStatement preparedStatement = null;
 
+        try {
+            preparedStatement = connection.prepareStatement
+                    ("UPDATE Operacoes_Biblioteca " +
+                          "SET idOperacoesBiblioteca = ?, idFuncionarioAdministrativo = ?, " +
+                          "quantidadeLivrosVendidos = ?, quantidadeLivrosEmprestados = ?, idEstoque = ? " +
+                          "WHERE idOperacoesBiblioteca = ?");
+
+            preparedStatement.setInt(1, operacoesBiblioteca.getIdOperacoesBiblioteca());
+            preparedStatement.setInt(2, operacoesBiblioteca.getIdFuncionarioAdministrativo());
+            preparedStatement.setInt(3, operacoesBiblioteca.getQuantidadeLivrosVendidos());
+            preparedStatement.setInt(4, operacoesBiblioteca.getQuantidadeLivrosEmprestados());
+            preparedStatement.setInt(5, operacoesBiblioteca.getIdEstoque());
+            preparedStatement.setInt(6, operacoesBiblioteca.getIdOperacoesBiblioteca());
+            preparedStatement.executeUpdate();
+            System.out.println("UPDATE REALIZADO! ");
+        }catch (SQLException ex){
+            throw new DBException(ex.getMessage());
+        }finally {
+            ConexaoBancoDeDados.closeStatement(preparedStatement);
+        }
     }
 
     @Override

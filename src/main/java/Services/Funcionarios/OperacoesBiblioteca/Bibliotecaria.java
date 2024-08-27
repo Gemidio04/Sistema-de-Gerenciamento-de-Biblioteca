@@ -3,12 +3,10 @@ package Services.Funcionarios.OperacoesBiblioteca;
 import Clientes.Cliente;
 import Livros.EmprestimoLivro;
 import Livros.Livro;
-import Services.Exception.ValidacaoException;
 import Services.Funcionarios.Funcionario;
 import Services.Funcionarios.SegurancaProfissional;
 import Services.Regras.Regra;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public class Bibliotecaria extends OperacoesBiblioteca {

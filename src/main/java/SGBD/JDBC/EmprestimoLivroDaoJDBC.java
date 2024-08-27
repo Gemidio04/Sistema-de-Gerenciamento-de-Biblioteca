@@ -45,7 +45,28 @@ public class EmprestimoLivroDaoJDBC extends ConexaoDAO implements EmprestimoLivr
 
     @Override
     public void update(EmprestimoLivro emprestimoLivro) {
+        PreparedStatement preparedStatement = null;
 
+        try{
+            preparedStatement = connection.prepareStatement
+                    ("UPDATE Emprestimo_Livro SET "+
+                          "idEmprestimoLivro = ?, isbn = ?, idCliente = ?, " +
+                          "dataEmprestimo = ?, dataDevolucaoEmprestimo = ? " +
+                          "WHERE idEmprestimoLivro = ?");
+
+            preparedStatement.setInt(1, emprestimoLivro.getIdEmprestimoLivro());
+            preparedStatement.setString(2, emprestimoLivro.getIsbn());
+            preparedStatement.setInt(3, emprestimoLivro.getIdCliente());
+            preparedStatement.setString(4, emprestimoLivro.getDataEmprestimo());
+            preparedStatement.setString(5, emprestimoLivro.getDataDevolucaoEmprestimo());
+            preparedStatement.setInt(6, emprestimoLivro.getIdEmprestimoLivro());
+            preparedStatement.executeUpdate();
+            System.out.println("UPDATE REALIZADO!");
+        }catch (SQLException ex){
+            throw new DBException(ex.getMessage());
+        }finally {
+            ConexaoBancoDeDados.closeStatement(preparedStatement);
+        }
     }
 
     @Override

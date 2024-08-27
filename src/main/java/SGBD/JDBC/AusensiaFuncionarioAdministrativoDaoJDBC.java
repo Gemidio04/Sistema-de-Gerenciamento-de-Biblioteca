@@ -1,12 +1,10 @@
 package SGBD.JDBC;
 
 import SGBD.Connection.ConexaoBancoDeDados;
-import SGBD.InterfacesDAO.AusenciaDAO;
-import SGBD.InterfacesDAO.AusenciaFuncionarioAdministrativoDAO;
 import SGBD.Connection.ConexaoDAO;
 import SGBD.Exception.DBException;
-import SGBD.InterfacesDAO.AusensiaFuncionarioGeralDAO;
-import Services.Ausencia.Ausencia;
+import SGBD.InterfacesDAO.AusenciaDAO;
+import SGBD.InterfacesDAO.AusenciaFuncionarioAdministrativoDAO;
 import Services.Ausencia.AusensiaFuncionarioAdministrativo;
 import Services.ENUM.AusenciaENUM;
 
@@ -14,7 +12,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AusensiaFuncionarioAdministrativoDaoJDBC extends ConexaoDAO implements AusenciaDAO, AusenciaFuncionarioAdministrativoDAO {
 
@@ -53,8 +52,30 @@ public class AusensiaFuncionarioAdministrativoDaoJDBC extends ConexaoDAO impleme
     }
 
     @Override
-    public void update(Ausencia ausencia) {
-    }
+    public void update(AusensiaFuncionarioAdministrativo ausensiaFuncionarioAdministrativo){
+        PreparedStatement preparedStatement = null;
+
+        try {
+            preparedStatement = connection.prepareStatement
+                    ("UPDATE Ausencia_Funcionario_Administrativo " +
+                            "SET idAusenciaFuncionarioAdministrativo  = ?, idFuncionarioAdministrativo = ?, " +
+                            "tipoAusencia = ?, dataInicio = ?, dataFinal = ? " +
+                            "WHERE idAusenciaFuncionarioAdministrativo = ?");
+
+            preparedStatement.setInt(1, ausensiaFuncionarioAdministrativo.getIdAusenciaFuncionarioAdministrativo());
+            preparedStatement.setInt(2, ausensiaFuncionarioAdministrativo.getIdFuncionarioAdministrativo());
+            preparedStatement.setString(3, String.valueOf(ausensiaFuncionarioAdministrativo.getTipoAusencia()));
+            preparedStatement.setString(4, ausensiaFuncionarioAdministrativo.getDataInicio());
+            preparedStatement.setString(5, ausensiaFuncionarioAdministrativo.getDataFinal());
+            preparedStatement.setInt(6, ausensiaFuncionarioAdministrativo.getIdAusenciaFuncionarioAdministrativo());
+            preparedStatement.executeUpdate();
+            System.out.println("UPDATE REALIZADO! ");
+        }catch (SQLException ex){
+            throw new DBException(ex.getMessage());
+        }finally {
+            ConexaoBancoDeDados.closeStatement(preparedStatement);
+        }
+    };
 
     @Override
     public void delete(Integer id) {

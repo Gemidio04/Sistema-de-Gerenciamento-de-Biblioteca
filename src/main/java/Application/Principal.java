@@ -1,62 +1,100 @@
 package Application;
 
-import SGBD.InterfacesDAO.*;
-import Services.Ausencia.AusensiaFuncionarioAdministrativo;
-import Services.Ausencia.AusensiaFuncionarioGeral;
-import Services.ENUM.AusenciaENUM;
-
 public class Principal {
 
     public static void main(String[] args) {
 
-//        LivroDAO livroDAO = DaoFactory.createLivroDao();
-//        String sinopse = "A Jornada do Herói é uma épica história de coragem e descoberta." +
-//        " Segue-se a jornada de um jovem camponês que descobre um legado oculto e deve" +
-//        " enfrentar desafios inimagináveis para salvar seu reino. Com personagens envolventes" +
-//        " e uma trama rica, este livro é um deleite para os fãs de fantasia.";
-//
-//        Livro livro = new Livro
-//        ("979-1-23-456789-7","A Jornada do Herói","Livros da Aventura",
-//        "Fantasia e Ficção", "Ana Oliveira", "10 de outubro de 2020", sinopse);
-//        String insertLivro;
-//        livroDAO.insert(livro);
+//        LivroDAO livroDAO = DaoFactory.createLivroDAO();
+//        Livro livro = new Livro();
+//        String sinopse = "Este livro oferece uma visão abrangente sobre as melhores práticas de programação, " +
+//                "cobrindo desde conceitos básicos até técnicas avançadas. Com exemplos práticos e exercícios," +
+//                " é uma leitura essencial para quem deseja aprimorar suas habilidades em desenvolvimento de software.";
+//        livro.setIsbn("979-1-23-456789-7");
+//        livro.setTitulo("A Arte da Programação");
+//        livro.setEditora("Editora Tech");
+//        livro.setGenero("Tecnologia e Educação");
+//        livro.setAutor("João Pereira");
+//        livro.setDataPublicacao("null");
+//        livro.setSinopse(sinopse);
+//        livroDAO.update(livro);
 
-//        ClienteDAO clienteDAO = DaoFactory.createClienteDAO();
-//        Cliente insertCliente = new Cliente
-//        (5,"Larissa Freitas Guimarães","larissafreitas@gmail.com",
-//        "37700-069","Av teorodo guimarães 1001, Lagoinha","2018-02-03");
-//        clienteDAO.insert(insertCliente);
+//          ClienteDAO clienteDAO = DaoFactory.createClienteDAO();
+//          Cliente cliente = new Cliente();
+//          cliente.setIdCliente(1);
+//          cliente.setNome("Daniel Freitas Ferreira");
+//          cliente.setEmail("danielfreitas@gmail.com");
+//          cliente.setCEP("38500-090");
+//          cliente.setEndereco("Av Moacir Ramos de Freitas, 290, Luizote");
+//          cliente.setDataCadastro("2020-08-08");
+//          clienteDAO.update(cliente);
 
 //        EmprestimoLivroDAO emprestimoLivroDAO = DaoFactory.createEmprestimoLivroDAO();
-//        EmprestimoLivro emprestimoLivro = new EmprestimoLivro
-//        (5,"978-8576080008", 5, "2024-04-20", "2024-06-15");
-//        emprestimoLivroDAO.insert(emprestimoLivro);
+//        EmprestimoLivro emprestimoLivro = new EmprestimoLivro();
+//        emprestimoLivro.setIdEmprestimoLivro(5);
+//        emprestimoLivro.setIsbn("978-8576080008");
+//        emprestimoLivro.setIdCliente(5);
+//        emprestimoLivro.setDataEmprestimo("2024-02-12");
+//        emprestimoLivro.setDataDevolucaoEmprestimo("2024-06-17");
+//        emprestimoLivroDAO.update(emprestimoLivro);
 
 //        FuncionarioGeralDAO funcionarioGeralDAO = DaoFactory.createFuncionarioGeralDAO();
-//        FuncionarioGeral insertFuncionarioGeral = new FuncionarioGeral(5,"Sergio Queiroz Rocha",
-//                "sergioqueiroz@gmail.com","555.666.777-55","Integral","2022-01-10", 6000.0, Cargo.ANALISTA_DE_SISTEMAS);
-//        funcionarioGeralDAO.insert(insertFuncionarioGeral);
+//        FuncionarioGeral funcionarioGeral = new FuncionarioGeral();
+//        funcionarioGeral.setIdFuncionarioGeral(2);
+//        funcionarioGeral.setNome("Cleomar Junior Severino");
+//        funcionarioGeral.setEmail("cleomarjunior@gmail.com");
+//        funcionarioGeral.setCPF("222.333.444-11");
+//        funcionarioGeral.setTurno("Manhã");
+//        funcionarioGeral.setDataContratacao("2019-02-02");
+//        funcionarioGeral.setSalario(4200.00);
+//        funcionarioGeral.setCargo(Cargo.SEGURANCA_PROFISSIONAL);
+//        funcionarioGeralDAO.update(funcionarioGeral);
 
 //        FuncionarioAdministrativoDAO funcionarioAdministrativoDAO = DaoFactory.createFuncionarioAdminstrativoDAO();
-//        FuncionarioAdministrativo insertFuncionarioAdministrativo = new FuncionarioAdministrativo(5,"Marcelo Jefferson Costa",
-//                "marcelojeff@gmail.com","666.777.888-55","Integral","2023-05-15", 1500.0, Cargo.ASSISTENTE);
-//        funcionarioAdministrativoDAO.insert(insertFuncionarioAdministrativo);
+//        FuncionarioAdministrativo funcionarioAdministrativo = new FuncionarioAdministrativo();
+//        funcionarioAdministrativo.setIdFuncionarioAdministrativo(5);
+//        funcionarioAdministrativo.setNome("Marcelo Silva Ortega");
+//        funcionarioAdministrativo.setEmail("marcelosilva@gmail.com");
+//        funcionarioAdministrativo.setCPF("567.567.567-56");
+//        funcionarioAdministrativo.setTurno("Integral");
+//        funcionarioAdministrativo.setDataContratacao("2023-03-25");
+//        funcionarioAdministrativo.setSalario(1900.0);
+//        funcionarioAdministrativo.setCargo(Cargo.ASSISTENTE);
+//        funcionarioAdministrativoDAO.update(funcionarioAdministrativo);
 
 //        EstoqueDAO estoqueDAO = DaoFactory.createEstoqueDAO();
-//        Estoque insertEstoque = new Estoque(4,"978-8576080008", 30);
-//        estoqueDAO.insert(insertEstoque);
+//        Estoque estoque = new Estoque();
+//        estoque.setIdEstoque(4);
+//        estoque.setIsbn("978-8576080008");
+//        estoque.setQuantidade(40);
+//        estoqueDAO.update(estoque);
 
 //        OperacoesBibliotecaDAO operacoesBibliotecaDAO = DaoFactory.createOperacoesBibliotecaDAO();
-//        OperacoesBiblioteca insertOperacoesBiblioteca = new OperacoesBiblioteca(4,4, 10, 15,4);
-//        operacoesBibliotecaDAO.insert(insertOperacoesBiblioteca);
+//        OperacoesBiblioteca operacoesBiblioteca = new OperacoesBiblioteca();
+//        operacoesBiblioteca.setIdOperacoesBiblioteca(4);
+//        operacoesBiblioteca.setIdFuncionarioAdministrativo(4);
+//        operacoesBiblioteca.setQuantidadeLivrosVendidos(0);
+//        operacoesBiblioteca.setQuantidadeLivrosEmprestados(0);
+//        operacoesBiblioteca.setIdEstoque(4);
+//        operacoesBibliotecaDAO.update(operacoesBiblioteca);
 
-//        AusensiaFuncionarioGeralDAO ausensiaFuncionarioGeralDAO = DaoFactory.createAusensiaFuncionarioGeralDAO();
-//        ausensiaFuncionarioGeralDAO.insert(AusensiaFuncionarioGeral.criarDadosParaInserir
-//                (5, 5,AusenciaENUM.FERIAS, "2024-05-08", "2024-06-08"));
+//          AusensiaFuncionarioGeralDAO ausenciaFuncionarioGeralDAO = DaoFactory.createAusensiaFuncionarioGeralDAO();
+//          AusensiaFuncionarioGeral ausenciaFuncionarioGeral = new AusensiaFuncionarioGeral();
+//          ausenciaFuncionarioGeral.setIdAusenciaFuncionarioGeral(5);
+//          ausenciaFuncionarioGeral.setIdFuncionarioGeral(5);
+//          ausenciaFuncionarioGeral.setTipoAusencia(AusenciaENUM.FOLGA);
+//          ausenciaFuncionarioGeral.setDataInicio("2024-12-28");
+//          ausenciaFuncionarioGeral.setDataFinal("2024-12-29");
+//          ausenciaFuncionarioGeralDAO.update(ausenciaFuncionarioGeral);
 
-//          AusenciaFuncionarioAdministrativoDAO ausensiaFuncionarioAdministrativoDAO = DaoFactory.createAusensiaFuncionarioAdministrativoDAO();
-//        ausensiaFuncionarioAdministrativoDAO.insert(AusensiaFuncionarioAdministrativo.criarDadosParaInserir
-//                (5, 5,AusenciaENUM.FERIAS, "2023-05-28", "2023-06-28"));
+//        AusenciaFuncionarioAdministrativoDAO ausenciaFuncionarioAdministrativoDAO = DaoFactory.createAusensiaFuncionarioAdministrativoDAO();
+//        AusensiaFuncionarioAdministrativo ausenciaFuncionarioAdministrativo = new AusensiaFuncionarioAdministrativo();
+//        ausenciaFuncionarioAdministrativo.setIdAusenciaFuncionarioAdministrativo(5);
+//        ausenciaFuncionarioAdministrativo.setIdFuncionarioAdministrativo(5);
+//        ausenciaFuncionarioAdministrativo.setTipoAusencia(AusenciaENUM.FERIAS);
+//        ausenciaFuncionarioAdministrativo.setDataInicio("2024-12-28");
+//        ausenciaFuncionarioAdministrativo.setDataFinal("2024-12-29");
+//        ausenciaFuncionarioAdministrativoDAO.update(ausenciaFuncionarioAdministrativo);
+
     }
 }
 

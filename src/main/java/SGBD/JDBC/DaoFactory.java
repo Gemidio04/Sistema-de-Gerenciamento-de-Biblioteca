@@ -1,12 +1,12 @@
-package SGBD.InterfacesDAO;
+package SGBD.JDBC;
 
 import SGBD.Connection.ConexaoBancoDeDados;
-import SGBD.JDBC.*;
+import SGBD.InterfacesDAO.*;
 
 
 public class DaoFactory {
 
-    public static LivroDAO createLivroDao(){
+    public static LivroDAO createLivroDAO(){
         return new LivroDaoJDBC(ConexaoBancoDeDados.getConnection());
     }
 

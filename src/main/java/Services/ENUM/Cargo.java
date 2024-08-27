@@ -3,8 +3,6 @@ package Services.ENUM;
 import Services.Funcionarios.OperacoesBiblioteca.Gerente;
 import Services.Funcionarios.OperacoesBiblioteca.OperacoesBiblioteca;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public enum Cargo {

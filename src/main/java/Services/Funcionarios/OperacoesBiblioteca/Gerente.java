@@ -4,14 +4,12 @@ import Clientes.Cliente;
 import Livros.EmprestimoLivro;
 import Livros.Livro;
 import Services.ENUM.Cargo;
-import Services.Exception.ValidacaoException;
 import Services.Funcionarios.Funcionario;
 import Services.Funcionarios.SegurancaProfissional;
 import Services.Promocao.Promocao;
 import Services.Regras.Regra;
 import Services.Solicitacoes.Solicitacoes;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;

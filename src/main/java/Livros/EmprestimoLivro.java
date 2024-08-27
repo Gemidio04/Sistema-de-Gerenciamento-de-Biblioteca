@@ -7,7 +7,6 @@ import java.sql.SQLException;
 
 public class EmprestimoLivro {
     private int idEmprestimoLivro;
-//    private Livro livro;
     private Cliente cliente;
     private String isbn;
     private int idCliente;

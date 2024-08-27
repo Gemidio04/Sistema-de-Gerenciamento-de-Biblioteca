@@ -2,9 +2,9 @@ package SGBD.JDBC;
 
 import SGBD.Connection.ConexaoBancoDeDados;
 import SGBD.Connection.ConexaoDAO;
+import SGBD.Exception.DBException;
 import SGBD.InterfacesDAO.FuncionarioAdministrativoDAO;
 import SGBD.InterfacesDAO.FuncionarioDAO;
-import SGBD.Exception.DBException;
 import Services.Funcionarios.Funcionario;
 import Services.Funcionarios.Tipos.FuncionarioAdministrativo;
 
@@ -47,9 +47,32 @@ public class FuncionarioAdministrativoDaoJDBC extends ConexaoDAO implements Func
     }
 
     @Override
-    public void update(Funcionario funcionario) {
+    public void update(FuncionarioAdministrativo funcionarioAdministrativo) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(
+                    "UPDATE Funcionario_Administrativo SET " +
+                            "idFuncionarioAdministrativo = ?, nome = ?, email = ?, CPF = ?, " +
+                            "turno = ?, dataContratacao = ?, salario = ?, cargo = ? " +
+                            "WHERE idFuncionarioAdministrativo = ?")) {
 
-    }
+                preparedStatement.setInt(1, funcionarioAdministrativo.getIdFuncionarioAdministrativo());
+                preparedStatement.setString(2, funcionarioAdministrativo.getNome());
+                preparedStatement.setString(3, funcionarioAdministrativo.getEmail());
+                preparedStatement.setString(4, funcionarioAdministrativo.getCPF());
+                preparedStatement.setString(5, funcionarioAdministrativo.getTurno());
+                preparedStatement.setString(6, funcionarioAdministrativo.getDataContratacao());
+                // Define salário ou NULL:
+                preparedStatement.setObject(7, funcionarioAdministrativo.getSalario(), java.sql.Types.DOUBLE);
+                // Define cargo ou NULL:
+                preparedStatement.setObject(8, funcionarioAdministrativo.getCargo() != null ?
+                        funcionarioAdministrativo.getCargo().name() : null, java.sql.Types.VARCHAR);
+                preparedStatement.setInt(9, funcionarioAdministrativo.getIdFuncionarioAdministrativo());
+                preparedStatement.executeUpdate();
+                System.out.println("UPDATE REALIZADO!");
+            } catch (SQLException ex) {
+                throw new DBException(ex.getMessage());
+            }
+        }
+
 
     @Override
     public void delete(Integer id) {

@@ -3,16 +3,9 @@ package Services.Funcionarios.OperacoesBiblioteca;
 import Clientes.Cliente;
 import Livros.EmprestimoLivro;
 import Livros.Livro;
-import Services.Exception.ValidacaoException;
 import Services.Funcionarios.SegurancaProfissional;
-import Services.Solicitacoes.Solicitacoes;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class Assistente extends OperacoesBiblioteca{
     public void adicionarLivro(String isbn, Livro livro) {

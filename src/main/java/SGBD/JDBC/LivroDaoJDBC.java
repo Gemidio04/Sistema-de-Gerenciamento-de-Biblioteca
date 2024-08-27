@@ -45,7 +45,32 @@ public class LivroDaoJDBC extends ConexaoDAO implements LivroDAO {
 
     @Override
     public void update(Livro livro) {
+        PreparedStatement preparedStatement = null;
 
+        try {
+
+            preparedStatement = connection.prepareStatement
+                    ("UPDATE Livro SET " +
+                    "isbn = ?, titulo = ?, editora = ?, genero = ?, " +
+                    "autor = ?, dataPublicacao = ?, sinopse = ? " +
+                    "WHERE isbn = ?");
+
+            preparedStatement.setString(1, livro.getIsbn());
+            preparedStatement.setString(2, livro.getTitulo());
+            preparedStatement.setString(3, livro.getEditora());
+            preparedStatement.setString(4, livro.getGenero());
+            preparedStatement.setString(5, livro.getAutor());
+            preparedStatement.setString(6, livro.getDataPublicacao());
+            preparedStatement.setString(7, livro.getSinopse());
+            preparedStatement.setString(8, livro.getIsbn());
+            preparedStatement.executeUpdate();
+            System.out.println("UPDATE REALIZADO!");
+
+        }catch (SQLException ex){
+            throw new DBException(ex.getMessage());
+        }finally {
+            ConexaoBancoDeDados.closeStatement(preparedStatement);
+        }
     }
 
     @Override

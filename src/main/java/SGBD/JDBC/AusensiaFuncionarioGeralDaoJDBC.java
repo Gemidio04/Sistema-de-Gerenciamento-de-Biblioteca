@@ -2,12 +2,9 @@ package SGBD.JDBC;
 
 import SGBD.Connection.ConexaoBancoDeDados;
 import SGBD.InterfacesDAO.AusenciaDAO;
-import SGBD.InterfacesDAO.AusenciaFuncionarioAdministrativoDAO;
 import SGBD.InterfacesDAO.AusensiaFuncionarioGeralDAO;
 import SGBD.Connection.ConexaoDAO;
 import SGBD.Exception.DBException;
-import Services.Ausencia.Ausencia;
-import Services.Ausencia.AusensiaFuncionarioAdministrativo;
 import Services.Ausencia.AusensiaFuncionarioGeral;
 import Services.ENUM.AusenciaENUM;
 
@@ -20,28 +17,6 @@ public class AusensiaFuncionarioGeralDaoJDBC extends ConexaoDAO implements Ausen
     public AusensiaFuncionarioGeralDaoJDBC(Connection connection) {
         super(connection);
     }
-
-//    @Override
-//    public void insert(AusensiaFuncionarioGeral ausensiaFuncionarioGeral) {
-//        PreparedStatement preparedStatement = null;
-//
-//        try {
-//            preparedStatement = connection.prepareStatement
-//                    ("INSERT INTO Ausencia_Funcionario_Geral VALUES (?,?,?,?,?)");
-//
-//            preparedStatement.setInt(1, ausensiaFuncionarioGeral.getIdAusenciaFuncionarioGeral());
-//            preparedStatement.setInt(2, ausensiaFuncionarioGeral.getIdFuncionarioGeral());
-//            preparedStatement.setString(3, String.valueOf(ausensiaFuncionarioGeral.getTipoAusencia()));
-//            preparedStatement.setString(4, ausensiaFuncionarioGeral.getDataInicio());
-//            preparedStatement.setString(5, ausensiaFuncionarioGeral.getDataFinal());
-//            preparedStatement.executeUpdate();
-//            System.out.println("INSERT REALIZADO!");
-//        }catch (SQLException ex){
-//            throw new DBException(ex.getMessage());
-//        }finally {
-//            ConexaoBancoDeDados.closeStatement(preparedStatement);
-//        }
-//    }
 
     @Override
     public void insert(AusensiaFuncionarioGeral ausenciaFuncionarioGeral) {
@@ -56,7 +31,7 @@ public class AusensiaFuncionarioGeralDaoJDBC extends ConexaoDAO implements Ausen
             preparedStatement.setInt(1, ausenciaFuncionarioGeral.getIdAusenciaFuncionarioGeral());
             preparedStatement.setInt(2, ausenciaFuncionarioGeral.getIdFuncionarioGeral());
 
-            // Define um valor padrão caso tipoAusencia seja nulo
+            // Define um valor padrão caso tipoAusencia seja nulo:
             AusenciaENUM tipoAusencia = ausenciaFuncionarioGeral.getTipoAusencia() != null ?
                     ausenciaFuncionarioGeral.getTipoAusencia() :
                     AusenciaENUM.FOLGA;
@@ -74,11 +49,30 @@ public class AusensiaFuncionarioGeralDaoJDBC extends ConexaoDAO implements Ausen
         }
     }
 
-
-
     @Override
-    public void update(Ausencia ausencia) {
+    public void update(AusensiaFuncionarioGeral ausensiaFuncionarioGeral) {
+        PreparedStatement preparedStatement = null;
 
+        try {
+            preparedStatement = connection.prepareStatement
+                    ("UPDATE Ausencia_Funcionario_Geral " +
+                          "SET idAusenciaFuncionarioGeral  = ?, idFuncionarioGeral = ?, " +
+                          "tipoAusencia = ?, dataInicio = ?, dataFinal = ? " +
+                          "WHERE idAusenciaFuncionarioGeral = ?");
+
+            preparedStatement.setInt(1, ausensiaFuncionarioGeral.getIdAusenciaFuncionarioGeral());
+            preparedStatement.setInt(2, ausensiaFuncionarioGeral.getIdFuncionarioGeral());
+            preparedStatement.setString(3, String.valueOf(ausensiaFuncionarioGeral.getTipoAusencia()));
+            preparedStatement.setString(4, ausensiaFuncionarioGeral.getDataInicio());
+            preparedStatement.setString(5, ausensiaFuncionarioGeral.getDataFinal());
+            preparedStatement.setInt(6, ausensiaFuncionarioGeral.getIdAusenciaFuncionarioGeral());
+            preparedStatement.executeUpdate();
+            System.out.println("UPDATE REALIZADO! ");
+        }catch (SQLException ex){
+            throw new DBException(ex.getMessage());
+        }finally {
+            ConexaoBancoDeDados.closeStatement(preparedStatement);
+        }
     }
 
     @Override

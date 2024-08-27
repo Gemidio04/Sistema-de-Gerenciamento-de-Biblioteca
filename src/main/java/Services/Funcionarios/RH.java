@@ -1,14 +1,12 @@
 package Services.Funcionarios;
 
-import Services.ENUM.Cargo;
 import Services.Ausencia.Ferias;
 import Services.Ausencia.Folga;
+import Services.ENUM.Cargo;
 import Services.Funcionarios.OperacoesBiblioteca.OperacoesBiblioteca;
 import Services.Promocao.Promocao;
 import Services.Regras.Regra;
 import Services.Solicitacoes.Solicitacoes;
-
-import java.time.LocalDate;
 
 import java.util.Locale;
 import java.util.Scanner;

@@ -4,7 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Livro {
-    private int i = 1;
     private String isbn;
     private String titulo;
     private String editora;

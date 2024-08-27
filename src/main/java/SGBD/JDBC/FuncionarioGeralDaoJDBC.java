@@ -46,10 +46,31 @@ public class FuncionarioGeralDaoJDBC extends ConexaoDAO implements FuncionarioDA
         }
     }
 
-
     @Override
-    public void update(Funcionario funcionario) {
+    public void update(FuncionarioGeral funcionarioGeral) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(
+                "UPDATE Funcionario_Geral SET " +
+                        "idFuncionarioGeral = ?, nome = ?, email = ?, CPF = ?, " +
+                        "turno = ?, dataContratacao = ?, salario = ?, cargo = ? " +
+                        "WHERE idFuncionarioGeral = ?")) {
 
+            preparedStatement.setInt(1, funcionarioGeral.getIdFuncionarioGeral());
+            preparedStatement.setString(2, funcionarioGeral.getNome());
+            preparedStatement.setString(3, funcionarioGeral.getEmail());
+            preparedStatement.setString(4, funcionarioGeral.getCPF());
+            preparedStatement.setString(5, funcionarioGeral.getTurno());
+            preparedStatement.setString(6, funcionarioGeral.getDataContratacao());
+            // Define salário ou NULL:
+            preparedStatement.setObject(7, funcionarioGeral.getSalario(), java.sql.Types.DOUBLE);
+            // Define cargo ou NULL:
+            preparedStatement.setObject(8, funcionarioGeral.getCargo() != null ?
+                    funcionarioGeral.getCargo().name() : null, java.sql.Types.VARCHAR);
+            preparedStatement.setInt(9, funcionarioGeral.getIdFuncionarioGeral());
+            preparedStatement.executeUpdate();
+            System.out.println("UPDATE REALIZADO!");
+        } catch (SQLException ex) {
+            throw new DBException(ex.getMessage());
+        }
     }
 
     @Override

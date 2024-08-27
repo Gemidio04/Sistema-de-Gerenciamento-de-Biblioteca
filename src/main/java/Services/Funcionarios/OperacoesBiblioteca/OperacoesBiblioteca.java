@@ -3,13 +3,11 @@ package Services.Funcionarios.OperacoesBiblioteca;
 import Clientes.Cliente;
 import Livros.EmprestimoLivro;
 import Livros.Livro;
-import Services.ENUM.Cargo;
 import Services.Estoque.Estoque;
 import Services.Exception.ValidacaoException;
 import Services.Funcionarios.AnalistaDeSistemas;
 import Services.Funcionarios.Funcionario;
 import Services.Funcionarios.Tipos.FuncionarioAdministrativo;
-import Services.Funcionarios.Tipos.FuncionarioGeral;
 import Services.Solicitacoes.Solicitacoes;
 
 import java.sql.ResultSet;

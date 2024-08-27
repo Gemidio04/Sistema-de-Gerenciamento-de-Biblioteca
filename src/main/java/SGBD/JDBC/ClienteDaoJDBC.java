@@ -42,7 +42,29 @@ public class ClienteDaoJDBC extends ConexaoDAO implements ClienteDAO {
 
     @Override
     public void update(Cliente cliente) {
+        PreparedStatement preparedStatement = null;
 
+        try {
+            preparedStatement = connection.prepareStatement
+                    ("UPDATE Cliente SET " +
+                          "idCliente = ?, nome = ?, email = ?, " +
+                          "CEP = ?, endereco = ?, dataCadastro = ? " +
+                          "WHERE idCliente = ?");
+
+            preparedStatement.setInt(1, cliente.getIdCliente());
+            preparedStatement.setString(2, cliente.getNome());
+            preparedStatement.setString(3, cliente.getEmail());
+            preparedStatement.setString(4, cliente.getCEP());
+            preparedStatement.setString(5, cliente.getEndereco());
+            preparedStatement.setString(6, cliente.getDataCadastro());
+            preparedStatement.setInt(7, cliente.getIdCliente());
+            preparedStatement.executeUpdate();
+            System.out.println("UPDATE REALIZADO! ");
+        }catch (SQLException ex){
+            throw new DBException(ex.getMessage());
+        }finally {
+            ConexaoBancoDeDados.closeStatement(preparedStatement);
+        }
     }
 
     @Override

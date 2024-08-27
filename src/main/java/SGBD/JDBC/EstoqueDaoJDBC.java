@@ -1,11 +1,10 @@
 package SGBD.JDBC;
 
 import SGBD.Connection.ConexaoBancoDeDados;
-import SGBD.InterfacesDAO.EstoqueDAO;
 import SGBD.Connection.ConexaoDAO;
 import SGBD.Exception.DBException;
+import SGBD.InterfacesDAO.EstoqueDAO;
 import Services.Estoque.Estoque;
-import Services.Funcionarios.Tipos.FuncionarioAdministrativo;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -42,8 +41,22 @@ public class EstoqueDaoJDBC extends ConexaoDAO implements EstoqueDAO {
 
     @Override
     public void update(Estoque estoque) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(
+                "UPDATE Estoque SET " +
+                        "idEstoque = ?, isbn = ?, quantidade = ? " +
+                        "WHERE idEstoque = ?")) {
 
+            preparedStatement.setInt(1, estoque.getIdEstoque());
+            preparedStatement.setString(2, estoque.getIsbn());
+            preparedStatement.setInt(3, estoque.getQuantidade());
+            preparedStatement.setInt(4, estoque.getIdEstoque());
+            preparedStatement.executeUpdate();
+            System.out.println("UPDATE REALIZADO!");
+        } catch (SQLException ex) {
+            throw new DBException(ex.getMessage());
+        }
     }
+
 
     @Override
     public void delete(Integer id){
