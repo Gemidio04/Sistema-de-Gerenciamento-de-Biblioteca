@@ -8,7 +8,7 @@ public interface LivroDAO {
 
     void insert(Livro livro);
     void update(Livro livro);
-    void delete(Integer id);
+    void delete(String isbn);
     Livro selectById(String id);
     List<Livro> selectAll();
 }

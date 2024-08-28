@@ -8,7 +8,7 @@ public interface EstoqueDAO {
 
     void insert(Estoque estoque);
     void update(Estoque estoque);
-    void delete(Integer id);
+    void delete(Integer idEstoque);
     Estoque selectById(Integer id);
     List<Estoque> selectAll();
 }

@@ -74,8 +74,22 @@ public class FuncionarioGeralDaoJDBC extends ConexaoDAO implements FuncionarioDA
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(Integer idFuncionarioGeral) {
+        PreparedStatement preparedStatement = null;
 
+        try{
+            preparedStatement = connection.prepareStatement("DELETE FROM Funcionario_Geral WHERE idFuncionarioGeral = ?");
+            preparedStatement.setInt(1, idFuncionarioGeral);
+            int linhas = preparedStatement.executeUpdate();
+
+            if (linhas == 0)
+                throw new DBException("O idFuncionarioGeral fornecido não existe!");
+            System.out.println("DELETE REALIZADO!");
+        }catch(SQLException ex){
+            throw new DBException(ex.getMessage());
+        }finally {
+            ConexaoBancoDeDados.closeStatement(preparedStatement);
+        }
     }
 
     @Override

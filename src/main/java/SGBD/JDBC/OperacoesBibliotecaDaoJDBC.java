@@ -68,8 +68,24 @@ public class OperacoesBibliotecaDaoJDBC extends ConexaoDAO implements OperacoesB
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(Integer idOperacoesBiblioteca) {
+        PreparedStatement preparedStatement = null;
 
+        try{
+            preparedStatement = connection.prepareStatement
+                    ("DELETE FROM Operacoes_Biblioteca WHERE idOperacoesBiblioteca = ?");
+
+            preparedStatement.setInt(1, idOperacoesBiblioteca);
+            int linhas = preparedStatement.executeUpdate();
+
+            if(linhas == 0)
+                throw new DBException("O idOperacoesBiblioteca fornecido não existe!");
+            System.out.println("DELETE REALIZADO!");
+        }catch (SQLException ex){
+            throw new DBException(ex.getMessage());
+        }finally {
+            ConexaoBancoDeDados.closeStatement(preparedStatement);
+        }
     }
 
     @Override

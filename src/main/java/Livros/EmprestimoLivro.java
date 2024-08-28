@@ -32,10 +32,6 @@ public class EmprestimoLivro {
         this.idEmprestimoLivro = idEmprestimoLivro;
     }
 
-//    public Livro getLivro() {
-//        return livro;
-//    }
-//
     public Cliente getCliente() {
         return cliente;
     }

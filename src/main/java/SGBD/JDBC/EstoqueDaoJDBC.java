@@ -59,8 +59,22 @@ public class EstoqueDaoJDBC extends ConexaoDAO implements EstoqueDAO {
 
 
     @Override
-    public void delete(Integer id){
+    public void delete(Integer idEstoque){
+        PreparedStatement preparedStatement = null;
 
+        try{
+            preparedStatement = connection.prepareStatement("DELETE FROM Estoque WHERE idEstoque = ?");
+            preparedStatement.setInt(1, idEstoque);
+            int linhas = preparedStatement.executeUpdate();
+
+            if (linhas == 0)
+                throw new DBException("O idEstoque fornecido não existe!");
+            System.out.println("DELETE REALIZADO!");
+        }catch(SQLException ex){
+            throw new DBException(ex.getMessage());
+        }finally {
+            ConexaoBancoDeDados.closeStatement(preparedStatement);
+        }
     };
 
     @Override

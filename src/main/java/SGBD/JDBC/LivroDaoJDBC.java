@@ -74,8 +74,22 @@ public class LivroDaoJDBC extends ConexaoDAO implements LivroDAO {
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(String isbn) {
+        PreparedStatement preparedStatement = null;
 
+        try {
+            preparedStatement = connection.prepareStatement("DELETE FROM Livro WHERE isbn = ?");
+            preparedStatement.setString(1, isbn);
+            int linhas = preparedStatement.executeUpdate();
+
+            if (linhas == 0)
+                throw new DBException("O ISBN fornecido não existe!");
+            System.out.println("DELETE REALIZADO!");
+        }catch (SQLException ex){
+            throw new DBException(ex.getMessage());
+        }finally {
+            ConexaoBancoDeDados.closeStatement(preparedStatement);
+        }
     }
 
     @Override

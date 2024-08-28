@@ -70,9 +70,24 @@ public class EmprestimoLivroDaoJDBC extends ConexaoDAO implements EmprestimoLivr
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(Integer idEmprestimoLivro) {
+        PreparedStatement preparedStatement = null;
 
+        try {
+            preparedStatement = connection.prepareStatement("DELETE FROM Emprestimo_Livro WHERE idEmprestimoLivro = ?");
+            preparedStatement.setInt(1, idEmprestimoLivro);
+            int linhas = preparedStatement.executeUpdate();
+
+            if (linhas == 0)
+                throw new DBException("O idEmprestimoLivro fornecido não existe!");
+            System.out.println("DELETE REALIZADO!");
+        } catch (SQLException ex) {
+            throw new DBException(ex.getMessage());
+        } finally {
+            ConexaoBancoDeDados.closeStatement(preparedStatement);
+        }
     }
+
 
     @Override
     public EmprestimoLivro selectById(Integer id) {

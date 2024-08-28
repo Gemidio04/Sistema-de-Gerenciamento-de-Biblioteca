@@ -8,7 +8,7 @@ public interface EmprestimoLivroDAO {
 
     void insert(EmprestimoLivro emprestimoLivro);
     void update(EmprestimoLivro emprestimoLivro);
-    void delete(Integer id);
+    void delete(Integer idEmprestimoLivro);
     EmprestimoLivro selectById(Integer id);
     List<EmprestimoLivro> selectAll();
 }

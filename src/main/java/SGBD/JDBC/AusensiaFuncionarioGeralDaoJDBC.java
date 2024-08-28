@@ -76,8 +76,23 @@ public class AusensiaFuncionarioGeralDaoJDBC extends ConexaoDAO implements Ausen
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(Integer idAusenciaFuncionarioGeral) {
+        PreparedStatement preparedStatement = null;
 
+        try{
+            preparedStatement = connection.prepareStatement
+                    ("DELETE FROM Ausencia_Funcionario_Geral WHERE idAusenciaFuncionarioGeral = ?");
+            preparedStatement.setInt(1, idAusenciaFuncionarioGeral);
+            int linhas = preparedStatement.executeUpdate();
+
+            if (linhas == 0)
+                throw new DBException("O idAusenciaFuncionarioGeral fornecido não existe!");
+            System.out.println("DELETE REALIZADO!");
+        }catch(SQLException ex){
+            throw new DBException(ex.getMessage());
+        }finally {
+            ConexaoBancoDeDados.closeStatement(preparedStatement);
+        }
     }
 
     @Override

@@ -6,6 +6,5 @@ import java.util.List;
 
 public interface FuncionarioDAO {
 
-    void delete(Integer id);
     List<Funcionario> selectAll();
 }

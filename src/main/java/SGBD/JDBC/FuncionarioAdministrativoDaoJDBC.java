@@ -75,9 +75,23 @@ public class FuncionarioAdministrativoDaoJDBC extends ConexaoDAO implements Func
 
 
     @Override
-    public void delete(Integer id) {
+    public void delete(Integer idFuncionarioAdministrativo) {
+            PreparedStatement preparedStatement = null;
 
-    }
+            try{
+                preparedStatement = connection.prepareStatement("DELETE FROM Funcionario_Administrativo WHERE idFuncionarioAdministrativo = ?");
+                preparedStatement.setInt(1, idFuncionarioAdministrativo);
+                int linhas = preparedStatement.executeUpdate();
+
+                if (linhas == 0)
+                    throw new DBException("O idFuncionarioAdministrativo fornecido não existe!");
+                System.out.println("DELETE REALIZADO!");
+            }catch(SQLException ex){
+                throw new DBException(ex.getMessage());
+            }finally {
+                ConexaoBancoDeDados.closeStatement(preparedStatement);
+            }
+        }
 
     @Override
     public FuncionarioAdministrativo selectById(Integer id) {

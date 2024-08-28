@@ -68,7 +68,22 @@ public class ClienteDaoJDBC extends ConexaoDAO implements ClienteDAO {
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(Integer idCliente) {
+        PreparedStatement preparedStatement = null;
+
+        try {
+            preparedStatement = connection.prepareStatement("DELETE FROM Cliente WHERE idCliente = ?");
+            preparedStatement.setInt(1, idCliente);
+            int linhas = preparedStatement.executeUpdate();
+
+            if (linhas == 0)
+                throw new DBException("O idCliente fornecido não existe!");
+            System.out.println("DELETE REALIZADO!");
+        } catch (SQLException ex) {
+            throw new DBException(ex.getMessage());
+        } finally {
+            ConexaoBancoDeDados.closeStatement(preparedStatement);
+        }
     }
 
     @Override

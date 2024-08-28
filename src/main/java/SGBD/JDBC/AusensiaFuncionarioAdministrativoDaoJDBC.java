@@ -78,7 +78,23 @@ public class AusensiaFuncionarioAdministrativoDaoJDBC extends ConexaoDAO impleme
     };
 
     @Override
-    public void delete(Integer id) {
+    public void delete(Integer idAusenciaFuncionarioAdministrativo) {
+        PreparedStatement preparedStatement = null;
+
+        try{
+            preparedStatement = connection.prepareStatement
+            ("DELETE FROM Ausencia_Funcionario_Administrativo WHERE idAusenciaFuncionarioAdministrativo = ?");
+            preparedStatement.setInt(1, idAusenciaFuncionarioAdministrativo);
+            int linhas = preparedStatement.executeUpdate();
+
+            if (linhas == 0)
+                throw new DBException("O idAusenciaFuncionarioAdministrativo fornecido não existe!");
+            System.out.println("DELETE REALIZADO!");
+        }catch(SQLException ex){
+            throw new DBException(ex.getMessage());
+        }finally {
+            ConexaoBancoDeDados.closeStatement(preparedStatement);
+        }
     }
 
     @Override

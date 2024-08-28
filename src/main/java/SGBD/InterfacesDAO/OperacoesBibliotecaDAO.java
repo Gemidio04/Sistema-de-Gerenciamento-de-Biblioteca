@@ -8,7 +8,7 @@ public interface OperacoesBibliotecaDAO {
 
     void insert(OperacoesBiblioteca operacoesBiblioteca);
     void update(OperacoesBiblioteca operacoesBiblioteca);
-    void delete(Integer id);
+    void delete(Integer idOperacoesBiblioteca);
     OperacoesBiblioteca selectById(Integer id);
     List<OperacoesBiblioteca> selectAll();
 }

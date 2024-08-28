@@ -8,7 +8,7 @@ public interface ClienteDAO {
 
     void insert(Cliente cliente);
     void update(Cliente cliente);
-    void delete(Integer id);
+    void delete(Integer idCliente);
     Cliente selectById(Integer id);
     List<Cliente> selectAll();
 }
