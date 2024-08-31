@@ -24,18 +24,16 @@ public class ClienteDaoJDBC extends ConexaoDAO implements ClienteDAO {
 
         try {
             preparedStatement = connection.prepareStatement
-            ("INSERT INTO Cliente VALUES (?,?,?,?,?,?) ");
-            preparedStatement.setInt(1, cliente.getIdCliente());
-            preparedStatement.setString(2, cliente.getNome());
-            preparedStatement.setString(3, cliente.getEmail());
-            preparedStatement.setString(4, cliente.getCEP());
-            preparedStatement.setString(5, cliente.getEndereco());
-            preparedStatement.setString(6, cliente.getDataCadastro());
+                    ("INSERT INTO Cliente (nome, email, CEP, endereco, dataCadastro) VALUES (?, ?, ?, ?, ?)");
+            preparedStatement.setString(1, cliente.getNome());
+            preparedStatement.setString(2, cliente.getEmail());
+            preparedStatement.setString(3, cliente.getCEP());
+            preparedStatement.setString(4, cliente.getEndereco());
+            preparedStatement.setString(5, cliente.getDataCadastro());
             preparedStatement.executeUpdate();
-            System.out.println("INSERT REALIZADO!");
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        }finally {
+        } finally {
             ConexaoBancoDeDados.closeStatement(preparedStatement);
         }
     }
@@ -47,11 +45,10 @@ public class ClienteDaoJDBC extends ConexaoDAO implements ClienteDAO {
         try {
             preparedStatement = connection.prepareStatement
                     ("UPDATE Cliente SET " +
-                          "idCliente = ?, nome = ?, email = ?, " +
+                          "nome = ?, email = ?, " +
                           "CEP = ?, endereco = ?, dataCadastro = ? " +
                           "WHERE idCliente = ?");
 
-            preparedStatement.setInt(1, cliente.getIdCliente());
             preparedStatement.setString(2, cliente.getNome());
             preparedStatement.setString(3, cliente.getEmail());
             preparedStatement.setString(4, cliente.getCEP());
@@ -59,7 +56,6 @@ public class ClienteDaoJDBC extends ConexaoDAO implements ClienteDAO {
             preparedStatement.setString(6, cliente.getDataCadastro());
             preparedStatement.setInt(7, cliente.getIdCliente());
             preparedStatement.executeUpdate();
-            System.out.println("UPDATE REALIZADO! ");
         }catch (SQLException ex){
             throw new DBException(ex.getMessage());
         }finally {
@@ -78,7 +74,6 @@ public class ClienteDaoJDBC extends ConexaoDAO implements ClienteDAO {
 
             if (linhas == 0)
                 throw new DBException("O idCliente fornecido não existe!");
-            System.out.println("DELETE REALIZADO!");
         } catch (SQLException ex) {
             throw new DBException(ex.getMessage());
         } finally {

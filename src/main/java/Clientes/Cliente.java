@@ -1,7 +1,7 @@
 package Clientes;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;;
+import java.sql.SQLException;
 
 public class Cliente {
     private int idCliente;
@@ -14,8 +14,7 @@ public class Cliente {
     public Cliente() {
     }
 
-    public Cliente(int idCliente, String nome, String email, String CEP, String endereco, String dataCadastro) {
-        this.idCliente = idCliente;
+    public Cliente(String nome, String email, String CEP, String endereco, String dataCadastro) {
         this.nome = nome;
         this.email = email;
         this.CEP = CEP;
@@ -25,10 +24,6 @@ public class Cliente {
 
     public int getIdCliente() {
         return idCliente;
-    }
-
-    public void setIdCliente(int idCliente) {
-        this.idCliente = idCliente;
     }
 
     public String getNome() {
@@ -77,7 +72,7 @@ public class Cliente {
 
     public static Cliente instanciaCliente(ResultSet rs) throws SQLException {
         Cliente cliente = new Cliente();
-        cliente.setIdCliente(rs.getInt("idCliente"));
+        //cliente.setIdCliente(rs.getInt("idCliente"));
         cliente.setNome(rs.getString("nome"));
         cliente.setEmail(rs.getString("email"));
         cliente.setCEP(rs.getString("CEP"));
@@ -97,6 +92,7 @@ public class Cliente {
         sb.append("Data do Cadastro: ").append(dataCadastro).append(".\n");
         return sb.toString();
     }
+
 }
 
 

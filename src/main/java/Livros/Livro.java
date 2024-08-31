@@ -15,16 +15,6 @@ public class Livro {
     public Livro() {
     }
 
-    public Livro(String isbn, String titulo, String editora, String genero, String autor, String dataPublicacao, String sinopse) {
-        this.isbn = isbn;
-        this.titulo = titulo;
-        this.editora = editora;
-        this.genero = genero;
-        this.autor = autor;
-        this.dataPublicacao = dataPublicacao;
-        this.sinopse = sinopse;
-    }
-
 
     public String getIsbn() {
         return isbn;

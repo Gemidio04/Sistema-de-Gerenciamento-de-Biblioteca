@@ -31,7 +31,7 @@ public class EstoqueDaoJDBC extends ConexaoDAO implements EstoqueDAO {
                 preparedStatement.setString(2, estoque.getIsbn());
                 preparedStatement.setInt(3, estoque.getQuantidade());
                 preparedStatement.executeUpdate();
-                System.out.println("INSERT REALIZADO!");
+                //System.out.println("INSERT REALIZADO!");
             }catch (SQLException ex){
                 throw new DBException(ex.getMessage());
             }finally {
@@ -51,7 +51,7 @@ public class EstoqueDaoJDBC extends ConexaoDAO implements EstoqueDAO {
             preparedStatement.setInt(3, estoque.getQuantidade());
             preparedStatement.setInt(4, estoque.getIdEstoque());
             preparedStatement.executeUpdate();
-            System.out.println("UPDATE REALIZADO!");
+            //System.out.println("UPDATE REALIZADO!");
         } catch (SQLException ex) {
             throw new DBException(ex.getMessage());
         }
@@ -69,13 +69,13 @@ public class EstoqueDaoJDBC extends ConexaoDAO implements EstoqueDAO {
 
             if (linhas == 0)
                 throw new DBException("O idEstoque fornecido não existe!");
-            System.out.println("DELETE REALIZADO!");
+            //System.out.println("DELETE REALIZADO!");
         }catch(SQLException ex){
             throw new DBException(ex.getMessage());
         }finally {
             ConexaoBancoDeDados.closeStatement(preparedStatement);
         }
-    };
+    }
 
     @Override
     public Estoque selectById(Integer id) {
@@ -98,6 +98,33 @@ public class EstoqueDaoJDBC extends ConexaoDAO implements EstoqueDAO {
         }finally {
             ConexaoBancoDeDados.closeStatement(preparedStatement);
             ConexaoBancoDeDados.closeResultSet(resultSet);
+        }
+
+    }
+
+    @Override
+    public Estoque selectByIsbn(String isbn) {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Estoque estoque = null;
+
+        try {
+            String sql = "SELECT * FROM Estoque WHERE isbn = ?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, isbn);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                String isbnEstoque = resultSet.getString("isbn");
+                int quantidade = resultSet.getInt("quantidade");
+                estoque = new Estoque(isbnEstoque, quantidade);
+            }
+            return estoque;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+           ConexaoBancoDeDados.closeResultSet(resultSet);
+           ConexaoBancoDeDados.closeStatement(preparedStatement);
         }
     }
 

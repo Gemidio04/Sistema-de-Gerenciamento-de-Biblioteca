@@ -3,6 +3,10 @@ package Services.Funcionarios.OperacoesBiblioteca;
 import Clientes.Cliente;
 import Livros.EmprestimoLivro;
 import Livros.Livro;
+import SGBD.InterfacesDAO.ClienteDAO;
+import SGBD.InterfacesDAO.EmprestimoLivroDAO;
+import SGBD.InterfacesDAO.EstoqueDAO;
+import SGBD.JDBC.DaoFactory;
 import Services.Estoque.Estoque;
 import Services.Exception.ValidacaoException;
 import Services.Funcionarios.AnalistaDeSistemas;
@@ -25,7 +29,7 @@ public class OperacoesBiblioteca extends Funcionario {
     private int quantidadeLivrosEmprestados;
     private boolean livroEmprestado;
     private AnalistaDeSistemas analistaDeSistemas;
-    private Estoque estoque;
+    private final Estoque estoque = new Estoque();
     private int idEstoque;
     private FuncionarioAdministrativo funcionarioAdministrativo;
 
@@ -33,9 +37,9 @@ public class OperacoesBiblioteca extends Funcionario {
     private final List<Cliente> listaClientes;
     private final List<EmprestimoLivro> historicoEmprestimos;
 
+    Scanner sc = new Scanner(System.in);
+
     public OperacoesBiblioteca() {
-        this.idOperacoesBiblioteca = 1;
-        this.idFuncionarioAdministrativo = 1;
         this.quantidadeLivrosVendidos = 0;
         this.quantidadeLivrosEmprestados = 0;
         this.livroEmprestado = true;
@@ -113,13 +117,28 @@ public class OperacoesBiblioteca extends Funcionario {
         estoque.setQuantidade(estoque.getQuantidade() + 1);
     }
 
+//    public void removerLivro(Livro livro) {
+//        if (estoque.getQuantidade() > 0) {
+//            livros.remove(livro);
+//            estoque.setQuantidade(estoque.getQuantidade() - 1);
+//        }else
+//            throw new ValidacaoException("Não há mais unidades deste livro!");
+//    }
+
     public void removerLivro(Livro livro) {
-        if (estoque.getQuantidade() > 0) {
-            livros.remove(livro);
-            estoque.setQuantidade(estoque.getQuantidade() - 1);
-        }else
+        // Verifique o estoque do livro pelo ISBN:
+        Estoque estoqueLivro = encontrarEstoquePorIsbn(livro.getIsbn());
+
+        // Verifique se há estoque suficiente:
+        if (estoqueLivro == null || estoqueLivro.getQuantidade() <= 0) {
             throw new ValidacaoException("Não há mais unidades deste livro!");
+        }
+
+        // Reduza a quantidade em 1
+        int novaQuantidade = estoqueLivro.getQuantidade() - 1;
+        estoqueLivro.atualizaQuantidade(novaQuantidade);
     }
+
 
     public void atualizarInformacoesLivro
             (String isbn, String novoTitulo, String novoAutor, String novaDataPublicacao) {
@@ -134,7 +153,7 @@ public class OperacoesBiblioteca extends Funcionario {
     }
 
     public void venderLivro(Livro livro) {
-        if (checarDisponibilidadeEstoque()) {
+        if (checarDisponibilidadeEstoque(livro)) {
             removerLivro(livro);
             quantidadeLivrosVendidos++;
         } else {
@@ -144,16 +163,26 @@ public class OperacoesBiblioteca extends Funcionario {
     }
 
     public void emprestarLivro(EmprestimoLivro emprestimoLivro, Livro livro) {
-        EmprestimoLivro emprestimo = new EmprestimoLivro(emprestimoLivro.getIdEmprestimoLivro(), emprestimoLivro.getIsbn(),
-        emprestimoLivro.getIdCliente(), emprestimoLivro.getDataEmprestimo(), emprestimoLivro.getDataDevolucaoEmprestimo());
-        if (checarDisponibilidadeEstoque() && checarDisponibilidadeparaEmprestimo()) {
+        emprestimoLivro.setIsbn(livro.getIsbn());
+        emprestimoLivro.setIdCliente(emprestimoLivro.getIdCliente());
+        emprestimoLivro.setDataEmprestimo(emprestimoLivro.getDataEmprestimo());
+        emprestimoLivro.setDataDevolucaoEmprestimo(emprestimoLivro.getDataDevolucaoEmprestimo());
+
+        if (checarDisponibilidadeEstoque(livro) && checarDisponibilidadeparaEmprestimo()) {
             removerLivro(livro);
             historicoEmprestimos.add(emprestimoLivro);
-            livroEmprestado = false;
+            livroEmprestado = true;
         } else {
             throw new ValidacaoException
                     ("Livro:  " + livro + " não está disponível para empréstimo!");
         }
+
+        // Persistir o empréstimo no banco de dados
+        EmprestimoLivroDAO emprestimoLivroDAO = DaoFactory.createEmprestimoLivroDAO();
+        emprestimoLivroDAO.insert(emprestimoLivro);
+
+        //LivroDAO livroDAO = DaoFactory.createLivroDAO();
+        //livroDAO.insert(livro);
     }
 
     public void devolverLivro(String isbn, Livro livro) {
@@ -162,9 +191,24 @@ public class OperacoesBiblioteca extends Funcionario {
         livroEmprestado = true;
     }
 
-    public boolean checarDisponibilidadeEstoque() {
-        return estoque.getQuantidade() > 0;
+    public boolean checarDisponibilidadeEstoque(Livro livro) {
+        // Verifique se o ISBN do livro não é nulo
+        if (livro.getIsbn() != null) {
+            // Encontre o estoque do livro pelo ISBN:
+            Estoque estoqueLivro = encontrarEstoquePorIsbn(livro.getIsbn());
+            // Verifique se o estoque existe e se a quantidade é maior que 0:
+            return (estoqueLivro != null) && (estoqueLivro.getQuantidade() > 0);
+        }
+        return false;
     }
+
+    // Método auxiliar para buscar o estoque com base no ISBN do livro:
+    private Estoque encontrarEstoquePorIsbn(String isbn) {
+        // Simule a busca de estoque associado ao ISBN fornecido:
+        EstoqueDAO estoqueDAO = DaoFactory.createEstoqueDAO();
+        return estoqueDAO.selectByIsbn(isbn);
+    }
+
 
     public boolean checarDisponibilidadeparaEmprestimo() {
         return livroEmprestado;
@@ -201,11 +245,9 @@ public class OperacoesBiblioteca extends Funcionario {
         System.out.println(livro.getSinopse());
     }
 
-    public void registrarNovoCliente() {
-        Scanner sc = new Scanner(System.in);
+    public void cadastrarNovoCliente() {
         Solicitacoes solicitacoes = new Solicitacoes();
 
-        int id = Integer.parseInt(solicitacoes.solicitarEntrada("Id do Cliente: ", sc));
         String nome = solicitacoes.solicitarEntrada("Nome: ", sc);
         String email = solicitacoes.solicitarEntrada("Email: ", sc);
         String CEP = solicitacoes.solicitarEntrada("CEP: ", sc);
@@ -217,8 +259,13 @@ public class OperacoesBiblioteca extends Funcionario {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String data = String.valueOf(LocalDate.parse(dateCadastro, formatter));
 
-        Cliente cliente = new Cliente(id, nome, email, CEP, endereco, data);
+        Cliente cliente = new Cliente(nome, email, CEP, endereco, data);
         listaClientes.add(cliente);
+
+        ClienteDAO clienteDAO = DaoFactory.createClienteDAO();
+        clienteDAO.insert(cliente);
+
+        System.out.println("Cliente: "+nome+" Cadastrado!");
     }
 
     public void listaTodosClientes() {
@@ -255,15 +302,22 @@ public class OperacoesBiblioteca extends Funcionario {
         }
     }
 
-    public void removerCliente(Cliente cliente){
-        listaClientes.remove(cliente);
-    }
-
-    public void atualizarTodasInformacoesCliente(Cliente cliente, String novoNome, String novoEmail, String novoCEP, String novoEndereco) {
+    public void atualizarTodasInformacoesCliente() {
+        Cliente cliente = new Cliente();
+        String novoNome = sc.nextLine();
+        String novoEmail = sc.nextLine();
+        String novoCEP = sc.nextLine();
+        String novoEndereco = sc.nextLine();
         atualizarNomeCliente(cliente, novoNome);
         atualizarEmailCliente(cliente, novoEmail);
         atualizarCepCliente(cliente, novoCEP);
         atualizarEnderecoCliente(cliente, novoEndereco);
+        System.out.println("DADOS DO CLIENTE ATUALIZADOS!");
+    }
+
+    public void removerCliente(Cliente cliente){
+        listaClientes.remove(cliente);
+        System.out.println("CLIENTE REMOVIDO!");
     }
 
     public void atualizarNomeCliente(Cliente cliente, String novoNome){

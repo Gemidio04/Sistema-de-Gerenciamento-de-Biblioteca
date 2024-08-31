@@ -34,7 +34,7 @@ public class EmprestimoLivroDaoJDBC extends ConexaoDAO implements EmprestimoLivr
             preparedStatement.setString(4, emprestimoLivro.getDataEmprestimo());
             preparedStatement.setString(5, emprestimoLivro.getDataDevolucaoEmprestimo());
             preparedStatement.executeUpdate();
-            System.out.println("INSERT REALIZADO!");
+            //System.out.println("INSERT REALIZADO!");
         }catch (SQLException ex){
             throw new DBException(ex.getMessage());
         }finally {
@@ -61,7 +61,7 @@ public class EmprestimoLivroDaoJDBC extends ConexaoDAO implements EmprestimoLivr
             preparedStatement.setString(5, emprestimoLivro.getDataDevolucaoEmprestimo());
             preparedStatement.setInt(6, emprestimoLivro.getIdEmprestimoLivro());
             preparedStatement.executeUpdate();
-            System.out.println("UPDATE REALIZADO!");
+            //System.out.println("UPDATE REALIZADO!");
         }catch (SQLException ex){
             throw new DBException(ex.getMessage());
         }finally {
@@ -80,7 +80,7 @@ public class EmprestimoLivroDaoJDBC extends ConexaoDAO implements EmprestimoLivr
 
             if (linhas == 0)
                 throw new DBException("O idEmprestimoLivro fornecido não existe!");
-            System.out.println("DELETE REALIZADO!");
+            //System.out.println("DELETE REALIZADO!");
         } catch (SQLException ex) {
             throw new DBException(ex.getMessage());
         } finally {

@@ -16,7 +16,7 @@ public class EmprestimoLivro {
     public EmprestimoLivro() {
     }
 
-    public EmprestimoLivro(int idEmprestimoLivro, String isbn, int idCliente, String dataEmprestimo, String dataDevolucaoEmprestimo) {
+    public EmprestimoLivro(String isbn, int idCliente, String dataEmprestimo, String dataDevolucaoEmprestimo) {
         this.idEmprestimoLivro = idEmprestimoLivro;
         this.isbn = isbn;
         this.idCliente = idCliente;

@@ -55,8 +55,8 @@ public class Assistente extends OperacoesBiblioteca{
         super.exibirSinopseLivro(livro);
     }
 
-    public void registrarNovoCliente() {
-        super.registrarNovoCliente();
+    public void cadastrarNovoCliente() {
+        super.cadastrarNovoCliente();
     }
 
     public void listaTodosClientes() {
@@ -72,9 +72,8 @@ public class Assistente extends OperacoesBiblioteca{
         super.removerCliente(cliente);
     }
 
-    public void atualizarTodasInformacoesCliente
-            (Cliente cliente, String novoNome, String novoEmail, String novoCEP, String novoEndereco) {
-        super.atualizarTodasInformacoesCliente(cliente, novoNome, novoEmail, novoCEP, novoEndereco);
+    public void atualizarTodasInformacoesCliente() {
+        super.atualizarTodasInformacoesCliente();
     }
 
     public List<EmprestimoLivro> historicoDeLivro(Livro livro) {

@@ -42,7 +42,7 @@ public class AusensiaFuncionarioAdministrativoDaoJDBC extends ConexaoDAO impleme
             preparedStatement.setString(4, ausensiaFuncionarioAdministrativo.getDataInicio());
             preparedStatement.setString(5, ausensiaFuncionarioAdministrativo.getDataFinal());
             preparedStatement.executeUpdate();
-            System.out.println("INSERT REALIZADO!");
+            //System.out.println("INSERT REALIZADO!");
 
         } catch (SQLException ex) {
             throw new DBException(ex.getMessage());
@@ -69,7 +69,7 @@ public class AusensiaFuncionarioAdministrativoDaoJDBC extends ConexaoDAO impleme
             preparedStatement.setString(5, ausensiaFuncionarioAdministrativo.getDataFinal());
             preparedStatement.setInt(6, ausensiaFuncionarioAdministrativo.getIdAusenciaFuncionarioAdministrativo());
             preparedStatement.executeUpdate();
-            System.out.println("UPDATE REALIZADO! ");
+            //System.out.println("UPDATE REALIZADO! ");
         }catch (SQLException ex){
             throw new DBException(ex.getMessage());
         }finally {
@@ -89,7 +89,7 @@ public class AusensiaFuncionarioAdministrativoDaoJDBC extends ConexaoDAO impleme
 
             if (linhas == 0)
                 throw new DBException("O idAusenciaFuncionarioAdministrativo fornecido não existe!");
-            System.out.println("DELETE REALIZADO!");
+            //System.out.println("DELETE REALIZADO!");
         }catch(SQLException ex){
             throw new DBException(ex.getMessage());
         }finally {
