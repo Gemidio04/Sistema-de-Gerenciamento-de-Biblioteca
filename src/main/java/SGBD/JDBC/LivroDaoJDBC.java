@@ -64,8 +64,7 @@ public class LivroDaoJDBC extends ConexaoDAO implements LivroDAO {
             preparedStatement.setString(7, livro.getSinopse());
             preparedStatement.setString(8, livro.getIsbn());
             preparedStatement.executeUpdate();
-            System.out.println("UPDATE REALIZADO!");
-
+            //System.out.println("UPDATE REALIZADO!");
         }catch (SQLException ex){
             throw new DBException(ex.getMessage());
         }finally {
@@ -84,7 +83,7 @@ public class LivroDaoJDBC extends ConexaoDAO implements LivroDAO {
 
             if (linhas == 0)
                 throw new DBException("O ISBN fornecido não existe!");
-            System.out.println("DELETE REALIZADO!");
+            //System.out.println("DELETE REALIZADO!");
         }catch (SQLException ex){
             throw new DBException(ex.getMessage());
         }finally {
@@ -92,29 +91,27 @@ public class LivroDaoJDBC extends ConexaoDAO implements LivroDAO {
         }
     }
 
-    @Override
-    public Livro selectById(String id) {
+    public Livro selectByIsbn(String isbn) {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
         try {
-            preparedStatement = connection.prepareStatement
-            ("SELECT * FROM Livro WHERE isbn = ? ");
+            preparedStatement = connection.prepareStatement("SELECT * FROM Livro WHERE isbn = ?");
+            preparedStatement.setString(1, isbn);
 
-            preparedStatement.setString(1, id);
             resultSet = preparedStatement.executeQuery();
-
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 return Livro.instanciaLivro(resultSet);
             }
             return null;
         } catch (SQLException ex) {
             throw new DBException(ex.getMessage());
-        }finally {
+        } finally {
             ConexaoBancoDeDados.closeStatement(preparedStatement);
             ConexaoBancoDeDados.closeResultSet(resultSet);
         }
     }
+
 
     @Override
     public List<Livro> selectAll() {
@@ -131,7 +128,7 @@ public class LivroDaoJDBC extends ConexaoDAO implements LivroDAO {
                 Livro livro = Livro.instanciaLivro(resultSet);
                 livros.add(livro);
             }
-            System.out.print("Livros ");
+            //System.out.print("Livros: ");
             return livros;
         }catch (SQLException ex) {
             throw new DBException(ex.getMessage());

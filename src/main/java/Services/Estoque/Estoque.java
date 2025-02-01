@@ -59,6 +59,11 @@ public class Estoque {
         estoqueDAO.update(this);
     }
 
+    public void subitraiQuantidade(){
+        quantidade -= 1;
+    }
+
+
 
     @Override
     public String toString() {

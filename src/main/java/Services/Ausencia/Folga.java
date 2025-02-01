@@ -29,7 +29,7 @@ public class Folga extends Ausencia {
         if (podeTirarFolga()) {
             dataInicioFolga = LocalDate.now();
             setDataInicio(String.valueOf(dataInicioFolga)); // Define a data inicial da folga
-            setDataFinal(String.valueOf(dataInicioFolga.plusDays(1))); // Define a data final da folga (por exemplo, 1 dia de folga)
+            setDataFinal(String.valueOf(dataInicioFolga.plusDays(1))); // Define a data final da folga (1 dia de folga)
             resetarDiasTrabalhados();
             System.out.println(funcionario.getNome() + " recebeu uma folga de " + getDataInicio() + " até " + getDataFinal());
         } else {

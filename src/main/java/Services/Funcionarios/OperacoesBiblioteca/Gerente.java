@@ -8,11 +8,8 @@ import Services.Funcionarios.Funcionario;
 import Services.Funcionarios.SegurancaProfissional;
 import Services.Promocao.Promocao;
 import Services.Regras.Regra;
-import Services.Solicitacoes.Solicitacoes;
 
 import java.util.List;
-import java.util.Locale;
-import java.util.Scanner;
 
 public class Gerente extends OperacoesBiblioteca {
     private Regra regra;
@@ -21,38 +18,38 @@ public class Gerente extends OperacoesBiblioteca {
         promocao.promover(funcionario, novoCargo);
     }
 
-    public void contratarFuncionario(Funcionario novoFuncionario) {
-        Locale.setDefault(Locale.US);
-        Solicitacoes solicitacoes = new Solicitacoes();
-
-        try (Scanner sc = new Scanner(System.in)) {
-            String nome = solicitacoes.solicitarEntrada("Nome: ", sc);
-            String email = solicitacoes.solicitarEntrada("Email: ", sc);
-            String CPF = solicitacoes.solicitarEntrada("CPF: ", sc);
-            String turno = solicitacoes.solicitarEntrada("Turno: ", sc);
-            String dataContratacao = solicitacoes.solicitarEntrada("Data da Contratação: ", sc);
-            Double salario = solicitacoes.solicitarSalario("Salário: ", sc);
-
-            Cargo.converteCargoEnum((OperacoesBiblioteca) novoFuncionario);
-
-            novoFuncionario.setNome(nome);
-            novoFuncionario.setEmail(email);
-            novoFuncionario.setCPF(CPF);
-            novoFuncionario.setTurno(turno);
-            novoFuncionario.setDataContratacao(dataContratacao);
-            novoFuncionario.setSalario(salario);
-
-            novoFuncionario.getListaDeFuncionarios().add(novoFuncionario);
-            System.out.println("\nFuncionário contratado: " + novoFuncionario.getNome() + ", Cargo: " + novoFuncionario.getCargo());
-        }
-    }
-
-    public void demitirFuncionario(Funcionario funcionario) {
-        Regra regra = new Regra();
-        if (regra.getQuantidadeAdvertencias() == 3 || regra.getAdvertencia()) {
-            System.out.println("Assistente: " + funcionario.getNome() + " demitido!");
-        }
-    }
+//    public void contratarFuncionario(Funcionario novoFuncionario) {
+//        Locale.setDefault(Locale.US);
+//        Solicitacoes solicitacoes = new Solicitacoes();
+//
+//        try (Scanner sc = new Scanner(System.in)) {
+//            String nome = solicitacoes.solicitarEntrada("Nome: ", sc);
+//            String email = solicitacoes.solicitarEntrada("Email: ", sc);
+//            String CPF = solicitacoes.solicitarEntrada("CPF: ", sc);
+//            String turno = solicitacoes.solicitarEntrada("Turno: ", sc);
+//            String dataContratacao = solicitacoes.solicitarEntrada("Data da Contratação: ", sc);
+//            Double salario = solicitacoes.solicitarSalario("Salário: ", sc);
+//
+//            Cargo.converteCargoEnum((OperacoesBiblioteca) novoFuncionario);
+//
+//            novoFuncionario.setNome(nome);
+//            novoFuncionario.setEmail(email);
+//            novoFuncionario.setCPF(CPF);
+//            novoFuncionario.setTurno(turno);
+//            novoFuncionario.setDataContratacao(dataContratacao);
+//            novoFuncionario.setSalario(salario);
+//
+//            novoFuncionario.getListaDeFuncionarios().add(novoFuncionario);
+//            System.out.println("\nFuncionário contratado: " + novoFuncionario.getNome() + ", Cargo: " + novoFuncionario.getCargo());
+//        }
+//    }
+//
+//    public void demitirFuncionario(Funcionario funcionario) {
+//        Regra regra = new Regra();
+//        if (regra.getQuantidadeAdvertencias() == 3 || regra.getAdvertencia()) {
+//            System.out.println("Assistente: " + funcionario.getNome() + " demitido!");
+//        }
+//    }
 
     public void adicionarLivro(String isbn, Livro livro) {
         super.adicionarLivro(isbn, livro);
@@ -62,31 +59,29 @@ public class Gerente extends OperacoesBiblioteca {
         super.removerLivro(livro);
     }
 
-    public void atualizarInformacoesLivro(String isbn, String novoTitulo, String novoAutor, String novaDataPublicacao) {
-        super.atualizarInformacoesLivro(isbn, novoTitulo, novoAutor, novaDataPublicacao);
-    }
-    public void venderLivro(Livro livro) {
-        super.venderLivro(livro);
+    public void atualizarInformacoesLivro() {
+        super.atualizarInformacoesLivro();
     }
 
-    public void emprestarLivro(EmprestimoLivro emprestimoLivro, Livro livro) {
-        super.emprestarLivro(emprestimoLivro, livro);
+    public void venderLivro() {
+        super.venderLivro();
     }
 
-    public void devolverLivro(String isbn, Livro livro) {
-        super.devolverLivro(isbn, livro);
+    public void emprestarLivro(EmprestimoLivro emprestimoLivro) {
+        super.emprestarLivro(emprestimoLivro);
     }
+
+//    public void devolverLivro(String isbn, Livro livro) {
+//        super.devolverLivro(isbn, livro);
+//    }
 
     public boolean checarDisponibilidadeEstoque() {
         return getEstoque().getQuantidade() > 0;
     }
 
-    public boolean checarDisponibilidadeparaEmprestimo() {
-        return getLivroEmprestado();
-    }
 
-    public Livro buscarLivroIsbn(String isbn) {
-        return super.buscarLivroIsbn(isbn);
+    public void buscarLivroIsbn(String isbn) {
+        super.buscarLivroIsbn(isbn);
     }
 
     public Livro buscarLivroAutor(String autor) {
@@ -97,10 +92,6 @@ public class Gerente extends OperacoesBiblioteca {
         return super.buscarLivroTitulo(titulo);
     }
 
-    public void exibirSinopseLivro(Livro livro){
-        super.exibirSinopseLivro(livro);
-    }
-
     public void cadastrarNovoCliente() {
         super.cadastrarNovoCliente();
     }
@@ -109,13 +100,8 @@ public class Gerente extends OperacoesBiblioteca {
         super.listaTodosClientes();
     }
 
-    public void listaClienteDadoUmNome(String nomeBusca) {
-        super.listaClienteDadoUmNome(nomeBusca);
-    }
-
-
-    public void removerCliente(Cliente cliente){
-        super.removerCliente(cliente);
+    public void excluirCadastroCliente(Cliente cliente){
+        super.excluirCadastroCliente(cliente);
     }
 
     public void atualizarTodasInformacoesCliente() {

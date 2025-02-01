@@ -7,6 +7,12 @@ import java.util.Scanner;
 
 public enum Cargo {
 
+    CARGO_PADRAO {
+        @Override
+        public Cargo ProximoCargo() {
+            return CARGO_PADRAO;
+        }
+    },
     GESTOR_PROGRAMAS_EVENTOS {
         @Override
         public Cargo ProximoCargo() {
@@ -53,6 +59,29 @@ public enum Cargo {
 
     public abstract Cargo ProximoCargo();
 
+    public static String obterDescricao(Cargo cargo) {
+        switch (cargo) {
+            case CARGO_PADRAO:
+                return "Cargo Padrão";
+            case GESTOR_PROGRAMAS_EVENTOS:
+                return "Gestor de Programas e Eventos";
+            case SEGURANCA_PROFISSIONAL:
+                return "Segurança";
+            case ANALISTA_DE_SISTEMAS:
+                return "Analista De Sistemas";
+            case RH:
+                return "Recursos Humanos";
+            case ASSISTENTE:
+                return "Assistente";
+            case BIBLIOTECARIO:
+                return "Bibliotecaria(o)";
+            case GERENTE:
+                return "Gerente";
+            default:
+                throw new IllegalArgumentException("Cargo desconhecido: " + cargo);
+        }
+    }
+
     public static void converteCargoEnum(OperacoesBiblioteca novoFuncionario){
         Scanner sc = new Scanner(System.in);
         Gerente gerente = new Gerente();
@@ -62,7 +91,6 @@ public enum Cargo {
             String cargoInput = sc.nextLine().toUpperCase();
             Cargo cargo = Cargo.valueOf(cargoInput);
             novoFuncionario.setCargo(cargo);
-            gerente.getListaDeFuncionarios().add(novoFuncionario);
         } catch (IllegalArgumentException e) {
             System.out.println("Cargo inválido. Por favor, insira um cargo válido: ");
         }

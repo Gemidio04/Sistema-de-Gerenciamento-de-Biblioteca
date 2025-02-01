@@ -59,14 +59,11 @@ public class Ausencia {
         this.tipoAusencia = tipoAusencia; // Directly set the value
     }
 
+    public void registrarFerias(LocalDate data) {
+        historicoFerias.add(data);
+    }
+
     public static String fromString(String tipoAusenciaString) {
-//        switch (tipoAusenciaString.toUpperCase()) {
-//            case "FOLGA":
-//                return new Folga();
-//            case "FERIAS":
-//                return new Ferias();
-//            default:
-//                throw new IllegalArgumentException("Tipo de ausência inválido: " + tipoAusenciaString);
         return switch (tipoAusenciaString.toUpperCase()) {
             case "FOLGA" -> tipoAusenciaString = String.valueOf(AusenciaENUM.FOLGA);
             case "FERIAS" -> tipoAusenciaString = String.valueOf(AusenciaENUM.FERIAS);

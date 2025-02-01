@@ -1,11 +1,12 @@
 package SGBD.JDBC;
 
 import SGBD.Connection.ConexaoBancoDeDados;
-import SGBD.InterfacesDAO.FuncionarioDAO;
 import SGBD.Connection.ConexaoDAO;
+import SGBD.InterfacesDAO.FuncionarioDAO;
 import SGBD.InterfacesDAO.FuncionarioGeralDAO;
 import SGBD.Exception.DBException;
 import Services.Funcionarios.Funcionario;
+import Services.Funcionarios.Tipos.FuncionarioAdministrativo;
 import Services.Funcionarios.Tipos.FuncionarioGeral;
 
 import java.sql.Connection;
@@ -15,19 +16,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FuncionarioGeralDaoJDBC extends ConexaoDAO implements FuncionarioDAO, FuncionarioGeralDAO {
+public class FuncionarioGeralDaoJDBC extends ConexaoDAO implements FuncionarioGeralDAO, FuncionarioDAO {
 
     public FuncionarioGeralDaoJDBC(Connection connection) {
         super(connection);
     }
 
     @Override
-    public void insert(FuncionarioGeral funcionarioGeral) {
+    public FuncionarioGeralDaoJDBC insert(FuncionarioGeral funcionarioGeral) {
         PreparedStatement preparedStatement = null;
 
         try {
             preparedStatement = connection.prepareStatement(
-                    "INSERT INTO Funcionario_Geral VALUES (?,?,?,?,?,?,?,?)");
+                    "INSERT INTO FUNCIONARIO_GERAL VALUES (?,?,?,?,?,?,?,?)");
 
             preparedStatement.setInt(1, funcionarioGeral.getIdFuncionarioGeral());
             preparedStatement.setString(2, funcionarioGeral.getNome());
@@ -39,11 +40,19 @@ public class FuncionarioGeralDaoJDBC extends ConexaoDAO implements FuncionarioDA
             preparedStatement.setString(8, funcionarioGeral.getCargo().toString());
             preparedStatement.executeUpdate();
             System.out.println("INSERT REALIZADO!");
+            System.out.println("Nome: " + funcionarioGeral.getNome());
+            System.out.println("Email: " + funcionarioGeral.getEmail());
+            System.out.println("CPF: " + funcionarioGeral.getCPF());
+            System.out.println("Turno: " + funcionarioGeral.getTurno());
+            System.out.println("Data Contratação: " + funcionarioGeral.getDataContratacao());
+            System.out.println("Salario: " + funcionarioGeral.getSalario());
+            System.out.println("Cargo: " + funcionarioGeral.getCargo().toString());
         } catch (SQLException ex) {
             throw new DBException(ex.getMessage());
         } finally {
             ConexaoBancoDeDados.closeStatement(preparedStatement);
         }
+        return null;
     }
 
     @Override
@@ -84,11 +93,35 @@ public class FuncionarioGeralDaoJDBC extends ConexaoDAO implements FuncionarioDA
 
             if (linhas == 0)
                 throw new DBException("O idFuncionarioGeral fornecido não existe!");
-            System.out.println("DELETE REALIZADO!");
+            //System.out.println("DELETE REALIZADO!");
         }catch(SQLException ex){
             throw new DBException(ex.getMessage());
         }finally {
             ConexaoBancoDeDados.closeStatement(preparedStatement);
+        }
+    }
+
+    @Override
+    public Funcionario selectById(int id) {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            preparedStatement = connection.prepareStatement
+                    ("SELECT * FROM Funcionario_Geral WHERE idFuncionarioGeral = ?");
+
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+
+            if(resultSet.next()){
+                return FuncionarioGeral.instanciaFuncionarioGeral(resultSet);
+            }
+            return null;
+        } catch (SQLException ex) {
+            throw new DBException(ex.getMessage());
+        }finally {
+            ConexaoBancoDeDados.closeStatement(preparedStatement);
+            ConexaoBancoDeDados.closeResultSet(resultSet);
         }
     }
 
@@ -114,11 +147,10 @@ public class FuncionarioGeralDaoJDBC extends ConexaoDAO implements FuncionarioDA
             ConexaoBancoDeDados.closeStatement(preparedStatement);
             ConexaoBancoDeDados.closeResultSet(resultSet);
         }
-
     }
 
     @Override
-    public List<Funcionario> selectAll() {
+    public List<FuncionarioGeral> selectAll() {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
@@ -130,15 +162,13 @@ public class FuncionarioGeralDaoJDBC extends ConexaoDAO implements FuncionarioDA
 
             resultSet = preparedStatement.executeQuery();
 
-            List<Funcionario> listaFuncionariosGerais = new ArrayList<>();
+            List<FuncionarioGeral> listaFuncionariosGerais = new ArrayList<>();
 
             while (resultSet.next()){
                 FuncionarioGeral funcionarioGeral = FuncionarioGeral.instanciaFuncionarioGeral(resultSet);
-                Funcionario funcionario = Funcionario.instanciaFuncionario(resultSet);
                 listaFuncionariosGerais.add(funcionarioGeral);
-                listaFuncionariosGerais.add(funcionario);
             }
-            System.out.print("Funcionários Gerais: ");
+            System.out.println("\nFuncionários Gerais: \n");
             return listaFuncionariosGerais;
         }catch (SQLException ex){
             throw new DBException(ex.getMessage());

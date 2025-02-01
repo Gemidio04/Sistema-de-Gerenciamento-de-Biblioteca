@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class EstoqueDaoJDBC extends ConexaoDAO implements EstoqueDAO {
 
@@ -54,6 +55,28 @@ public class EstoqueDaoJDBC extends ConexaoDAO implements EstoqueDAO {
             //System.out.println("UPDATE REALIZADO!");
         } catch (SQLException ex) {
             throw new DBException(ex.getMessage());
+        }
+    }
+
+    public void updateQuantidade(int idEstoque, int novaQuantidade) {
+        PreparedStatement preparedStatement = null;
+
+        try {
+            preparedStatement = connection.prepareStatement(
+                    "UPDATE Estoque SET quantidade = ? WHERE idEstoque = ?");
+
+            preparedStatement.setInt(1, novaQuantidade);
+            preparedStatement.setInt(2, idEstoque);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected == 0) {
+                System.out.println("Nenhuma linha foi atualizada. Verifique o idEstoque.");
+            }
+        } catch(SQLException ex) {
+            throw new DBException(ex.getMessage());
+        } finally {
+            ConexaoBancoDeDados.closeStatement(preparedStatement);
         }
     }
 

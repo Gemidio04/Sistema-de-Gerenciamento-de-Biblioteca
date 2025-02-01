@@ -2,9 +2,8 @@ package SGBD.InterfacesDAO;
 
 import Services.Funcionarios.Funcionario;
 
-import java.util.List;
-
 public interface FuncionarioDAO {
 
-    List<Funcionario> selectAll();
+    void delete(Integer idFuncionario);
+    Funcionario selectById(int id);
 }

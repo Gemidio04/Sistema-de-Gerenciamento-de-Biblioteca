@@ -4,9 +4,12 @@ import Services.ENUM.Cargo;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Funcionario {
+    private int idFuncionario;
     private String nome;
     private String email;
     private String CPF;
@@ -14,7 +17,7 @@ public class Funcionario {
     private String dataContratacao;
     private Double salario;
     private Cargo cargo;
-    private List<Funcionario> listaDeFuncionarios;
+
 
     public Funcionario(){
     }
@@ -27,6 +30,10 @@ public class Funcionario {
         this.dataContratacao = dataContratacao;
         this.salario = salario;
         this.cargo = cargo;
+    }
+
+    protected Integer getIdFuncionario() {
+        return idFuncionario;
     }
 
     public String getNome() {
@@ -85,11 +92,6 @@ public class Funcionario {
         this.cargo = cargo;
     }
 
-    public List<Funcionario> getListaDeFuncionarios() {
-        return listaDeFuncionarios;
-    }
-
-
     public void enviarNotificacaoIncidente(SegurancaProfissional incidente) {
         incidente.enviarNotificacao(incidente);
     }
@@ -113,13 +115,14 @@ public class Funcionario {
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("\n");
-        sb.append("Nome: ").append(nome).append(",\n");
-        sb.append("Email: ").append(email).append(",\n");
-        sb.append("CPF: ").append(CPF).append(",\n");
-        sb.append("Turno: ").append(turno).append(",\n");
-        sb.append("Data da Contratacao: ").append(dataContratacao).append(",\n");
-        sb.append("Salário: ").append(salario).append(",\n");
+        sb.append("Nome: ").append(nome).append(", ");
+        sb.append("Email: ").append(email).append(", ");
+        sb.append("CPF: ").append(CPF).append(", ");
+        sb.append("Turno: ").append(turno).append(", ");
+        sb.append("Data da Contratacao: ").append(dataContratacao).append(", ");
+        sb.append("Salário: ").append(salario).append(", ");
         sb.append("Cargo: ").append(cargo).append(".\n");
         return sb.toString();
     }
+
 }

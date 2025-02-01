@@ -18,6 +18,10 @@ public class DaoFactory {
         return new ClienteDaoJDBC(ConexaoBancoDeDados.getConnection());
     }
 
+    public static FuncionarioDAO createFuncionarioDAO() {
+        return new FuncionarioDaoJDBC(ConexaoBancoDeDados.getConnection());
+    }
+
     public static FuncionarioGeralDAO createFuncionarioGeralDAO() {
         return new FuncionarioGeralDaoJDBC(ConexaoBancoDeDados.getConnection());
     }

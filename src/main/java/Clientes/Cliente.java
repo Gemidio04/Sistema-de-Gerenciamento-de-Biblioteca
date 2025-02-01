@@ -26,6 +26,10 @@ public class Cliente {
         return idCliente;
     }
 
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
+    }
+
     public String getNome() {
         return nome;
     }
@@ -54,16 +58,12 @@ public class Cliente {
         return endereco;
     }
 
-    public String getDataCadastro() {
-        return dataCadastro;
-    }
-
-    public void setCPF(String CEP) {
-        this.CEP = CEP;
-    }
-
     public void setEndereco(String endereco) {
         this.endereco = endereco;
+    }
+
+    public String getDataCadastro() {
+        return dataCadastro;
     }
 
     public void setDataCadastro(String dataCadastro) {
@@ -72,7 +72,7 @@ public class Cliente {
 
     public static Cliente instanciaCliente(ResultSet rs) throws SQLException {
         Cliente cliente = new Cliente();
-        //cliente.setIdCliente(rs.getInt("idCliente"));
+        cliente.setIdCliente(rs.getInt("idCliente"));
         cliente.setNome(rs.getString("nome"));
         cliente.setEmail(rs.getString("email"));
         cliente.setCEP(rs.getString("CEP"));

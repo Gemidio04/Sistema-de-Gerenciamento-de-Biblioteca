@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FuncionarioAdministrativoDaoJDBC extends ConexaoDAO implements FuncionarioDAO, FuncionarioAdministrativoDAO {
+public class FuncionarioAdministrativoDaoJDBC extends ConexaoDAO implements FuncionarioAdministrativoDAO, FuncionarioDAO {
 
     public FuncionarioAdministrativoDaoJDBC(Connection connection) {
         super(connection);
@@ -39,6 +39,13 @@ public class FuncionarioAdministrativoDaoJDBC extends ConexaoDAO implements Func
            preparedStatement.setString(8, String.valueOf(funcionarioAdministrativo.getCargo()));
            preparedStatement.executeUpdate();
            System.out.println("INSERT REALIZADO!");
+           System.out.println("Nome: " + funcionarioAdministrativo.getNome());
+           System.out.println("Email: " + funcionarioAdministrativo.getEmail());
+           System.out.println("CPF: " + funcionarioAdministrativo.getCPF());
+           System.out.println("Turno: " + funcionarioAdministrativo.getTurno());
+           System.out.println("Data Contratação: " + funcionarioAdministrativo.getDataContratacao());
+           System.out.println("Salario: " + funcionarioAdministrativo.getSalario());
+           System.out.println("Cargo: " + funcionarioAdministrativo.getCargo().toString());
        }catch (SQLException ex){
            throw new DBException(ex.getMessage());
        }finally {
@@ -94,6 +101,30 @@ public class FuncionarioAdministrativoDaoJDBC extends ConexaoDAO implements Func
         }
 
     @Override
+    public Funcionario selectById(int id) {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            preparedStatement = connection.prepareStatement
+                    ("SELECT * FROM Funcionario_Administrativo WHERE idFuncionarioAdministrativo = ?");
+
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+
+            if(resultSet.next()){
+                return (FuncionarioAdministrativo) FuncionarioAdministrativo.instanciaFuncionarioAdministrativo(resultSet);
+            }
+            return null;
+        } catch (SQLException ex) {
+            throw new DBException(ex.getMessage());
+        }finally {
+            ConexaoBancoDeDados.closeStatement(preparedStatement);
+            ConexaoBancoDeDados.closeResultSet(resultSet);
+        }
+    }
+
+    @Override
     public FuncionarioAdministrativo selectById(Integer id) {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -118,30 +149,29 @@ public class FuncionarioAdministrativoDaoJDBC extends ConexaoDAO implements Func
     }
 
     @Override
-    public List<Funcionario> selectAll() {
+    public List<FuncionarioAdministrativo> selectAll() {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
         try {
-            preparedStatement = connection.prepareStatement
-                    ("SELECT FA.idFuncionarioAdministrativo, FA.nome, FA.email, FA.CPF, FA.turno, " +
-                    "DATE_FORMAT(FA.dataContratacao, '%d/%m/%Y') AS dataContratacao, " +
-                    "FA.salario, FA.cargo FROM FUNCIONARIO_ADMINISTRATIVO FA; ");
+            preparedStatement = connection.prepareStatement(
+                    "SELECT FA.idFuncionarioAdministrativo, FA.nome, FA.email, FA.CPF, FA.turno, " +
+                            "DATE_FORMAT(FA.dataContratacao, '%d/%m/%Y') AS dataContratacao, " +
+                            "FA.salario, FA.cargo FROM FUNCIONARIO_ADMINISTRATIVO FA;"
+            );
             resultSet = preparedStatement.executeQuery();
 
-            List<Funcionario> listaFuncionarioAdministrativo = new ArrayList<>();
+            List<FuncionarioAdministrativo> listaFuncionarioAdministrativo = new ArrayList<>();
 
-            while (resultSet.next()){
+            while (resultSet.next()) {
+                // Instancia e adiciona diretamente o FuncionarioAdministrativo
                 FuncionarioAdministrativo funcionarioAdministrativo =
-                FuncionarioAdministrativo.instanciaFuncionarioAdministrativo(resultSet);
-                Funcionario funcionario = Funcionario.instanciaFuncionario(resultSet);
-
+                        FuncionarioAdministrativo.instanciaFuncionarioAdministrativo(resultSet);
                 listaFuncionarioAdministrativo.add(funcionarioAdministrativo);
-                listaFuncionarioAdministrativo.add(funcionario);
             }
-            System.out.print("Funcionários Administrativos: ");
+            System.out.println("\nFuncionários Administrativos: \n");
             return listaFuncionarioAdministrativo;
-        }catch (SQLException ex){
+        } catch (SQLException ex) {
             throw new DBException(ex.getMessage());
         }
     }

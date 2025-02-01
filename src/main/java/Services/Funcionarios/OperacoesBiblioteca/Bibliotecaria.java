@@ -20,23 +20,25 @@ public class Bibliotecaria extends OperacoesBiblioteca {
         super.removerLivro(livro);
     }
 
-    public void atualizarInformacoesLivro(String isbn, String novoTitulo, String novoAutor, String novaDataPublicacao) {
-        super.atualizarInformacoesLivro(isbn, novoTitulo, novoAutor, novaDataPublicacao);
-    }
-    public void venderLivro(Livro livro) {
-        super.venderLivro(livro);
+    public void atualizarInformacoesLivro() {
+        super.atualizarInformacoesLivro();
     }
 
-    public void emprestarLivro(EmprestimoLivro emprestimoLivro, Livro livro) {
-        super.emprestarLivro(emprestimoLivro, livro);
+    public void venderLivro() {
+        super.venderLivro();
     }
 
-    public void devolverLivro(String isbn, Livro livro) {
-        super.devolverLivro(isbn, livro);
+    public void emprestarLivro(EmprestimoLivro emprestimoLivro) {
+        super.emprestarLivro(emprestimoLivro);
     }
 
-    public Livro buscarLivroIsbn(String isbn) {
-        return super.buscarLivroIsbn(isbn);
+
+//    public void devolverLivro(String isbn, Livro livro) {
+//        super.devolverLivro(isbn, livro);
+//    }
+
+    public void buscarLivroIsbn(String isbn) {
+        super.buscarLivroIsbn(isbn);
     }
 
     public Livro buscarLivroAutor(String autor) {
@@ -51,14 +53,6 @@ public class Bibliotecaria extends OperacoesBiblioteca {
         return getEstoque().getQuantidade() > 0;
     }
 
-    public boolean checarDisponibilidadeparaEmprestimo() {
-        return getLivroEmprestado();
-    }
-
-    public void exibirSinopseLivro(Livro livro){
-        super.exibirSinopseLivro(livro);
-    }
-
     public void cadastrarNovoCliente() {
         super.cadastrarNovoCliente();
     }
@@ -67,13 +61,8 @@ public class Bibliotecaria extends OperacoesBiblioteca {
         super.listaTodosClientes();
     }
 
-    public void listaClienteDadoUmNome(String nomeBusca) {
-        super.listaClienteDadoUmNome(nomeBusca);
-    }
-
-
-    public void removerCliente(Cliente cliente){
-        super.removerCliente(cliente);
+    public void excluirCadastroCliente(Cliente cliente){
+        super.excluirCadastroCliente(cliente);
     }
 
     public void atualizarTodasInformacoesCliente() {
@@ -92,11 +81,11 @@ public class Bibliotecaria extends OperacoesBiblioteca {
         return super.historicoCompletoLivrosEmprestados();
     }
 
-    public void demitirAssistente(Funcionario funcionario) {
-        if (regra.getQuantidadeAdvertencias() == 3 || regra.getAdvertencia()) {
-            System.out.println("Assistente: " + funcionario.getNome() + " demitido!");
-        }
-    }
+//    public void demitirAssistente(Funcionario funcionario) {
+//        if (regra.getQuantidadeAdvertencias() == 3 || regra.getAdvertencia()) {
+//            System.out.println("Assistente: " + funcionario.getNome() + " demitido!");
+//        }
+//    }
 
     @Override
     public void verificandoTodoSistemaBiblioteca(){

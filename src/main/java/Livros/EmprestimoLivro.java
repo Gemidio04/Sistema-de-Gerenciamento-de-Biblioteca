@@ -36,6 +36,10 @@ public class EmprestimoLivro {
         return cliente;
     }
 
+    public void setCliente(Cliente cliente){
+        this.cliente = cliente;
+    }
+
     public String getIsbn() {
         return isbn;
     }

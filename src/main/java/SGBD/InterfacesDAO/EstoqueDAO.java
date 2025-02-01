@@ -9,6 +9,7 @@ public interface EstoqueDAO {
 
     void insert(Estoque estoque);
     void update(Estoque estoque);
+    void updateQuantidade(int idEstoque, int novaQuantidade);
     void delete(Integer idEstoque);
     Estoque selectById(Integer id);
     Estoque selectByIsbn(String isbn);

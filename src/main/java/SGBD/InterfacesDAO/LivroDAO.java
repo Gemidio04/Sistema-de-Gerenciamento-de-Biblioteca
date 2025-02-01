@@ -9,6 +9,9 @@ public interface LivroDAO {
     void insert(Livro livro);
     void update(Livro livro);
     void delete(String isbn);
-    Livro selectById(String id);
+    //Livro selectById(String id);
+    Livro selectByIsbn(String isbn);
     List<Livro> selectAll();
+
+
 }

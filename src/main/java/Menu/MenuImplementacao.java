@@ -1,5 +1,11 @@
 package Menu;
 
+import Clientes.Cliente;
+import SGBD.InterfacesDAO.ClienteDAO;
+import SGBD.JDBC.DaoFactory;
+import Services.Funcionarios.OperacoesBiblioteca.OperacoesBiblioteca;
+import Services.Funcionarios.RH;
+
 import java.util.Scanner;
 
 public class MenuImplementacao {
@@ -11,7 +17,7 @@ public class MenuImplementacao {
         boolean running = true;
 
         while (running) {
-            MenuExibicoes.exibirMenuPrincipal();
+            Exibicoes.exibirMenuPrincipal();
             int opcao = sc.nextInt();
             // Consumir a nova linha pendente:
             sc.nextLine();
@@ -21,12 +27,10 @@ public class MenuImplementacao {
                     menuCliente();
                     break;
                 case 2:
-                    System.out.println("Opções de Funcionário (não implementado)");
-                    running = false;
-                    // Implemente o menu de funcionário aqui se necessário:
+                    menuFuncionario();
                     break;
                 case 3:
-                    MenuExibicoes.exibirOpcaoFinal();
+                    Exibicoes.exibirOpcaoFinal();
                     running = false;
                     break;
                 default:
@@ -39,27 +43,33 @@ public class MenuImplementacao {
         boolean clienteMenu = true;
 
         while (clienteMenu) {
-            MenuExibicoes.exibirMenuCliente();
+            Exibicoes.exibirMenuCliente();
             int opcaoCliente = sc.nextInt();
             // Consumir a nova linha pendente:
             sc.nextLine();
 
+            OperacoesBiblioteca operacoesBiblioteca = new OperacoesBiblioteca();
+            ClienteDAO clienteDAO = DaoFactory.createClienteDAO();
+            Cliente cliente = new Cliente();
+
             switch (opcaoCliente) {
                 case 1:
-                    System.out.println("Cadastrar Novo Cliente (não implementado)");
+                    operacoesBiblioteca.cadastrarNovoCliente();
                     break;
                 case 2:
-                    System.out.println("Atualizar Cadastro (não implementado)");
+                    operacoesBiblioteca.atualizarTodasInformacoesCliente();
                     break;
                 case 3:
-                    System.out.println("Excluir Cadastro (não implementado)");
+                    operacoesBiblioteca.excluirCadastroCliente(cliente);
                     break;
                 case 4:
+                    operacoesBiblioteca.listaTodosClientes();
+                case 5:
                     // Volta ao menu principal:
                     clienteMenu = false;
                     break;
-                case 5:
-                    MenuExibicoes.exibirOpcaoFinal();
+                case 6:
+                    Exibicoes.exibirOpcaoFinal();
                     // Encerra o programa:
                     System.exit(0);
                     break;
@@ -69,13 +79,48 @@ public class MenuImplementacao {
         }
     }
 
-//    public static void exibirMenuContinuacao(String opcaoContinuar) {
-//        System.out.println("\nDeseja Continuar?");
-//        System.out.println("1. SIM");
-//        System.out.println("2. NÃO");
-//        System.out.println("------------------------------");
-//        System.out.print("Escolha uma das opções: ");
-//        opcaoContinuar = sc.nextLine();
-//    }
+    public static void menuFuncionario() {
+        boolean clienteMenu = true;
+
+        while (clienteMenu) {
+            Exibicoes.exibirMenuFuncionario();
+            int opcaoCliente = sc.nextInt();
+            sc.nextLine();
+
+            RH RH = new RH();
+            ClienteDAO clienteDAO = DaoFactory.createClienteDAO();
+            Cliente cliente = new Cliente();
+
+            switch (opcaoCliente) {
+                case 1:
+                    RH.cadastrarNovoFuncionario();
+                    break;
+                case 2:
+                    RH.atualizarDadosFuncionario();
+                    break;
+                case 3:
+                    RH.demitirFuncionario();
+                    break;
+                case 4:
+                    Exibicoes.exibirMenuOperacoesBiblioteca();
+                    OperacoesBiblioteca.realizarOperacaoBiblioteca();
+                    break;
+                case 5:
+                    RH.listarFuncionarios();
+                    break;
+                case 6:
+                    // Volta ao menu principal:
+                    clienteMenu = false;
+                    break;
+                case 7:
+                    Exibicoes.exibirOpcaoFinal();
+                    // Encerra o programa:
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+            }
+        }
+    }
 
 }

@@ -1,6 +1,7 @@
 package SGBD.JDBC;
 
 import Clientes.Cliente;
+import Livros.Livro;
 import SGBD.Connection.ConexaoBancoDeDados;
 import SGBD.InterfacesDAO.ClienteDAO;
 import SGBD.Connection.ConexaoDAO;
@@ -18,22 +19,66 @@ public class ClienteDaoJDBC extends ConexaoDAO implements ClienteDAO {
         super(connection);
     }
 
+//    @Override
+//    public void insert(Cliente cliente) {
+//        PreparedStatement preparedStatement = null;
+//
+//        try {
+//            preparedStatement = connection.prepareStatement
+//                    ("INSERT INTO Cliente (nome, email, CEP, endereco, dataCadastro) VALUES (?, ?, ?, ?, ?)");
+//            preparedStatement.setString(1, cliente.getNome());
+//            preparedStatement.setString(2, cliente.getEmail());
+//            preparedStatement.setString(3, cliente.getCEP());
+//            preparedStatement.setString(4, cliente.getEndereco());
+//            preparedStatement.setString(5, cliente.getDataCadastro());
+//            preparedStatement.executeUpdate();
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        } finally {
+//            ConexaoBancoDeDados.closeStatement(preparedStatement);
+//        }
+//    }
+
     @Override
     public void insert(Cliente cliente) {
         PreparedStatement preparedStatement = null;
-
         try {
-            preparedStatement = connection.prepareStatement
-                    ("INSERT INTO Cliente (nome, email, CEP, endereco, dataCadastro) VALUES (?, ?, ?, ?, ?)");
+            // Desativa o auto-commit para iniciar uma transação
+            connection.setAutoCommit(false);
+
+            preparedStatement = connection.prepareStatement(
+                    "INSERT INTO Cliente (nome, email, CEP, endereco, dataCadastro) VALUES (?, ?, ?, ?, ?)");
             preparedStatement.setString(1, cliente.getNome());
             preparedStatement.setString(2, cliente.getEmail());
             preparedStatement.setString(3, cliente.getCEP());
             preparedStatement.setString(4, cliente.getEndereco());
             preparedStatement.setString(5, cliente.getDataCadastro());
+
+            // Executa a inserção
             preparedStatement.executeUpdate();
+
+            // Se a inserção for bem-sucedida, faz o commit
+            connection.commit();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            try {
+                // Em caso de erro, faz rollback para desfazer a transação
+                if (connection != null) {
+                    connection.rollback();
+                    System.out.println("Erro na inserção. Transação desfeita (rollback).");
+                }
+            } catch (SQLException rollbackException) {
+                throw new RuntimeException("Erro ao fazer rollback: " + rollbackException.getMessage(), rollbackException);
+            }
+            throw new RuntimeException("Erro ao inserir cliente: " + e.getMessage(), e);
         } finally {
+            try {
+                // Ativa novamente o auto-commit para outras operações
+                if (connection != null) {
+                    connection.setAutoCommit(true);
+                }
+            } catch (SQLException ex) {
+                throw new RuntimeException("Erro ao restaurar auto-commit: " + ex.getMessage(), ex);
+            }
             ConexaoBancoDeDados.closeStatement(preparedStatement);
         }
     }
@@ -49,12 +94,12 @@ public class ClienteDaoJDBC extends ConexaoDAO implements ClienteDAO {
                           "CEP = ?, endereco = ?, dataCadastro = ? " +
                           "WHERE idCliente = ?");
 
-            preparedStatement.setString(2, cliente.getNome());
-            preparedStatement.setString(3, cliente.getEmail());
-            preparedStatement.setString(4, cliente.getCEP());
-            preparedStatement.setString(5, cliente.getEndereco());
-            preparedStatement.setString(6, cliente.getDataCadastro());
-            preparedStatement.setInt(7, cliente.getIdCliente());
+            preparedStatement.setString(1, cliente.getNome());
+            preparedStatement.setString(2, cliente.getEmail());
+            preparedStatement.setString(3, cliente.getCEP());
+            preparedStatement.setString(4, cliente.getEndereco());
+            preparedStatement.setString(5, cliente.getDataCadastro());
+            preparedStatement.setInt(6, cliente.getIdCliente());
             preparedStatement.executeUpdate();
         }catch (SQLException ex){
             throw new DBException(ex.getMessage());
