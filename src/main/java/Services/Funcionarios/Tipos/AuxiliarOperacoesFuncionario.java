@@ -64,7 +64,6 @@ public class AuxiliarOperacoesFuncionario {
         FuncionarioGeralDAO funcionarioGeralDAO = DaoFactory.createFuncionarioGeralDAO();
         try {
         funcionarioGeralDAO.insert(funcionarioGeral);
-        //FuncionarioGeralDaoJDBC funcionarioGeralDaoJDBC = funcionarioGeralDAO.insert(funcionarioGeral);
         } catch (DBException ex) {
             System.err.println("Erro ao inserir funcionário: " + ex.getMessage());
             throw new DBException("Erro ao inserir funcionário no banco");
@@ -83,7 +82,7 @@ public class AuxiliarOperacoesFuncionario {
     }
 
     public void defineTipoFuncionarioCadastro() {
-        Solicitacoes solicitacoes = new Solicitacoes();
+        Solicitacoes solicitacoes = new Solicitacoes(sc);
 
         // Obter as informações do funcionário
         Funcionario tipoFuncionario = obterDadosCadastroFuncionario();
@@ -106,19 +105,19 @@ public class AuxiliarOperacoesFuncionario {
     }
 
     public Funcionario obterDadosAtualizacaoFuncionario(int tipoFuncionario) {
-        Solicitacoes solicitacoes = new Solicitacoes();
+        Solicitacoes solicitacoes = new Solicitacoes(sc);
 
-        String nome = solicitacoes.solicitarEntrada("Nome: ", sc);
-        String email = solicitacoes.solicitarEntrada("Email: ", sc);
-        String CPF = solicitacoes.solicitarEntrada("CPF: ", sc);
-        String turno = solicitacoes.solicitarEntrada("Turno: ", sc);
+        String nome = solicitacoes.solicitarEntrada("Nome: ");
+        String email = solicitacoes.solicitarEntrada("Email: ");
+        String CPF = solicitacoes.solicitarEntrada("CPF: ");
+        String turno = solicitacoes.solicitarEntrada("Turno: ");
 
         System.out.print("Data de Cadastro (dd/MM/yyyy): ");
         String dateCadastro = sc.nextLine();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         dateCadastro = LocalDate.parse(dateCadastro, formatter).toString();
 
-        double salario = solicitacoes.solicitarSalario("Salário: ", sc);
+        double salario = solicitacoes.solicitarSalario("Salário: ");
 
         // Criar o objeto baseado no tipo recebido:
         if (tipoFuncionario == 1) {

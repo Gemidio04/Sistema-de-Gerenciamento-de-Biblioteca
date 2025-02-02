@@ -2,10 +2,11 @@ package SGBD.JDBC;
 
 import Livros.Livro;
 import SGBD.Connection.ConexaoBancoDeDados;
+import SGBD.Exception.DBException;
 import SGBD.InterfacesDAO.LivroDAO;
 
 import SGBD.Connection.ConexaoDAO;
-import SGBD.Exception.DBException;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -36,9 +37,9 @@ public class LivroDaoJDBC extends ConexaoDAO implements LivroDAO {
             preparedStatement.setString(7, livro.getSinopse());
             preparedStatement.executeUpdate();
             System.out.println("INSERT REALIZADO!");
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             throw new DBException(ex.getMessage());
-        }finally {
+        } finally {
             ConexaoBancoDeDados.closeStatement(preparedStatement);
         }
     }
@@ -51,9 +52,9 @@ public class LivroDaoJDBC extends ConexaoDAO implements LivroDAO {
 
             preparedStatement = connection.prepareStatement
                     ("UPDATE Livro SET " +
-                    "isbn = ?, titulo = ?, editora = ?, genero = ?, " +
-                    "autor = ?, dataPublicacao = ?, sinopse = ? " +
-                    "WHERE isbn = ?");
+                            "isbn = ?, titulo = ?, editora = ?, genero = ?, " +
+                            "autor = ?, dataPublicacao = ?, sinopse = ? " +
+                            "WHERE isbn = ?");
 
             preparedStatement.setString(1, livro.getIsbn());
             preparedStatement.setString(2, livro.getTitulo());
@@ -65,9 +66,9 @@ public class LivroDaoJDBC extends ConexaoDAO implements LivroDAO {
             preparedStatement.setString(8, livro.getIsbn());
             preparedStatement.executeUpdate();
             //System.out.println("UPDATE REALIZADO!");
-        }catch (SQLException ex){
+        } catch (SQLException ex) {
             throw new DBException(ex.getMessage());
-        }finally {
+        } finally {
             ConexaoBancoDeDados.closeStatement(preparedStatement);
         }
     }
@@ -84,9 +85,9 @@ public class LivroDaoJDBC extends ConexaoDAO implements LivroDAO {
             if (linhas == 0)
                 throw new DBException("O ISBN fornecido não existe!");
             //System.out.println("DELETE REALIZADO!");
-        }catch (SQLException ex){
+        } catch (SQLException ex) {
             throw new DBException(ex.getMessage());
-        }finally {
+        } finally {
             ConexaoBancoDeDados.closeStatement(preparedStatement);
         }
     }
@@ -118,21 +119,21 @@ public class LivroDaoJDBC extends ConexaoDAO implements LivroDAO {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
-        try{
+        try {
             preparedStatement = connection.prepareStatement("SELECT * FROM Livro");
             resultSet = preparedStatement.executeQuery();
 
             List<Livro> livros = new ArrayList<>();
 
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 Livro livro = Livro.instanciaLivro(resultSet);
                 livros.add(livro);
             }
             //System.out.print("Livros: ");
             return livros;
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             throw new DBException(ex.getMessage());
-        }finally {
+        } finally {
             ConexaoBancoDeDados.closeStatement(preparedStatement);
             ConexaoBancoDeDados.closeResultSet(resultSet);
         }

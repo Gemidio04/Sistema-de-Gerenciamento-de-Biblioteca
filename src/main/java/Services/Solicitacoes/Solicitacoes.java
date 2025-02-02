@@ -7,106 +7,91 @@ import SGBD.JDBC.DaoFactory;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class Solicitacoes {
 
-    public String solicitarEntrada(String mensagem, Scanner sc) {
-        System.out.print(mensagem);
-        return sc.nextLine().trim();
+    private final Scanner sc;
+
+    public Solicitacoes(Scanner sc) {
+        this.sc = sc;
     }
+
     public String solicitarEntrada(String mensagem) {
         System.out.print(mensagem);
-        Scanner sc = new Scanner(System.in);
         return sc.nextLine().trim();
     }
 
-    Scanner sc = new Scanner(System.in);
-
     public int solicitarIdCliente(ClienteDAO clienteDAO) {
-        int idCliente;
-        int contador = 0;
-        while (true) {
-            System.out.print("idCliente do Cliente que pegou o Livro emprestado: ");
-            idCliente = sc.nextInt();
+        int tentativas = 3;
 
-            if (clienteDAO.selectById(idCliente) != null) {
-                break; // CLIENTE ENCONTRADO, SAI DO LOOP
+        while (tentativas > 0) {
+            System.out.print("ID do Cliente que pegou o livro emprestado: ");
+            if (sc.hasNextInt()) {
+                int idCliente = sc.nextInt();
+                sc.nextLine(); // Consumir quebra de linha
+
+                if (Optional.ofNullable(clienteDAO.selectById(idCliente)).isPresent()) {
+                    return idCliente;
+                }
+                System.out.println("Cliente não encontrado.");
+            } else {
+                sc.nextLine(); // Consumir entrada inválida
             }
 
-            System.out.println("\nEsse Cliente não existe em nossa biblioteca!");
-
-            contador++;
-            if (contador == 1)
-                System.out.println("1º TENTANTIVA! RESTÃO 2!");
-            else if (contador == 2)
-                System.out.println("2º TENTANTIVA! RESTÃO 1!");
-            else {
-                System.out.println("3º TENTANTIVA! RESTÃO 0!");
-                System.out.println("Você digitou o idCliente errado 3 vezes!");
-                MenuImplementacao.menuFuncionario();
-            }
+            tentativas--;
+            System.out.printf("Tentativas restantes: %d\n", tentativas);
         }
-        return idCliente;
+
+        System.out.println("Você digitou o ID incorretamente 3 vezes!");
+        MenuImplementacao.menuFuncionario();
+        return -1;
     }
 
     public String solicitarISBN() {
-        String ISBN;
-        int contador = 0;
-        while (true) {
-            System.out.print("\nISBN: ");
-            ISBN = sc.nextLine();
+        LivroDAO livroDAO = DaoFactory.createLivroDAO();
+        int tentativas = 3;
 
-            LivroDAO livroDAO = DaoFactory.createLivroDAO();
-            if (livroDAO.selectByIsbn(ISBN) != null) {
-                break; // ISBN ENCONTRADO, SAI DO LOOP
+        while (tentativas > 0) {
+            String ISBN = solicitarEntrada("\nISBN: ");
+
+            if (Optional.ofNullable(livroDAO.selectByIsbn(ISBN)).isPresent()) {
+                return ISBN;
             }
 
-            System.out.println("\nEsse Livro não existe em nosso catálogo!");
-            contador++;
-            if (contador == 1)
-                System.out.println("1º TENTANTIVA! RESTÃO 2!");
-            else if (contador == 2)
-                System.out.println("2º TENTANTIVA! RESTÃO 1!");
-            else {
-                System.out.println("3º TENTANTIVA! RESTÃO 0!");
-                System.out.println("Os ISBNs informado não foram encontrados em nosso catálogo de livros!");
-                MenuImplementacao.menuFuncionario();
-            }
+            System.out.println("Livro não encontrado no catálogo.");
+            tentativas--;
+            System.out.printf("Tentativas restantes: %d\n", tentativas);
         }
-        return ISBN;
-    }
 
-    public LocalDate solicitarDataContratacao(String mensagem, Scanner sc) {
-        while (true) {
-            System.out.print(mensagem);
-            String dataStr = sc.nextLine().trim();
-            try {
-                return LocalDate.parse(dataStr, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-            } catch (DateTimeParseException e) {
-                System.out.println("Data inválida. Por favor, use o formato dd/MM/yyyy.");
-            }
-        }
+        System.out.println("ISBN informado incorretamente 3 vezes.");
+        MenuImplementacao.menuFuncionario();
+        return null;
     }
 
     public String solicitarData(String mensagem) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String data = solicitarEntrada(mensagem);
-        return LocalDate.parse(data, formatter).toString();
+
+        while (true) {
+            try {
+                return LocalDate.parse(solicitarEntrada(mensagem), formatter).toString();
+            } catch (Exception e) {
+                System.out.println("Formato de data inválido. Use dd/MM/yyyy.");
+            }
+        }
     }
 
-    public double solicitarSalario(String mensagem, Scanner sc) {
+    public double solicitarSalario(String mensagem) {
         while (true) {
             System.out.print(mensagem);
             if (sc.hasNextDouble()) {
-                Double salario = sc.nextDouble();
-                sc.nextLine(); // Consome a nova linha restante
+                double salario = sc.nextDouble();
+                sc.nextLine(); // Consumir quebra de linha
                 return salario;
-            } else {
-                System.out.println("Salário inválido. Digite novamente: ");
-                sc.next(); // Consome a entrada inválida
             }
+            System.out.println("Salário inválido. Digite novamente.");
+            sc.next(); // Descarta entrada inválida
         }
     }
 }

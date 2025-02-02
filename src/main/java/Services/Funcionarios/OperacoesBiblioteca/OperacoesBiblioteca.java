@@ -10,7 +10,6 @@ import SGBD.InterfacesDAO.LivroDAO;
 import SGBD.JDBC.DaoFactory;
 import Services.Estoque.Estoque;
 import Services.Exception.ValidacaoException;
-import Services.Funcionarios.AnalistaDeSistemas;
 import Services.Funcionarios.Funcionario;
 import Services.Funcionarios.Tipos.FuncionarioAdministrativo;
 import Services.Solicitacoes.Solicitacoes;
@@ -31,7 +30,6 @@ public class OperacoesBiblioteca extends Funcionario {
     private int idFuncionarioAdministrativo;
     private int quantidadeLivrosVendidos;
     private int quantidadeLivrosEmprestados;
-    private AnalistaDeSistemas analistaDeSistemas;
     private final Estoque estoque = new Estoque();
     private int idEstoque;
     private FuncionarioAdministrativo funcionarioAdministrativo;
@@ -120,18 +118,18 @@ public class OperacoesBiblioteca extends Funcionario {
 
     static Scanner sc = new Scanner(System.in);
     LivroDAO livroDAO = DaoFactory.createLivroDAO();
-    Solicitacoes solicitacoes = new Solicitacoes();
+    Solicitacoes solicitacoes = new Solicitacoes(sc);
 
     public static void realizarOperacaoBiblioteca() {
         int opcao = sc.nextInt();
         sc.nextLine();
 
         OperacoesBiblioteca operacoesBiblioteca = new OperacoesBiblioteca();
-        Solicitacoes solicitacoes = new Solicitacoes();
+        Solicitacoes solicitacoes = new Solicitacoes(sc);
 
         if (opcao == 1) {
             Livro novoLivro = new Livro();
-            novoLivro.setIsbn(OperacoesAuxiliaresBiblioteca.solicitarEntrada("\nISBN: "));
+            novoLivro.setIsbn(solicitacoes.solicitarEntrada("\nISBN: "));
             OperacoesAuxiliaresBiblioteca.solicitarNovosDadosLivro(novoLivro);
 
             operacoesBiblioteca.adicionarLivro(novoLivro.getIsbn(), novoLivro);
@@ -156,10 +154,6 @@ public class OperacoesBiblioteca extends Funcionario {
         } else if (opcao == 6) {
             String ISBN = solicitacoes.solicitarISBN();
             operacoesBiblioteca.buscarLivroIsbn(ISBN);
-//        } else if (opcao == 7) {
-//            operacoesBiblioteca.buscarLivroAutor();
-//        } else if (opcao == 8) {
-//            operacoesBiblioteca.buscarLivroTitulo();
         } else if (opcao == 7) {
             MenuImplementacao.ImplementacaoMenuBiblioteca();
         } else if (opcao == 8) {
@@ -168,26 +162,6 @@ public class OperacoesBiblioteca extends Funcionario {
             System.exit(0);
         } else {
 
-        }
-    }
-
-    public void listarLivros() {
-        if (livros.isEmpty()) {
-            System.out.println("Não há livros cadastrados na biblioteca.");
-            return;
-        }
-
-        System.out.println("Lista de Livros na Biblioteca:");
-        for (Map.Entry<String, Livro> entry : livros.entrySet()) {
-            String isbn = entry.getKey();
-            Livro livro = entry.getValue();
-
-            // Supondo que a classe Livro tenha métodos para obter detalhes
-            System.out.println("ISBN: " + isbn);
-            System.out.println("Título: " + livro.getTitulo());
-            System.out.println("Autor: " + livro.getAutor());
-            System.out.println("Data de Publicação: " + livro.getDataPublicacao());
-            System.out.println("-----------------------------------");
         }
     }
 
@@ -225,7 +199,7 @@ public class OperacoesBiblioteca extends Funcionario {
     }
 
     public void venderLivro() {
-        String ISBN = OperacoesAuxiliaresBiblioteca.solicitarEntrada("\nQual o ISBN do Livro que deseja vender: ");
+        String ISBN = solicitacoes.solicitarEntrada("\nQual o ISBN do Livro que deseja vender: ");
 
         // VERIFICA A DISPONIBILIDADE DO LIVRO:
         if (operacoesAuxiliaresBiblioteca.checarDisponibilidadeLivro(ISBN)) {
@@ -235,7 +209,6 @@ public class OperacoesBiblioteca extends Funcionario {
             quantidadeLivrosVendidos++;
             livrosVendidos.add(livro);
         } else {
-            //throw new ValidacaoException("O livro com ISBN " + ISBN + " não está disponível para venda!");
             System.out.println("O livro com ISBN " + ISBN + " não está disponível para venda!");
         }
     }
@@ -258,54 +231,21 @@ public class OperacoesBiblioteca extends Funcionario {
         }
     }
 
-//    public void devolverLivro(String isbn, Livro livro) {
-//        adicionarLivro(isbn, livro);
-//        quantidadeLivrosEmprestados++;
-//        operacoesAuxiliaresBiblioteca.setLivroEmprestado(true);
-//    }
-
-//    public Livro buscarLivroIsbn(String isbn) {
-//        Livro livro = livros.get(isbn);
-//        if (livro != null) {
-//            return livro;
-//        } else {
-//            throw new ValidacaoException("O livro não existe");
-//        }
-//    }
-
     public void buscarLivroIsbn(String isbn) {
         Livro livro =  livroDAO.selectByIsbn(isbn);
         System.out.print("\nResultado da busca:");
         System.out.print(livro);
     }
 
-    public Livro buscarLivroAutor(String autor) {
-        Livro livro = livros.get(autor);
-        if (livro != null) {
-            return livro;
-        } else {
-            throw new ValidacaoException("O livro não existe");
-        }
-    }
-
-    public Livro buscarLivroTitulo(String titulo) {
-        Livro livro = livros.get(titulo);
-        if (livro != null) {
-            return livro;
-        } else {
-            throw new ValidacaoException("O livro não existe");
-        }
-    }
-
     // CLIENTES:
 
     public void cadastrarNovoCliente() {
-        Solicitacoes solicitacoes = new Solicitacoes();
+        Solicitacoes solicitacoes = new Solicitacoes(sc);
 
-        String nome = solicitacoes.solicitarEntrada("\nNome: ", sc);
-        String email = solicitacoes.solicitarEntrada("Email: ", sc);
-        String CEP = solicitacoes.solicitarEntrada("CEP: ", sc);
-        String endereco = solicitacoes.solicitarEntrada("Endereço: ", sc);
+        String nome = solicitacoes.solicitarEntrada("\nNome: ");
+        String email = solicitacoes.solicitarEntrada("Email: ");
+        String CEP = solicitacoes.solicitarEntrada("CEP: ");
+        String endereco = solicitacoes.solicitarEntrada("Endereço: ");
 
         System.out.print("Data de Cadastro (dd/MM/yyyy): ");
         String dateCadastro = sc.nextLine();
@@ -331,14 +271,14 @@ public class OperacoesBiblioteca extends Funcionario {
 
     public void atualizarTodasInformacoesCliente() {
         Cliente cliente = new Cliente();
-        Solicitacoes solicitacoes = new Solicitacoes();
+        Solicitacoes solicitacoes = new Solicitacoes(sc);
 
-        int novoIdCliente = Integer.parseInt(solicitacoes.solicitarEntrada("\nQual é o idCliente: ", sc));
+        int novoIdCliente = Integer.parseInt(solicitacoes.solicitarEntrada("\nQual é o idCliente: "));
         System.out.println("\nNovos dados:");
-        String novoNome = solicitacoes.solicitarEntrada("Nome: ", sc);
-        String novoEmail = solicitacoes.solicitarEntrada("Email: ", sc);
-        String novoCEP = solicitacoes.solicitarEntrada("CEP: ", sc);
-        String novoEndereco = solicitacoes.solicitarEntrada("Endereço: ", sc);
+        String novoNome = solicitacoes.solicitarEntrada("Nome: ");
+        String novoEmail = solicitacoes.solicitarEntrada("Email: ");
+        String novoCEP = solicitacoes.solicitarEntrada("CEP: ");
+        String novoEndereco = solicitacoes.solicitarEntrada("Endereço: ");
 
         System.out.print("Data de Cadastro (dd/mm/yyyyy): ");
         String dateCadastro = sc.nextLine();
@@ -360,51 +300,6 @@ public class OperacoesBiblioteca extends Funcionario {
     public void listaTodosClientes() {
         System.out.println("\nLISTA DE CLIENTES DA BIBLIOTECA:\n");
         clienteDAO.selectAll();
-    }
-
-//    public void listaClienteDadoUmNome(String nomeBusca) {
-//        System.out.println("\nLISTA DE CLIENTES COM O NOME: " + nomeBusca + "\n");
-//        boolean encontrado = false;
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-//
-//        for (Cliente cliente : listaClientes) {
-//            // Divida o nome do cliente em partes com base nos espaços:
-//            String[] partesNomeCliente = cliente.getNome().split("\\s+");
-//
-//            for (String parte : partesNomeCliente) {
-//                if (parte.equalsIgnoreCase(nomeBusca)) {
-//                    System.out.println("Nome: " + cliente.getNome() + ",");
-//                    System.out.println("Email: " + cliente.getEmail() + ",");
-//                    System.out.println("CEP: " + cliente.getCEP() + ",");
-//                    System.out.println("Endereco: " + cliente.getEndereco() + ",");
-//                    System.out.println("DataCadastro: " + cliente.getDataCadastro() + "\n");
-//                    encontrado = true;
-//                    break;
-//                }
-//            }
-//        }
-//
-//        if (!encontrado) {
-//            System.out.println("Nenhum cliente encontrado com o nome: " + nomeBusca);
-//        }
-//    }
-
-    public List<EmprestimoLivro> historicoDeLivro(Livro livro) {
-        return historicoEmprestimos.stream().filter(emprestimoLivro ->
-                emprestimoLivro.getIsbn().equals(livro.getIsbn())).collect(Collectors.toList());
-    }
-
-    public List<EmprestimoLivro> historicoDeUsuario(Cliente cliente) {
-        return historicoEmprestimos.stream().filter(emprestimo ->
-                emprestimo.getCliente().equals(cliente)).collect(Collectors.toList());
-    }
-
-    public List<EmprestimoLivro> historicoCompletoLivrosEmprestados() {
-        return new ArrayList<>(historicoEmprestimos);
-    }
-
-    public void verificandoTodoSistemaBiblioteca() {
-        analistaDeSistemas.suporteTecnico(true);
     }
 
     public static OperacoesBiblioteca instanciaOperacoesBiblioteca(ResultSet resultSet) throws SQLException {

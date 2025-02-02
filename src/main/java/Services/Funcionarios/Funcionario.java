@@ -18,7 +18,6 @@ public class Funcionario {
     private Double salario;
     private Cargo cargo;
 
-
     public Funcionario(){
     }
 
@@ -90,14 +89,6 @@ public class Funcionario {
 
     public void setCargo(Cargo cargo) {
         this.cargo = cargo;
-    }
-
-    public void enviarNotificacaoIncidente(SegurancaProfissional incidente) {
-        incidente.enviarNotificacao(incidente);
-    }
-
-    public static void tabelaDeCargos(){
-        Cargo.tabelaDeCargos();
     }
 
     public static Funcionario instanciaFuncionario(ResultSet rs) throws SQLException {

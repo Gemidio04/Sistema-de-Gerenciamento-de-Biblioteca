@@ -6,8 +6,6 @@ import SGBD.Exception.DBException;
 import SGBD.InterfacesDAO.FuncionarioAdministrativoDAO;
 import SGBD.InterfacesDAO.FuncionarioGeralDAO;
 import SGBD.JDBC.DaoFactory;
-import SGBD.InterfacesDAO.FuncionarioDAO;
-import SGBD.JDBC.FuncionarioAdministrativoDaoJDBC;
 import Services.Funcionarios.OperacoesBiblioteca.OperacoesBiblioteca;
 import Services.Funcionarios.Tipos.AuxiliarOperacoesFuncionario;
 import Services.Funcionarios.Tipos.FuncionarioAdministrativo;
@@ -19,11 +17,7 @@ public class RH extends OperacoesBiblioteca {
 
     AuxiliarOperacoesFuncionario auxiliarOperacoesFuncionario = new AuxiliarOperacoesFuncionario();
     static Scanner sc = new Scanner(System.in);
-    static Solicitacoes solicitacoes = new Solicitacoes();
-
-    public void receberNotificacao(SegurancaProfissional incidente) {
-        super.enviarNotificacaoIncidente(incidente);
-    }
+    static Solicitacoes solicitacoes = new Solicitacoes(sc);
 
     public void cadastrarNovoFuncionario() {
         System.out.println("\nCadastro de Funcionário:");

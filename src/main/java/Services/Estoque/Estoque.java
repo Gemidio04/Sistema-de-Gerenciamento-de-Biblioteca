@@ -1,8 +1,5 @@
 package Services.Estoque;
 
-import SGBD.InterfacesDAO.EstoqueDAO;
-import SGBD.JDBC.DaoFactory;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -11,7 +8,7 @@ public class Estoque {
     private String isbn;
     private int quantidade;
 
-    public Estoque(){
+    public Estoque() {
     }
 
     public Estoque(String isbn, int quantidade) {
@@ -50,20 +47,6 @@ public class Estoque {
         estoque.setQuantidade(resultSet.getInt("quantidade"));
         return estoque;
     }
-
-    public void atualizaQuantidade(int novaQuantidade) {
-        // Atualiza a quantidade do objeto em memória:
-        this.quantidade = novaQuantidade;
-        // Atualiza a quantidade no banco de dados:
-        EstoqueDAO estoqueDAO = DaoFactory.createEstoqueDAO();
-        estoqueDAO.update(this);
-    }
-
-    public void subitraiQuantidade(){
-        quantidade -= 1;
-    }
-
-
 
     @Override
     public String toString() {

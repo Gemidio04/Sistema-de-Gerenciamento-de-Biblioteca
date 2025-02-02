@@ -3,7 +3,6 @@ package SGBD.JDBC;
 import SGBD.Connection.ConexaoBancoDeDados;
 import SGBD.InterfacesDAO.*;
 
-
 public class DaoFactory {
 
     public static LivroDAO createLivroDAO(){
@@ -16,10 +15,6 @@ public class DaoFactory {
 
     public static ClienteDAO createClienteDAO(){
         return new ClienteDaoJDBC(ConexaoBancoDeDados.getConnection());
-    }
-
-    public static FuncionarioDAO createFuncionarioDAO() {
-        return new FuncionarioDaoJDBC(ConexaoBancoDeDados.getConnection());
     }
 
     public static FuncionarioGeralDAO createFuncionarioGeralDAO() {
@@ -36,13 +31,5 @@ public class DaoFactory {
 
     public static EstoqueDAO createEstoqueDAO(){
         return new EstoqueDaoJDBC(ConexaoBancoDeDados.getConnection());
-    }
-
-    public static AusensiaFuncionarioGeralDAO createAusensiaFuncionarioGeralDAO(){
-        return new AusensiaFuncionarioGeralDaoJDBC(ConexaoBancoDeDados.getConnection());
-    }
-
-    public static AusenciaFuncionarioAdministrativoDAO createAusensiaFuncionarioAdministrativoDAO(){
-        return new AusensiaFuncionarioAdministrativoDaoJDBC(ConexaoBancoDeDados.getConnection());
     }
 }

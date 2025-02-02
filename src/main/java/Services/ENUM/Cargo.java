@@ -1,10 +1,5 @@
 package Services.ENUM;
 
-import Services.Funcionarios.OperacoesBiblioteca.Gerente;
-import Services.Funcionarios.OperacoesBiblioteca.OperacoesBiblioteca;
-
-import java.util.Scanner;
-
 public enum Cargo {
 
     CARGO_PADRAO {
@@ -82,24 +77,4 @@ public enum Cargo {
         }
     }
 
-    public static void converteCargoEnum(OperacoesBiblioteca novoFuncionario){
-        Scanner sc = new Scanner(System.in);
-        Gerente gerente = new Gerente();
-
-        try (sc) {
-            System.out.print("Cargo: (ASSISTENTE, BIBLIOTECARIO, GERENTE): ");
-            String cargoInput = sc.nextLine().toUpperCase();
-            Cargo cargo = Cargo.valueOf(cargoInput);
-            novoFuncionario.setCargo(cargo);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Cargo inválido. Por favor, insira um cargo válido: ");
-        }
-    }
-
-    public static void tabelaDeCargos() {
-        System.out.println("\nLISTA DE CARGOS DA BIBLIOTECA:\n");
-        for (Cargo cargo : Cargo.values()) {
-            System.out.println(cargo+".");
-        }
-    }
 }

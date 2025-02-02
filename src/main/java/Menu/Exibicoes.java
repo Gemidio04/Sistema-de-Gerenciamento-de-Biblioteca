@@ -2,16 +2,6 @@ package Menu;
 
 public class Exibicoes {
 
-    public static void exibirMensagemApresentacao() {
-        System.out.println("BEM-VINDO À BIBLIOTECA MUNICIPAL!\n");
-        System.out.println("NOSSO ESPAÇO É DEDICADO À PROMOÇÃO DA LEITURA, CONHECIMENTO E CULTURA PARA TODAS AS IDADES.");
-        System.out.print("AQUI VOCÊ ENCONTRA UM ACERVO DIVERSIFICADO DE LIVROS, REVISTAS, JORNAIS E MULTIMÍDIA,\n");
-        System.out.print("ALÉM DE UM AMBIENTE AGRADÁVEL E TRANQUILO PARA ESTUDO E PESQUISA.\n");
-        System.out.println("APROVEITE NOSSOS SERVIÇOS DE EMPRÉSTIMO, ACESSO À INTERNET, EVENTOS CULTURAIS, OFICINAS E PALESTRAS.");
-        System.out.println("NOSSA EQUIPE ESTÁ SEMPRE À DISPOSIÇÃO PARA AJUDAR E ORIENTAR EM SUAS NECESSIDADES DE INFORMAÇÃO.\n");
-        System.out.println("VENHA DESCOBRIR UM MUNDO DE POSSIBILIDADES! A BIBLIOTECA É SEU LUGAR DE ENCONTRO COM A LEITURA E O SABER.\n");
-    }
-
     public static void exibirMenuPrincipal() {
         System.out.println("\n==============================");
         System.out.println("        MENU PRINCIPAL          ");
@@ -101,7 +91,6 @@ public class Exibicoes {
         System.out.println("11. Sair");
         System.out.println("------------------------------");
     }
-
 
     public static void exibirOpcaoFinal() {
         System.out.println("\nSaindo do Sistema da Biblioteca...");

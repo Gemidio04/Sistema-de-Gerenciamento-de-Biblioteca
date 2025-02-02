@@ -19,7 +19,6 @@ public class MenuImplementacao {
         while (running) {
             Exibicoes.exibirMenuPrincipal();
             int opcao = sc.nextInt();
-            // Consumir a nova linha pendente:
             sc.nextLine();
 
             switch (opcao) {
@@ -45,7 +44,6 @@ public class MenuImplementacao {
         while (clienteMenu) {
             Exibicoes.exibirMenuCliente();
             int opcaoCliente = sc.nextInt();
-            // Consumir a nova linha pendente:
             sc.nextLine();
 
             OperacoesBiblioteca operacoesBiblioteca = new OperacoesBiblioteca();

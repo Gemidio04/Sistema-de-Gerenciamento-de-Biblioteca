@@ -1,9 +1,9 @@
 package SGBD.JDBC;
 
 import SGBD.Connection.ConexaoBancoDeDados;
+import SGBD.Exception.DBException;
 import SGBD.InterfacesDAO.OperacoesBibliotecaDAO;
 import SGBD.Connection.ConexaoDAO;
-import SGBD.Exception.DBException;
 import Services.Funcionarios.OperacoesBiblioteca.OperacoesBiblioteca;
 
 import java.sql.Connection;
@@ -34,9 +34,9 @@ public class OperacoesBibliotecaDaoJDBC extends ConexaoDAO implements OperacoesB
             preparedStatement.setInt(5, operacoesBiblioteca.getIdEstoque());
             preparedStatement.executeUpdate();
             System.out.println("INSERT REALIZADO!");
-        }catch (SQLException ex){
+        } catch (SQLException ex) {
             throw new DBException(ex.getMessage());
-        }finally {
+        } finally {
             ConexaoBancoDeDados.closeStatement(preparedStatement);
         }
     }
@@ -48,9 +48,9 @@ public class OperacoesBibliotecaDaoJDBC extends ConexaoDAO implements OperacoesB
         try {
             preparedStatement = connection.prepareStatement
                     ("UPDATE Operacoes_Biblioteca " +
-                          "SET idOperacoesBiblioteca = ?, idFuncionarioAdministrativo = ?, " +
-                          "quantidadeLivrosVendidos = ?, quantidadeLivrosEmprestados = ?, idEstoque = ? " +
-                          "WHERE idOperacoesBiblioteca = ?");
+                            "SET idOperacoesBiblioteca = ?, idFuncionarioAdministrativo = ?, " +
+                            "quantidadeLivrosVendidos = ?, quantidadeLivrosEmprestados = ?, idEstoque = ? " +
+                            "WHERE idOperacoesBiblioteca = ?");
 
             preparedStatement.setInt(1, operacoesBiblioteca.getIdOperacoesBiblioteca());
             preparedStatement.setInt(2, operacoesBiblioteca.getIdFuncionarioAdministrativo());
@@ -60,9 +60,9 @@ public class OperacoesBibliotecaDaoJDBC extends ConexaoDAO implements OperacoesB
             preparedStatement.setInt(6, operacoesBiblioteca.getIdOperacoesBiblioteca());
             preparedStatement.executeUpdate();
             System.out.println("UPDATE REALIZADO! ");
-        }catch (SQLException ex){
+        } catch (SQLException ex) {
             throw new DBException(ex.getMessage());
-        }finally {
+        } finally {
             ConexaoBancoDeDados.closeStatement(preparedStatement);
         }
     }
@@ -71,19 +71,19 @@ public class OperacoesBibliotecaDaoJDBC extends ConexaoDAO implements OperacoesB
     public void delete(Integer idOperacoesBiblioteca) {
         PreparedStatement preparedStatement = null;
 
-        try{
+        try {
             preparedStatement = connection.prepareStatement
                     ("DELETE FROM Operacoes_Biblioteca WHERE idOperacoesBiblioteca = ?");
 
             preparedStatement.setInt(1, idOperacoesBiblioteca);
             int linhas = preparedStatement.executeUpdate();
 
-            if(linhas == 0)
+            if (linhas == 0)
                 throw new DBException("O idOperacoesBiblioteca fornecido não existe!");
             System.out.println("DELETE REALIZADO!");
-        }catch (SQLException ex){
+        } catch (SQLException ex) {
             throw new DBException(ex.getMessage());
-        }finally {
+        } finally {
             ConexaoBancoDeDados.closeStatement(preparedStatement);
         }
     }
@@ -96,21 +96,21 @@ public class OperacoesBibliotecaDaoJDBC extends ConexaoDAO implements OperacoesB
         try {
             preparedStatement = connection.prepareStatement
                     ("SELECT OB.idOperacoesBiblioteca," +
-                          "FA.idFuncionarioAdministrativo," +
-                          "OB.quantidadeLivrosVendidos," +
-                          "OB.quantidadeLivrosEmprestados," +
-                          "E.idEstoque " +
-                          "FROM Operacoes_Biblioteca OB " +
-                          "JOIN Funcionario_administrativo FA " +
-                          "ON FA.idFuncionarioAdministrativo = OB.idFuncionarioAdministrativo " +
-                          "JOIN Estoque E " +
-                          "ON OB.idEstoque = E.idEstoque " +
-                          "WHERE idOperacoesBiblioteca = ?");
+                            "FA.idFuncionarioAdministrativo," +
+                            "OB.quantidadeLivrosVendidos," +
+                            "OB.quantidadeLivrosEmprestados," +
+                            "E.idEstoque " +
+                            "FROM Operacoes_Biblioteca OB " +
+                            "JOIN Funcionario_administrativo FA " +
+                            "ON FA.idFuncionarioAdministrativo = OB.idFuncionarioAdministrativo " +
+                            "JOIN Estoque E " +
+                            "ON OB.idEstoque = E.idEstoque " +
+                            "WHERE idOperacoesBiblioteca = ?");
 
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
 
-            if(resultSet.next()) {
+            if (resultSet.next()) {
                 return OperacoesBiblioteca.instanciaOperacoesBiblioteca(resultSet);
             }
             return null;
@@ -133,15 +133,15 @@ public class OperacoesBibliotecaDaoJDBC extends ConexaoDAO implements OperacoesB
 
             List<OperacoesBiblioteca> listaOperacoesBiblioteca = new ArrayList<>();
 
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 OperacoesBiblioteca operacoesBiblioteca = OperacoesBiblioteca.instanciaOperacoesBiblioteca(resultSet);
                 listaOperacoesBiblioteca.add(operacoesBiblioteca);
             }
             System.out.print("Operações Biblioteca ");
             return listaOperacoesBiblioteca;
-        }catch (SQLException ex){
+        } catch (SQLException ex) {
             throw new DBException(ex.getMessage());
-        }finally {
+        } finally {
             ConexaoBancoDeDados.closeStatement(preparedStatement);
             ConexaoBancoDeDados.closeResultSet(resultSet);
         }

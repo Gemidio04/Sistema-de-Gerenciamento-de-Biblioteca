@@ -3,7 +3,6 @@ package Services.Funcionarios.OperacoesBiblioteca;
 import Clientes.Cliente;
 import Livros.EmprestimoLivro;
 import Livros.Livro;
-import SGBD.Exception.DBException;
 import SGBD.InterfacesDAO.ClienteDAO;
 import SGBD.InterfacesDAO.EstoqueDAO;
 import SGBD.InterfacesDAO.LivroDAO;
@@ -11,7 +10,6 @@ import SGBD.JDBC.DaoFactory;
 import Services.Estoque.Estoque;
 import Services.Solicitacoes.Solicitacoes;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
@@ -88,17 +86,13 @@ public class OperacoesAuxiliaresBiblioteca {
         return estoqueDAO.selectByIsbn(isbn);
     }
 
-    public static String solicitarEntrada(String mensagem) {
-        Solicitacoes solicitacoes = new Solicitacoes();
-        return solicitacoes.solicitarEntrada(mensagem);
-    }
 
     public static void solicitarNovosDadosLivro(Livro livro) {
-
-        livro.setTitulo(solicitarEntrada("Título: "));
-        livro.setEditora(solicitarEntrada("Editora: "));
-        livro.setGenero(solicitarEntrada("Gênero: "));
-        livro.setAutor(solicitarEntrada("Autor: "));
+        Solicitacoes solicitacoes = new Solicitacoes(sc);
+        livro.setTitulo(solicitacoes.solicitarEntrada("Título: "));
+        livro.setEditora(solicitacoes.solicitarEntrada("Editora: "));
+        livro.setGenero(solicitacoes.solicitarEntrada("Gênero: "));
+        livro.setAutor(solicitacoes.solicitarEntrada("Autor: "));
 
         // SOLICITAR E VALIDAR A DATA:
         while (true) {
@@ -113,13 +107,13 @@ public class OperacoesAuxiliaresBiblioteca {
             }
         }
 
-        livro.setSinopse(solicitarEntrada("Sinopse: "));
+        livro.setSinopse(solicitacoes.solicitarEntrada("Sinopse: "));
     }
 
     ClienteDAO clienteDAO = DaoFactory.createClienteDAO();
 
     public EmprestimoLivro solicitaDadosEmprestimoLivro() {
-        Solicitacoes solicitacoes = new Solicitacoes();
+        Solicitacoes solicitacoes = new Solicitacoes(sc);
         EmprestimoLivro emprestimoLivro = new EmprestimoLivro();
 
         try {
@@ -149,10 +143,6 @@ public class OperacoesAuxiliaresBiblioteca {
         }
     }
 
-    public void exibirSinopseLivro(Livro livro) {
-        System.out.println(livro.getSinopse());
-    }
-
     public boolean checarDisponibilidadeparaEmprestimo() {
         return livroEmprestado;
     }
@@ -180,6 +170,4 @@ public class OperacoesAuxiliaresBiblioteca {
     public void atualizarDataCadastroCliente(Cliente cliente, String data) {
         cliente.setDataCadastro(data);
     }
-
-
 }

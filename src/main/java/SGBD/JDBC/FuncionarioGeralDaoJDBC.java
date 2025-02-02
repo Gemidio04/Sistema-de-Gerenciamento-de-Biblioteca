@@ -2,11 +2,9 @@ package SGBD.JDBC;
 
 import SGBD.Connection.ConexaoBancoDeDados;
 import SGBD.Connection.ConexaoDAO;
-import SGBD.InterfacesDAO.FuncionarioDAO;
 import SGBD.InterfacesDAO.FuncionarioGeralDAO;
 import SGBD.Exception.DBException;
 import Services.Funcionarios.Funcionario;
-import Services.Funcionarios.Tipos.FuncionarioAdministrativo;
 import Services.Funcionarios.Tipos.FuncionarioGeral;
 
 import java.sql.Connection;
@@ -16,7 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FuncionarioGeralDaoJDBC extends ConexaoDAO implements FuncionarioGeralDAO, FuncionarioDAO {
+public class FuncionarioGeralDaoJDBC extends ConexaoDAO implements FuncionarioGeralDAO {
 
     public FuncionarioGeralDaoJDBC(Connection connection) {
         super(connection);
@@ -98,30 +96,6 @@ public class FuncionarioGeralDaoJDBC extends ConexaoDAO implements FuncionarioGe
             throw new DBException(ex.getMessage());
         }finally {
             ConexaoBancoDeDados.closeStatement(preparedStatement);
-        }
-    }
-
-    @Override
-    public Funcionario selectById(int id) {
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-        try {
-            preparedStatement = connection.prepareStatement
-                    ("SELECT * FROM Funcionario_Geral WHERE idFuncionarioGeral = ?");
-
-            preparedStatement.setInt(1, id);
-            resultSet = preparedStatement.executeQuery();
-
-            if(resultSet.next()){
-                return FuncionarioGeral.instanciaFuncionarioGeral(resultSet);
-            }
-            return null;
-        } catch (SQLException ex) {
-            throw new DBException(ex.getMessage());
-        }finally {
-            ConexaoBancoDeDados.closeStatement(preparedStatement);
-            ConexaoBancoDeDados.closeResultSet(resultSet);
         }
     }
 
